@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YanehCheck.EpicGamesUtils.Api", "YanehCheck.EpicGamesUtils.Api\YanehCheck.EpicGamesUtils.Api.csproj", "{79B4395D-7261-4648-9ED1-AC0EB4980CA6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YanehCheck.EpicGamesUtils.FortniteGGScraper", "YanehCheck.EpicGamesUtils.FortniteGGScraper\YanehCheck.EpicGamesUtils.FortniteGGScraper.csproj", "{D55AA83E-703F-40B4-A206-DD0497571980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YanehCheck.EpicGamesUtils.WpfUiApp", "YanehCheck.EpicGamesUtils.WpfUiApp\YanehCheck.EpicGamesUtils.WpfUiApp.csproj", "{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79B4395D-7261-4648-9ED1-AC0EB4980CA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79B4395D-7261-4648-9ED1-AC0EB4980CA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79B4395D-7261-4648-9ED1-AC0EB4980CA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79B4395D-7261-4648-9ED1-AC0EB4980CA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D55AA83E-703F-40B4-A206-DD0497571980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D55AA83E-703F-40B4-A206-DD0497571980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D55AA83E-703F-40B4-A206-DD0497571980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D55AA83E-703F-40B4-A206-DD0497571980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38FCFCE7-8128-4B2D-A317-E77EF0FBAEED}
+	EndGlobalSection
+EndGlobal

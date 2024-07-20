@@ -1,0 +1,178 @@
+﻿<Page
+    x:Class="YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    Title="Home Page"
+    d:DataContext="{d:DesignInstance local:HomePage,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border
+            Grid.Row="0"
+            Height="200"
+            CornerRadius="6"
+            Margin="0, 32, 0, 0">
+            <Border.Background>
+                <ImageBrush
+                    ImageSource="pack://application:,,,/Assets/Images/desdemona-bg-1920.jpg"
+                    RenderOptions.BitmapScalingMode="HighQuality"
+                    Stretch="UniformToFill" />
+            </Border.Background>
+            <Border CornerRadius="8">
+                <Border.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Offset="0" Color="#6F000000" />
+                        <GradientStop Offset="1" Color="#9F000000" />
+                    </RadialGradientBrush>
+                </Border.Background>
+                <Grid>
+                    <StackPanel
+                        Margin="50, 0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="Transparent">
+                        <ui:TextBlock
+                            FontTypography="Title"
+                            Foreground="#FFFFFF"
+                            Text="Desdemona Toolkit" />
+                        <ui:TextBlock
+                            FontTypography="Subtitle"
+                            Foreground="#B7FFFFFF"
+                            Text="Collection of utilities for Fortnite." />
+                        <ui:TextBlock
+                            FontTypography="BodyStrong"
+                            Foreground="#B7FFFFFF"
+                            Text="Free. Open-source. Desdemona fueled." />
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Border>
+
+        <Grid
+            Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ui:Card
+                Grid.Column="0" >
+                <StackPanel
+                    Width="auto"
+                    Height="auto">
+                    <ui:TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Quick Start!"
+                        Margin="0, 0, 0, 10"/>
+                    <ui:TextBlock
+                        Width="500"
+                        Height="auto"
+                        TextWrapping="Wrap">
+                        <Run FontWeight="SemiBold" Text="Step 1" /> : Authenticate through Epic Games
+                        <LineBreak />
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="•" /> Log in to Epic Games in your default browser.
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="•" /> Click the “Get code” button.
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="•" /> Copy the displayed authorization code and paste it here. This will allow the application to interact with your account.
+                        <LineBreak />
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="Step 2" /> : Fetch Fortnite Item Information
+                        <LineBreak />
+                        <LineBreak />
+                        You have a couple of options to fetch item information:
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="• Fortnite.gg" /> : It’s a bit slow and might not always work, but you’ll always get the latest information.
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="• GitHub" /> : Fast and stable, but the information might be a bit older.
+                        <LineBreak />
+                    </ui:TextBlock>
+                </StackPanel>
+            </ui:Card>
+
+            <ui:Card
+                Grid.Column="1" 
+                Margin="25, 0">
+                <StackPanel
+                    Width="auto"
+                    Height="auto">
+                    <ui:TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Authenticate"
+                        Margin="0, 0, 0, 10"/>
+                    <ui:TextBlock 
+                        Text="Your authorization code:"
+                        />
+                    <ui:TextBox
+                        PlaceholderText="123456fc9ee74d12846e79ea3aaa075f"
+                        />
+                    <ui:Button
+                        Content="Confirm"
+                        />
+                    <ui:TextBlock 
+                        Text="Status:"/>
+                    <ui:TextBlock 
+                        Foreground="{ui:ThemeResource SystemFillColorCriticalBrush}"
+                        Text="Expired."/>
+                </StackPanel>
+            </ui:Card>
+
+            <ui:Card
+                Grid.Column="2">
+                <StackPanel
+                    Width="auto"
+                    Height="auto">
+                    <ui:TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Text="Fetch Items"
+                        Margin="0, 0, 0, 10"/>
+                    <ui:TextBlock 
+                        Text="Source:"
+                    />
+                    <ui:DropDownButton/>
+                    <ui:Button
+                        Content="Fetch"
+                    />
+                    <ui:TextBlock 
+                        Text="Status:"/>
+                    <ui:TextBlock 
+                        Foreground="{ui:ThemeResource SystemFillColorCriticalBrush}"
+                        Text="No items found."/>
+                </StackPanel>
+            </ui:Card>
+        </Grid>
+
+        <StackPanel 
+            Grid.Row="2"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Margin="0, 16">
+            <ui:HyperlinkButton 
+                Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                Icon="{ui:SymbolIcon Link24}"
+                Content="Github"
+                NavigateUri="https://github.com/YanehCheck/DesdemonaToolkit"
+                ToolTip="https://github.com/YanehCheck/DesdemonaToolkit"/>
+        </StackPanel>
+    </Grid>
+</Page>

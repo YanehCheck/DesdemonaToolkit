@@ -15,7 +15,7 @@ public partial class MainWindowViewModel : ObservableObject, IViewModel {
         {
             Content = "Home",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
-            TargetPageType = typeof(DashboardPage)
+            TargetPageType = typeof(HomePage)
         },
         new NavigationViewItem()
         {

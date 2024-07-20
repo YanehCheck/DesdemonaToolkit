@@ -5,9 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wpf.Ui;
+using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Windows;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp;
@@ -48,9 +48,11 @@ public partial class App {
                 .AsSelfWithInterfaces()
                 .WithTransientLifetime());
 
-            services.AddSingleton<DashboardPage>();
-            services.AddSingleton<DataPage>();
-            services.AddSingleton<SettingsPage>();
+            services.Scan(s => s
+                .FromAssembliesOf(typeof(App))
+                .AddClasses(c => c.AssignableTo(typeof(INavigableView<>)))
+                .AsSelfWithInterfaces()
+                .WithTransientLifetime());
         }).Build();
 
     /// <summary>

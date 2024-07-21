@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Windows;
 
@@ -27,17 +28,12 @@ public partial class App {
         .ConfigureServices((context, services) => {
             services.AddHostedService<ApplicationHostService>();
 
-            // Page resolver service
             services.AddSingleton<IPageService, PageService>();
-
-            // Theme manipulation
             services.AddSingleton<IThemeService, ThemeService>();
-
-            // TaskBar manipulation
             services.AddSingleton<ITaskBarService, TaskBarService>();
-
-            // Service containing navigation, same as INavigationWindow... but without window
             services.AddSingleton<INavigationService, NavigationService>();
+
+            services.AddSingleton<IBrowserService, BrowserService>();
 
             // Main window with navigation
             services.AddSingleton<INavigationWindow, MainWindow>();

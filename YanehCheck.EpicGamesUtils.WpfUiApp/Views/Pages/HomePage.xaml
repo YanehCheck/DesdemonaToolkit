@@ -9,8 +9,8 @@
     Title="Home Page"
     d:DataContext="{d:DesignInstance local:HomePage,
                                      IsDesignTimeCreatable=False}"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    d:DesignHeight="675"
+    d:DesignWidth="1200"
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -19,13 +19,13 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Border
             Grid.Row="0"
-            Height="200"
+            Height="250"
             CornerRadius="6"
             Margin="0, 32, 0, 0">
             <Border.Background>
@@ -65,13 +65,15 @@
         </Border>
 
         <Grid
-            Grid.Row="1">
+            Grid.Row="1"
+            Margin="0, 30, 0, 0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <ui:Card
+                Height="336"
                 Grid.Column="0" >
                 <StackPanel
                     Width="auto"
@@ -109,9 +111,13 @@
             </ui:Card>
 
             <ui:Card
+                Height="336"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Top"
                 Grid.Column="1" 
-                Margin="25, 0">
+                Margin="25,0,25,0">
                 <StackPanel
+                    VerticalAlignment="Top"
                     Width="auto"
                     Height="auto">
                     <ui:TextBlock
@@ -123,13 +129,29 @@
                         Text="Your authorization code:"
                         />
                     <ui:TextBox
+                        HorizontalAlignment="Left"
+                        Margin="0, 5, 0, 10"
+                        Width="250"
+                        Text="{Binding ViewModel.AuthorizationCode, Mode=OneWayToSource}"
                         PlaceholderText="123456fc9ee74d12846e79ea3aaa075f"
                         />
-                    <ui:Button
-                        Content="Confirm"
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <ui:Button
+                            Content="Get Code"
+                            Command="{Binding ViewModel.}"
                         />
+                        <ui:Button
+                            Margin="10, 0, 0, 0"
+                            Content="Confirm"
+                        />
+                    </StackPanel>
+                    <Separator 
+                        Margin="3, 10"/>
                     <ui:TextBlock 
-                        Text="Status:"/>
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Text="Status"/>
                     <ui:TextBlock 
                         Foreground="{ui:ThemeResource SystemFillColorCriticalBrush}"
                         Text="Expired."/>
@@ -137,10 +159,11 @@
             </ui:Card>
 
             <ui:Card
+                Height="336"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Top"
                 Grid.Column="2">
-                <StackPanel
-                    Width="auto"
-                    Height="auto">
+                <StackPanel>
                     <ui:TextBlock
                         FontSize="20"
                         FontWeight="Bold"
@@ -149,15 +172,21 @@
                     <ui:TextBlock 
                         Text="Source:"
                     />
-                    <ui:DropDownButton/>
+                    <ui:DropDownButton
+                        Content="Temporary"
+                        Margin="0, 5, 0, 10"/>
                     <ui:Button
                         Content="Fetch"
                     />
+                    <Separator 
+                        Margin="3, 10"/>
                     <ui:TextBlock 
-                        Text="Status:"/>
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Text="Status"/>
                     <ui:TextBlock 
                         Foreground="{ui:ThemeResource SystemFillColorCriticalBrush}"
-                        Text="No items found."/>
+                        Text="No item file found."/>
                 </StackPanel>
             </ui:Card>
         </Grid>

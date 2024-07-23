@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YanehCheck.EpicGamesUtils.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YanehCheck.EpicGamesUtils.FortniteGGScraper", "YanehCheck.EpicGamesUtils.FortniteGGScraper\YanehCheck.EpicGamesUtils.FortniteGGScraper.csproj", "{D55AA83E-703F-40B4-A206-DD0497571980}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YanehCheck.EpicGamesUtils.WpfUiApp", "YanehCheck.EpicGamesUtils.WpfUiApp\YanehCheck.EpicGamesUtils.WpfUiApp.csproj", "{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YanehCheck.EpicGamesUtils.WpfUiApp", "YanehCheck.EpicGamesUtils.WpfUiApp\YanehCheck.EpicGamesUtils.WpfUiApp.csproj", "{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YanehCheck.EpicGamesUtils.DAL", "YanehCheck.EpicGamesUtils.DAL\YanehCheck.EpicGamesUtils.DAL.csproj", "{FB66DC77-DABD-49D7-801D-A59797820E3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YanehCheck.EpicGamesUtils.Common", "YanehCheck.EpicGamesUtils.Common\YanehCheck.EpicGamesUtils.Common.csproj", "{C7DC3354-D119-4AE0-94BF-825CD6B4445B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YanehCheck.EpicGamesUtils.BL", "YanehCheck.EpicGamesUtils.BL\YanehCheck.EpicGamesUtils.BL.csproj", "{01E31841-1224-48E8-8834-032B246C89F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D91BE28F-F97D-47A9-9734-679D7C9C4F6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB66DC77-DABD-49D7-801D-A59797820E3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB66DC77-DABD-49D7-801D-A59797820E3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB66DC77-DABD-49D7-801D-A59797820E3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB66DC77-DABD-49D7-801D-A59797820E3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7DC3354-D119-4AE0-94BF-825CD6B4445B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7DC3354-D119-4AE0-94BF-825CD6B4445B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7DC3354-D119-4AE0-94BF-825CD6B4445B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7DC3354-D119-4AE0-94BF-825CD6B4445B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01E31841-1224-48E8-8834-032B246C89F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01E31841-1224-48E8-8834-032B246C89F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01E31841-1224-48E8-8834-032B246C89F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01E31841-1224-48E8-8834-032B246C89F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,6 +13,7 @@ public partial class HomeViewModel(IBrowserService browserService) : ObservableO
 
     [RelayCommand]
     public void OnButtonGetCodeClick() {
+        Properties.Se
         browserService.StartAndNavigateToAuthCode();
     }
 }

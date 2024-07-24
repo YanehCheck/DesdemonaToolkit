@@ -4,7 +4,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
-public partial class DataViewModel : ObservableObject, IViewModel, INavigationAware {
+public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
     [ObservableProperty]

@@ -6,7 +6,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Windows;
 
 public partial class MainWindowViewModel : ObservableObject, IViewModel {
     [ObservableProperty]
-    private string _applicationTitle = "FortniteUtils";
+    private string _applicationTitle = "Desdemona Toolkit";
 
     [ObservableProperty]
     private ObservableCollection<object> _menuItems = new()
@@ -19,9 +19,9 @@ public partial class MainWindowViewModel : ObservableObject, IViewModel {
         },
         new NavigationViewItem()
         {
-            Content = "Data",
-            Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
-            TargetPageType = typeof(DataPage)
+            Content = "Items",
+            Icon = new SymbolIcon { Symbol = SymbolRegular.Tag24 },
+            TargetPageType = typeof(ItemsPage)
         }
     };
 

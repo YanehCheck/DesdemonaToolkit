@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -9,6 +9,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="wpfui-icon.ico" />
@@ -25,6 +31,11 @@
     <None Remove="Assets\wpfui-icon-256.png" />
     <None Remove="Assets\wpfui-icon-1024.png" />
     <None Remove="Assets\desdemona-bg-1920.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.BL\YanehCheck.EpicGamesUtils.BL.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.DAL\YanehCheck.EpicGamesUtils.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

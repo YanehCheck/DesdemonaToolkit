@@ -6,8 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using YanehCheck.EpicGamesUtils.BL;
+using YanehCheck.EpicGamesUtils.DAL;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Windows;
 
@@ -26,6 +29,11 @@ public partial class App {
         .CreateDefaultBuilder()
         .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
         .ConfigureServices((context, services) => {
+            services.AddOptions<UserOptions>();
+
+            services.RegisterDalServices();
+            services.RegisterBlServices();
+
             services.AddHostedService<ApplicationHostService>();
 
             services.AddSingleton<IPageService, PageService>();
@@ -35,9 +43,7 @@ public partial class App {
 
             services.AddSingleton<IBrowserService, BrowserService>();
 
-            // Main window with navigation
             services.AddSingleton<INavigationWindow, MainWindow>();
-
             services.Scan(s => s
                 .FromAssembliesOf(typeof(App))
                 .AddClasses(c => c.AssignableTo<IViewModel>())
@@ -49,7 +55,11 @@ public partial class App {
                 .AddClasses(c => c.AssignableTo(typeof(INavigableView<>)))
                 .AsSelfWithInterfaces()
                 .WithTransientLifetime());
-        }).Build();
+        })
+        .ConfigureAppConfiguration((context, builder) => {
+            builder.AddJsonFile("appsettings.json", false, true);
+        })
+        .Build();
 
     /// <summary>
     /// Gets registered service.

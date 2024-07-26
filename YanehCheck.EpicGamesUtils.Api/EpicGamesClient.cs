@@ -20,7 +20,9 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
 
         var response = await client.ExecuteAsync(request);
 
-        var jsonDom = JsonDocument.Parse(response.Content!);
+        var jsonDom = response.Content is not null ?
+            JsonDocument.Parse(response.Content!) :
+            null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
@@ -35,8 +37,9 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         request.AddParameter("code", authCode);
 
         var response = await client.ExecuteAsync(request);
-
-        var jsonDom = JsonDocument.Parse(response.Content!);
+        var jsonDom = response.Content is not null ? 
+            JsonDocument.Parse(response.Content!) : 
+            null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
@@ -47,7 +50,9 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         request.AddHeader("Authorization", $"Bearer {accessToken}");
 
         var response = await client.ExecuteAsync(request);
-        var jsonDom = JsonDocument.Parse(response.Content!);
+        var jsonDom = response.Content is not null ?
+            JsonDocument.Parse(response.Content!) :
+            null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
@@ -60,7 +65,9 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         request.AddBody("{}");
 
         var response = await client.ExecuteAsync(request);
-        var jsonDom = JsonDocument.Parse(response.Content!);
+        var jsonDom = response.Content is not null ?
+            JsonDocument.Parse(response.Content!) :
+            null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
 }

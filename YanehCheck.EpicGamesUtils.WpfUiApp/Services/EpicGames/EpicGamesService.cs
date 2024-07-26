@@ -8,7 +8,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesService {
     public async Task<EpicGamesAuthResult> AuthenticateAccount(string authCode) {
         var result = await epicGamesClient.AuthenticateAsAccount(AuthClientType.FortnitePcGameClient, authCode);
-        if (result) {
+        if (result.Success) {
             // TODO: Validate JSON structure just to be sure
             return new EpicGamesAuthResult(
                 result.StatusCode,
@@ -18,7 +18,12 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
                 );
         }
 
+        if (result.StatusCode != 0) {
+            return new EpicGamesAuthResult(result.StatusCode,
+                errorMessage: result.Content!.RootElement.GetProperty("errorMessage").ToString());
+        }
+
         return new EpicGamesAuthResult(result.StatusCode,
-            errorMessage: result.Content!.RootElement.GetProperty("errorMessage").ToString());
+            errorMessage: "Can not contact the Epic Games API.");
     }
 }

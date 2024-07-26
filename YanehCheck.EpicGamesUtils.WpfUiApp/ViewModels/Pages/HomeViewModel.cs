@@ -29,7 +29,8 @@ public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserSer
 
     [RelayCommand]
     public async Task OnButtonConfirmClick() {
-        if(string.IsNullOrEmpty(AuthorizationCode)) {
+        if(AuthorizationCode is null or { Length: not 32}) {
+            snackbarService.Show("Error", "The authorization code must be 32 characters long.", ControlAppearance.Caution, null, TimeSpan.FromSeconds(5));
             return;
         }
 

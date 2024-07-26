@@ -47,8 +47,6 @@ public partial class App {
             services.AddTransient<IRestClient, RestClient>();
             services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
 
-            services.AddSingleton<IEpicGamesService, EpicGamesService>();
-
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<ITaskBarService, TaskBarService>();
@@ -57,6 +55,8 @@ public partial class App {
 
             services.AddSingleton<IBrowserService, BrowserService>();
             services.AddSingleton<IPersistenceProvider, PersistenceProvider>();
+            services.AddSingleton<ISessionService, SessionService>();
+            services.AddSingleton<IEpicGamesService, EpicGamesService>();
 
             services.AddSingleton<INavigationWindow, MainWindow>();
             services.Scan(s => s

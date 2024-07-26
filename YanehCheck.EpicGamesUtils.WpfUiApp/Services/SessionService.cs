@@ -1,0 +1,9 @@
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services;
+
+public class SessionService(IPersistenceProvider persistenceProvider) : ISessionService {
+    public string? AccountId { get; set; } = persistenceProvider.AccessTokenExpiry > DateTime.Now ? persistenceProvider.AccountId : null;
+    public string? AccessToken { get; set; } = persistenceProvider.AccessTokenExpiry > DateTime.Now ? persistenceProvider.AccessToken : null;
+    public DateTime? AccessTokenExpiry { get; set; } = persistenceProvider.AccessTokenExpiry > DateTime.Now ? persistenceProvider.AccessTokenExpiry : null;
+}

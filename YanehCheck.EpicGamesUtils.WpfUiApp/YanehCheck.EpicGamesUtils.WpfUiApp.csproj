@@ -37,6 +37,7 @@
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Api\YanehCheck.EpicGamesUtils.Api.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.BL\YanehCheck.EpicGamesUtils.BL.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.DAL\YanehCheck.EpicGamesUtils.DAL.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.FortniteGGScraper\YanehCheck.EpicGamesUtils.FortniteGGScraper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,6 @@
 ﻿namespace YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
 
-public class Item
+public class FortniteGgItem
 {
     public string Id { get; set; }
     public string FortniteGgId { get; set; }

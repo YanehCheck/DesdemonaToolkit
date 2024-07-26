@@ -10,9 +10,12 @@ using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Api;
 using YanehCheck.EpicGamesUtils.BL;
 using YanehCheck.EpicGamesUtils.DAL;
+using YanehCheck.EpicGamesUtils.FortniteGGScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
@@ -38,6 +41,7 @@ public partial class App {
         .ConfigureServices((context, services) => {
             services.AddOptions<UserOptions>().Bind(context.Configuration.GetSection(UserOptions.Key));
             services.AddOptions<DalOptions>().Bind(context.Configuration.GetSection(DalOptions.Key));
+            services.AddOptions<ItemFetchOptions>().Bind(context.Configuration.GetSection(ItemFetchOptions.Key));
 
             services.RegisterDalServices();
             services.RegisterBlServices();
@@ -46,6 +50,10 @@ public partial class App {
 
             services.AddTransient<IRestClient, RestClient>();
             services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
+
+            services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();
+            services.AddSingleton<IFortniteGgItemProvider, FortniteGgItemProvider>();
+            services.AddSingleton<IUriItemProvider, UriItemProvider>();
 
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<IThemeService, ThemeService>();

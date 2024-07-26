@@ -2,14 +2,12 @@
 using System.Text.Json;
 using RestSharp;
 using YanehCheck.EpicGamesUtils.Api.Auth;
+using YanehCheck.EpicGamesUtils.Api.Results;
 using YanehCheck.EpicGamesUtils.Api.Stw;
 
 namespace YanehCheck.EpicGamesUtils.Api;
 
 public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
-    private string accessToken = null!;
-    private string accountId = null!;
-
     public async Task<ApiResult> AuthenticateAsClient(AuthClientType clientType) {
         
         var authClient = AuthClient.GetClient(clientType);
@@ -23,14 +21,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         var response = await client.ExecuteAsync(request);
 
         var jsonDom = JsonDocument.Parse(response.Content!);
-        if(response.IsSuccessful) {
-            return ApiResult.Ok();
-        }
-        else {
-            var errorCode = jsonDom.RootElement.GetProperty("errorCode");
-            var errorMessage = jsonDom.RootElement.GetProperty("errorMessage");
-            return ApiResult.Error($"{errorCode} - {errorMessage}");
-        }
+        return new ApiResult(response.StatusCode, jsonDom);
     }
 
     public async Task<ApiResult> AuthenticateAsAccount(AuthClientType clientType, string authCode) {
@@ -46,19 +37,10 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         var response = await client.ExecuteAsync(request);
 
         var jsonDom = JsonDocument.Parse(response.Content!);
-        if (response.IsSuccessful) {
-            accessToken = jsonDom.RootElement.GetProperty("access_token").ToString();
-            accountId = jsonDom.RootElement.GetProperty("account_id").ToString();
-            return ApiResult.Ok();
-        }
-        else {
-            var errorCode = jsonDom.RootElement.GetProperty("errorCode").ToString() ?? "ERROR CODE MISSING";
-            var errorMessage = jsonDom.RootElement.GetProperty("errorMessage").ToString() ?? "ERROR MESSAGE MISSING";
-            return ApiResult.Error($"{errorCode} - {errorMessage}");
-        }
+        return new ApiResult(response.StatusCode, jsonDom);
     }
 
-    public async Task<ApiResult> GetFounderCodes(FounderCodePlatform platform) {
+    public async Task<ApiResult> GetFounderCodes(FounderCodePlatform platform, string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/friendcodes/{accountId}/{Enum.GetName(platform)!.ToLower()}");
@@ -66,14 +48,10 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
 
         var response = await client.ExecuteAsync(request);
         var jsonDom = JsonDocument.Parse(response.Content!);
-        var codeIds = jsonDom.RootElement.EnumerateArray()
-            .Where(element => element.GetProperty("codeType").GetString() == "CodeToken:founderfriendinvite")
-            .Select(element => element.GetProperty("codeId").GetString());
-        var codes = string.Join(Environment.NewLine, codeIds);
-        return new ApiResult(response.IsSuccessful, codes);
+        return new ApiResult(response.StatusCode, jsonDom);
     }
 
-    public async Task<ApiResult> GetInventory() {
+    public async Task<ApiResult> GetInventory(string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/profile/{accountId}/client/QueryProfile", Method.Post); 
@@ -82,6 +60,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         request.AddBody("{}");
 
         var response = await client.ExecuteAsync(request);
-        return new ApiResult(response.IsSuccessful, response.Content);
+        var jsonDom = JsonDocument.Parse(response.Content!);
+        return new ApiResult(response.StatusCode, jsonDom);
     }
 }

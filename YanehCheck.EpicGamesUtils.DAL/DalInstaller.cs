@@ -7,8 +7,7 @@ using YanehCheck.EpicGamesUtils.DAL.Migrators;
 namespace YanehCheck.EpicGamesUtils.DAL;
 
 public static class DalInstaller {
-    public static IServiceCollection RegisterDalServices(this IServiceCollection services) {
-        services.AddOptions<DalOptions>();
+    public static IServiceCollection RegisterDalServices(this IServiceCollection services) { ;
         services.AddSingleton<IDbContextFactory<EpicGamesUtilsDbContext>, DbContextSqLiteFactory>();
         services.AddSingleton<IDatabaseMigrator, DatabaseMigrator>();
 

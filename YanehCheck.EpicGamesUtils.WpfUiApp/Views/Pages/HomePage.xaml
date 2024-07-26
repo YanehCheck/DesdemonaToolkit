@@ -155,7 +155,7 @@
                         Text="Status"/>
                     <ui:TextBlock 
                         Foreground="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource DateToColorConverter}}"
-                        Text="Expired."/>
+                        Text="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource DateToStringConverter}}"/>
                 </StackPanel>
             </ui:Card>
 

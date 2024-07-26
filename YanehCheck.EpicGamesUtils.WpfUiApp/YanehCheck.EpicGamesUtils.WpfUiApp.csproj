@@ -34,6 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Api\YanehCheck.EpicGamesUtils.Api.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.BL\YanehCheck.EpicGamesUtils.BL.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.DAL\YanehCheck.EpicGamesUtils.DAL.csproj" />
   </ItemGroup>

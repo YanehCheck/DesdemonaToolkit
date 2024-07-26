@@ -1,7 +1,7 @@
 ﻿namespace YanehCheck.EpicGamesUtils.DAL;
 
 public class DalOptions {
-    public const string Dal = "DAL";
+    public const string Key = "DAL";
 
     public string DatabaseName { get; set; } = "desdemonatoolkit.db";
 

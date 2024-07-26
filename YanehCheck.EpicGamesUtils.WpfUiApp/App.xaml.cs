@@ -4,11 +4,15 @@ using System.Windows.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RestSharp;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using YanehCheck.EpicGamesUtils.Api;
 using YanehCheck.EpicGamesUtils.BL;
 using YanehCheck.EpicGamesUtils.DAL;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
@@ -27,19 +31,29 @@ public partial class App {
     // https://docs.microsoft.com/dotnet/core/extensions/logging
     private static readonly IHost _host = Host
         .CreateDefaultBuilder()
-        .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)); })
+        .ConfigureAppConfiguration((context, builder) => {
+            builder.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location));
+            builder.AddJsonFile("appsettings.json", false, false);
+        })
         .ConfigureServices((context, services) => {
-            services.AddOptions<UserOptions>();
+            services.AddOptions<UserOptions>().Bind(context.Configuration.GetSection(UserOptions.Key));
+            services.AddOptions<DalOptions>().Bind(context.Configuration.GetSection(DalOptions.Key));
 
             services.RegisterDalServices();
             services.RegisterBlServices();
 
             services.AddHostedService<ApplicationHostService>();
 
+            services.AddTransient<IRestClient, RestClient>();
+            services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
+
+            services.AddSingleton<IEpicGamesService, EpicGamesService>();
+
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<ITaskBarService, TaskBarService>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<ISnackbarService, SnackbarService>();
 
             services.AddSingleton<IBrowserService, BrowserService>();
             services.AddSingleton<ISettingsProvider, SettingsProvider>();
@@ -56,9 +70,6 @@ public partial class App {
                 .AddClasses(c => c.AssignableTo(typeof(INavigableView<>)))
                 .AsSelfWithInterfaces()
                 .WithTransientLifetime());
-        })
-        .ConfigureAppConfiguration((context, builder) => {
-            builder.AddJsonFile("appsettings.json", false, true);
         })
         .Build();
 

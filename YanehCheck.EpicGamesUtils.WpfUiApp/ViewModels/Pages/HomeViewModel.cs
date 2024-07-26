@@ -5,7 +5,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
-public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserService browserService, ISettingsProvider settingsProvider, IEpicGamesService epicGamesService) : ObservableObject, IViewModel, INavigationAware {
+public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserService browserService, IPersistenceProvider persistenceProvider, IEpicGamesService epicGamesService) : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
     [ObservableProperty] 
@@ -22,7 +22,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserSer
     }
 
     private void InitializeViewModel() {
-        AccessTokenExpiry = settingsProvider.AccessTokenExpiry;
+        AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
     }
 
     public void OnNavigatedFrom() { }
@@ -37,10 +37,11 @@ public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserSer
         var response = await epicGamesService.AuthenticateAccount(AuthorizationCode);
         if (response) {
             snackbarService.Show("Success", "Successfully authenticated", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
-            settingsProvider.AccessToken = response.AccessToken!;
-            settingsProvider.AccessTokenExpiry = response.AccessTokenExpiry!.Value;
+            persistenceProvider.AccountId = response.AccountId!;
+            persistenceProvider.AccessToken = response.AccessToken!;
+            persistenceProvider.AccessTokenExpiry = response.AccessTokenExpiry!.Value;
             AccessTokenExpiry = response.AccessTokenExpiry!.Value;
-            settingsProvider.Save();
+            persistenceProvider.Save();
         }
         else {
             snackbarService.Show("Failure", response.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));

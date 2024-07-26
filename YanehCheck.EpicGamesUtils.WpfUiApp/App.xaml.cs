@@ -56,7 +56,7 @@ public partial class App {
             services.AddSingleton<ISnackbarService, SnackbarService>();
 
             services.AddSingleton<IBrowserService, BrowserService>();
-            services.AddSingleton<ISettingsProvider, SettingsProvider>();
+            services.AddSingleton<IPersistenceProvider, PersistenceProvider>();
 
             services.AddSingleton<INavigationWindow, MainWindow>();
             services.Scan(s => s

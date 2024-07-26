@@ -45,5 +45,17 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Properties {
                 this["AccessTokenExpiry"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AccountId {
+            get {
+                return ((string)(this["AccountId"]));
+            }
+            set {
+                this["AccountId"] = value;
+            }
+        }
     }
 }

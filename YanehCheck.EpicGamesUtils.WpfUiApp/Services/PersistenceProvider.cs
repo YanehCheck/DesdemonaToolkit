@@ -5,11 +5,15 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services;
 
-public class SettingsProvider : ISettingsProvider {
-    public SettingsProvider(IOptions<UserOptions> userOptions) {
+public class PersistenceProvider : IPersistenceProvider {
+    public PersistenceProvider(IOptions<UserOptions> userOptions) {
         if (userOptions.Value.ResetUserSettings) {
             Reset();
         }
+    }
+    public string AccountId {
+        get => Settings.Default.AccountId;
+        set => Settings.Default.AccountId = value;
     }
 
     public string AccessToken {

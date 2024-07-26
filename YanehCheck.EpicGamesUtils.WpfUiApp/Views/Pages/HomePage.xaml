@@ -131,9 +131,10 @@
                     <ui:TextBox
                         HorizontalAlignment="Left"
                         Margin="0, 5, 0, 10"
-                        Width="250"
+                        MinWidth="300"
+                        Width="300"
                         Text="{Binding ViewModel.AuthorizationCode, Mode=OneWayToSource}"
-                        PlaceholderText="123456fc9ee74d12846e79ea3aaa075f"
+                        PlaceholderText=""
                         />
                     <StackPanel
                         Orientation="Horizontal">

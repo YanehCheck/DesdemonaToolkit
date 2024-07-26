@@ -139,11 +139,12 @@
                         Orientation="Horizontal">
                         <ui:Button
                             Content="Get Code"
-                            Command="{Binding ViewModel.}"
+                            Command="{Binding ViewModel.ButtonGetCodeClickCommand}"
                         />
                         <ui:Button
                             Margin="10, 0, 0, 0"
                             Content="Confirm"
+                            Command="{Binding ViewModel.ButtonConfirmClickCommand}"
                         />
                     </StackPanel>
                     <Separator 
@@ -153,7 +154,7 @@
                         FontWeight="SemiBold"
                         Text="Status"/>
                     <ui:TextBlock 
-                        Foreground="{ui:ThemeResource SystemFillColorCriticalBrush}"
+                        Foreground="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource DateToColorConverter}}"
                         Text="Expired."/>
                 </StackPanel>
             </ui:Card>

@@ -155,6 +155,10 @@
                         FontWeight="SemiBold"
                         Text="Status"/>
                     <ui:TextBlock 
+                        Visibility="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToVisibilityConverter}}"
+                        Text="{Binding ViewModel.DisplayName}"
+                        />
+                    <ui:TextBlock 
                         Foreground="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToColorConverter}}"
                         Text="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToStringConverter}}"/>
                 </StackPanel>

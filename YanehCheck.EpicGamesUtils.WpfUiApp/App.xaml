@@ -16,7 +16,10 @@
 
             <converters:ExpiryDateToColorConverter x:Key="ExpiryDateToColorConverter" />
             <converters:ExpiryDateToStringConverter x:Key="ExpiryDateToStringConverter" />
+            <converters:ExpiryDateToVisibilityConverter x:Key="ExpiryDateToVisibilityConverter" />
+
             <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
+
             <converters:ItemFetchSourceToStringConverter x:Key="ItemFetchSourceToStringConverter" />
             <converters:FetchDateToColorConverter x:Key="FetchDateToColorConverter" />
             <converters:FetchDateToStringConverter x:Key="FetchDateToStringConverter" />

@@ -28,6 +28,9 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     [ObservableProperty]
     public DateTime _lastItemFetch;
 
+    [ObservableProperty] 
+    public string _displayName;
+
     [ObservableProperty]
     private ItemFetchSource selectedItemFetchSource = ItemFetchSource.FortniteGg;
 
@@ -44,6 +47,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     private void InitializeViewModel() {
         AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
         LastItemFetch = persistenceProvider.LastItemFetch;
+        DisplayName = persistenceProvider.DisplayName;
     }
 
     public void OnNavigatedFrom() { }
@@ -60,7 +64,6 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             persistenceProvider.AccountId = resultAuth.AccountId!;
             persistenceProvider.AccessToken = resultAuth.AccessToken!;
             persistenceProvider.AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
-            persistenceProvider.Save();
 
             sessionService.AccountId = resultAuth.AccountId!;
             sessionService.AccessToken = resultAuth.AccessToken!;
@@ -77,12 +80,14 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         if (resultLookup) {
             persistenceProvider.DisplayName = resultLookup.DisplayName!;
             sessionService.DisplayName = resultLookup.DisplayName;
+            DisplayName = resultLookup.DisplayName!;
             snackbarService.Show("Success", $"Successfully authenticated as {resultLookup.DisplayName}.", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
-
         }
         else {
             snackbarService.Show("Failure", resultLookup.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
         }
+
+        persistenceProvider.Save();
     }
 
     [RelayCommand]

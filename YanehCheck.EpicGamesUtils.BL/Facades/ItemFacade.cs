@@ -32,16 +32,11 @@ public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemE
         var repo = uow.GetRepository<ItemEntity, ItemEntityMapper>();
         var entities = models.Select(Mapper.MapToEntity);
 
+        await repo.Get().ExecuteDeleteAsync();
+
         entities = await Task.WhenAll(entities.Select(async entity => {
-            var fetchedEntity = await repo.Get().SingleOrDefaultAsync(e => e.FortniteId == entity.FortniteId);
-            if (fetchedEntity != null) {
-                entity.Id = fetchedEntity.Id;
-                return await repo.UpdateAsync(entity);
-            }
-            else {
-                entity.Id = Guid.NewGuid();
-                return await repo.AddAsync(entity);
-            }
+            entity.Id = Guid.NewGuid();
+            return await repo.AddAsync(entity);
         }));
 
         await uow.SaveChangesAsync();

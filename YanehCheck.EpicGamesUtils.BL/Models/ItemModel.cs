@@ -1,6 +1,5 @@
 ﻿using YanehCheck.EpicGamesUtils.BL.Models.Interfaces;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
+using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
 namespace YanehCheck.EpicGamesUtils.BL.Models;
 

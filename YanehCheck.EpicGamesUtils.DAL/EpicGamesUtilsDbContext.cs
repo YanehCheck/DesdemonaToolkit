@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.DAL.Entities;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper;
 
 namespace YanehCheck.EpicGamesUtils.DAL;
 
 public class EpicGamesUtilsDbContext : DbContext {
-    public EpicGamesUtilsDbContext(DbContextOptions options, bool seedData = false) : base(options) {
-        Database.EnsureCreated();
-    }
+    public EpicGamesUtilsDbContext(DbContextOptions options, bool seedData = false) : base(options) { }
     public DbSet<ItemEntity> ItemEntities => Set<ItemEntity>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {

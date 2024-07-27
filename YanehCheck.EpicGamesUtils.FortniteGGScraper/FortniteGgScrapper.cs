@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Net;
 using System.Text.RegularExpressions;
 using HtmlAgilityPack;
+using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
 
 namespace YanehCheck.EpicGamesUtils.FortniteGGScraper;

@@ -1,4 +1,4 @@
-﻿namespace YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
+﻿namespace YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
 public enum ItemSource
 {

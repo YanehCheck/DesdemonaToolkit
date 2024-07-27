@@ -1,4 +1,6 @@
-﻿namespace YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
+﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
+
+namespace YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
 
 public class FortniteGgItem
 {

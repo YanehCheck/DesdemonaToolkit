@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.DAL.Entities;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
 
 namespace YanehCheck.EpicGamesUtils.DAL.Seeds;
 

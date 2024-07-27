@@ -1,4 +1,4 @@
-﻿namespace YanehCheck.EpicGamesUtils.FortniteGGScraper;
+﻿namespace YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
 public enum ItemRarity {
     Unknown,

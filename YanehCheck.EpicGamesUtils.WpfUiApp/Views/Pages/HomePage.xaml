@@ -128,7 +128,7 @@
                     <ui:TextBlock 
                         Text="Your authorization code:"
                         />
-                    <ui:TextBox
+                    <ui:PasswordBox
                         HorizontalAlignment="Left"
                         Margin="0, 5, 0, 10"
                         MinWidth="300"

@@ -26,4 +26,22 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
         return new EpicGamesAuthResult(result.StatusCode,
             errorMessage: "Can not contact the Epic Games API.");
     }
+
+    public async Task<EpicGamesGetByAccountIdResult> GetByAccountId(string accountId, string accessToken) {
+        var result = await epicGamesClient.GetByAccountId(accountId, accessToken);
+        if (result.Success) {
+            return new EpicGamesGetByAccountIdResult(
+                result.StatusCode,
+                result.Content!.RootElement.GetProperty("displayName").ToString()
+            );
+        }
+
+        if(result.StatusCode != 0) {
+            return new EpicGamesGetByAccountIdResult(result.StatusCode,
+                errorMessage: result.Content!.RootElement.GetProperty("errorMessage").ToString());
+        }
+
+        return new EpicGamesGetByAccountIdResult(result.StatusCode,
+            errorMessage: "Can not contact the Epic Games API.");
+    }
 }

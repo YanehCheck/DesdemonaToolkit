@@ -4,4 +4,5 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 
 public interface IEpicGamesService {
     public Task<EpicGamesAuthResult> AuthenticateAccount(string authCode);
+    public Task<EpicGamesGetByAccountIdResult> GetByAccountId(string accountId, string accessToken);
 }

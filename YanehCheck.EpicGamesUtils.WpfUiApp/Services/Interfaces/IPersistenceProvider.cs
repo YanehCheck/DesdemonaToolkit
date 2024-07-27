@@ -5,6 +5,7 @@ public interface IPersistenceProvider {
     public string AccessToken { get; set; }
     public DateTime AccessTokenExpiry { get; set; }
     public DateTime LastItemFetch { get; set; }
+    public string DisplayName { get; set; }
     public void Save();
     public void Reset();
 }

@@ -56,6 +56,19 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
+    public async Task<ApiResult> GetByAccountId(string accountId, string accessToken) {
+        var request =
+            new RestRequest(
+                $"https://account-public-service-prod.ol.epicgames.com/account/api/public/account/{accountId}");
+        request.AddHeader("Authorization", $"Bearer {accessToken}");
+
+        var response = await client.ExecuteAsync(request);
+        var jsonDom = response.Content is not null ?
+            JsonDocument.Parse(response.Content!) :
+            null;
+        return new ApiResult(response.StatusCode, jsonDom);
+    }
+
     public async Task<ApiResult> GetInventory(string accountId, string accessToken) {
         var request =
             new RestRequest(

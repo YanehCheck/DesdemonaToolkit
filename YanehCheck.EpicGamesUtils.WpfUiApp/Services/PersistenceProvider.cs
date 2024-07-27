@@ -31,6 +31,11 @@ public class PersistenceProvider : IPersistenceProvider {
         set => Settings.Default.LastItemFetch = value;
     }
 
+    public string DisplayName {
+        get => Settings.Default.DisplayName;
+        set => Settings.Default.DisplayName = value;
+    }
+
     public void Save() => Settings.Default.Save();
     public void Reset() => Settings.Default.Reset();
 }

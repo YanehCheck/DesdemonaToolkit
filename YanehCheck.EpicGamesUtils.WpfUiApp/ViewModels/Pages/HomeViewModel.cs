@@ -55,23 +55,33 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             return;
         }
 
-        var response = await epicGamesService.AuthenticateAccount(AuthorizationCode);
-        if (response) {
-            snackbarService.Show("Success", "Successfully authenticated", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
-
-            persistenceProvider.AccountId = response.AccountId!;
-            persistenceProvider.AccessToken = response.AccessToken!;
-            persistenceProvider.AccessTokenExpiry = response.AccessTokenExpiry!.Value;
+        var resultAuth = await epicGamesService.AuthenticateAccount(AuthorizationCode);
+        if (resultAuth) {
+            persistenceProvider.AccountId = resultAuth.AccountId!;
+            persistenceProvider.AccessToken = resultAuth.AccessToken!;
+            persistenceProvider.AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
             persistenceProvider.Save();
 
-            sessionService.AccountId = response.AccountId!;
-            sessionService.AccessToken = response.AccessToken!;
-            sessionService.AccessTokenExpiry = response.AccessTokenExpiry!.Value;
+            sessionService.AccountId = resultAuth.AccountId!;
+            sessionService.AccessToken = resultAuth.AccessToken!;
+            sessionService.AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
 
-            AccessTokenExpiry = response.AccessTokenExpiry!.Value;
+            AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
         }
         else {
-            snackbarService.Show("Failure", response.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            snackbarService.Show("Failure", resultAuth.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            return;
+        }
+
+        var resultLookup = await epicGamesService.GetByAccountId(sessionService.AccountId, sessionService.AccessToken);
+        if (resultLookup) {
+            persistenceProvider.DisplayName = resultLookup.DisplayName!;
+            sessionService.DisplayName = resultLookup.DisplayName;
+            snackbarService.Show("Success", $"Successfully authenticated as {resultLookup.DisplayName}.", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
+
+        }
+        else {
+            snackbarService.Show("Failure", resultLookup.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
         }
     }
 

@@ -57,5 +57,16 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Properties {
                 this["AccountId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastItemFetch {
+            get {
+                return ((global::System.DateTime)(this["LastItemFetch"]));
+            }
+            set {
+                this["LastItemFetch"] = value;
+            }
+        }
     }
 }

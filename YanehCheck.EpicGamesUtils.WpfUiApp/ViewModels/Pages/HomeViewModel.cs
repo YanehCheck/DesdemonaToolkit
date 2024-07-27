@@ -3,11 +3,18 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
-public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserService browserService, IPersistenceProvider persistenceProvider, ISessionService sessionService, IEpicGamesService epicGamesService) : ObservableObject, IViewModel, INavigationAware {
+public partial class HomeViewModel(ISnackbarService snackbarService, 
+    IBrowserService browserService,
+    IPersistenceProvider persistenceProvider, 
+    ISessionService sessionService, 
+    IEpicGamesService epicGamesService,
+    IFortniteGgItemProvider fortniteGgItemProvider,
+    IUriItemProvider uriItemProvider) : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
     [ObservableProperty] 
@@ -17,10 +24,12 @@ public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserSer
     public DateTime _accessTokenExpiry;
 
     [ObservableProperty]
+    public DateTime _lastItemFetch;
+
+    [ObservableProperty]
     private ItemFetchSource selectedItemFetchSource = ItemFetchSource.FortniteGg;
 
     public ObservableCollection<ItemFetchSource> ItemFetchSources { get; set; } = new(Enum.GetValues<ItemFetchSource>());
-
 
 
     public void OnNavigatedTo() {
@@ -32,6 +41,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserSer
 
     private void InitializeViewModel() {
         AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
+        LastItemFetch = persistenceProvider.LastItemFetch;
     }
 
     public void OnNavigatedFrom() { }
@@ -66,5 +76,26 @@ public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserSer
     [RelayCommand]
     public void OnButtonGetCodeClick() {
         browserService.StartAndNavigateToAuthCode();
+    }
+
+    [RelayCommand]
+    public async Task OnButtonFetchItemDataClick() {
+        IFortniteItemProvider source = SelectedItemFetchSource switch {
+            ItemFetchSource.FortniteGg => fortniteGgItemProvider,
+            ItemFetchSource.Stable => uriItemProvider,
+            _ => throw new ArgumentException("Invalid item source selected.")
+        };
+
+        var items = await source.GetItemsAsync();
+        if (items == null) {
+            snackbarService.Show("Failure", "Could not fetch item data.", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+        }
+
+        LastItemFetch = DateTime.Now;
+        persistenceProvider.LastItemFetch = LastItemFetch;
+        persistenceProvider.Save();
+        sessionService.IsItemDataFetched = true;
+
+        snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
     }
 }

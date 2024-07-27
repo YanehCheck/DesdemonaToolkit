@@ -26,6 +26,11 @@ public class PersistenceProvider : IPersistenceProvider {
         set => Settings.Default.AccessTokenExpiry = value;
     }
 
+    public DateTime LastItemFetch {
+        get => Settings.Default.LastItemFetch;
+        set => Settings.Default.LastItemFetch = value;
+    }
+
     public void Save() => Settings.Default.Save();
     public void Reset() => Settings.Default.Reset();
 }

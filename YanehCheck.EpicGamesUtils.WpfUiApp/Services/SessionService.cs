@@ -6,4 +6,5 @@ public class SessionService(IPersistenceProvider persistenceProvider) : ISession
     public string? AccountId { get; set; } = persistenceProvider.AccessTokenExpiry > DateTime.Now ? persistenceProvider.AccountId : null;
     public string? AccessToken { get; set; } = persistenceProvider.AccessTokenExpiry > DateTime.Now ? persistenceProvider.AccessToken : null;
     public DateTime? AccessTokenExpiry { get; set; } = persistenceProvider.AccessTokenExpiry > DateTime.Now ? persistenceProvider.AccessTokenExpiry : null;
+    public bool IsItemDataFetched { get; set; } = persistenceProvider.LastItemFetch != DateTime.MinValue;
 }

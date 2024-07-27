@@ -186,6 +186,7 @@
                     </ComboBox>
                     <ui:Button
                         Content="Fetch"
+                        Command="{Binding ViewModel.ButtonFetchItemDataClickCommand}"
                     />
                     <Separator 
                         Margin="3, 10"/>
@@ -194,8 +195,8 @@
                         FontWeight="SemiBold"
                         Text="Status"/>
                     <ui:TextBlock 
-                        Foreground="{ui:ThemeResource SystemFillColorCriticalBrush}"
-                        Text="No item file found."/>
+                        Foreground="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToColorConverter}}"
+                        Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToStringConverter}}"/>
                 </StackPanel>
             </ui:Card>
         </Grid>

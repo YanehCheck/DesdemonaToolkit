@@ -14,8 +14,9 @@
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
 
-            <converters:DateToColorConverter x:Key="DateToColorConverter" />
-            <converters:DateToStringConverter x:Key="DateToStringConverter" />
+            <converters:ExpiryDateToColorConverter x:Key="ExpiryDateToColorConverter" />
+            <converters:ExpiryDateToStringConverter x:Key="ExpiryDateToStringConverter" />
+            <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

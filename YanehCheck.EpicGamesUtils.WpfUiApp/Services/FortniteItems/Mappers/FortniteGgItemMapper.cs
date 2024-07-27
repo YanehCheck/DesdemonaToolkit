@@ -4,8 +4,8 @@ using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 
 public class FortniteGgItemMapper : IFortniteGgItemMapper {
-    public ItemFullModel MapToModel(FortniteGgItem item) {
-        return new ItemFullModel() {
+    public ItemModel MapToModel(FortniteGgItem item) {
+        return new ItemModel() {
             // Id = null,
             FortniteId = item.Id,
             FortniteGgId = item.FortniteGgId,

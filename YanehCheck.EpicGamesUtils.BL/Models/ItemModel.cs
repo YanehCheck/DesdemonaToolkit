@@ -4,7 +4,7 @@ using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
 
 namespace YanehCheck.EpicGamesUtils.BL.Models;
 
-public class ItemFullModel : IModel {
+public class ItemModel : IModel {
     public Guid Id { get; set; }
     public string FortniteId { get; set; }
     public string FortniteGgId { get; set; }
@@ -23,7 +23,7 @@ public class ItemFullModel : IModel {
     public IEnumerable<string> Styles { get; set; }
     public IEnumerable<ItemTag> Tags { get; set; }
 
-    public ItemFullModel GetEmpty() => new() {
+    public ItemModel GetEmpty() => new() {
         Id = Guid.Empty,
         FortniteId = default!,
         FortniteGgId = default!,

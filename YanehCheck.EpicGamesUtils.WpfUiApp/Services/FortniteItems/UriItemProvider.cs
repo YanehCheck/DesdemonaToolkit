@@ -11,7 +11,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
 public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mapper, IOptions<ItemFetchOptions> options) : IUriItemProvider
 {
-    public async Task<IEnumerable<ItemFullModel>?> GetItemsAsync()
+    public async Task<IEnumerable<ItemModel>?> GetItemsAsync()
     {
         var request = new RestRequest(options.Value.StableSourceUri);
         var response = await restClient.GetAsync(request);

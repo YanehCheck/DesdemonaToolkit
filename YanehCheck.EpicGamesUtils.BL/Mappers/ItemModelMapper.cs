@@ -4,9 +4,9 @@ using YanehCheck.EpicGamesUtils.DAL.Entities;
 
 namespace YanehCheck.EpicGamesUtils.BL.Mappers;
 
-public class ItemModelMapper : IModelMapper<ItemEntity, ItemFullModel> {
-    public ItemFullModel MapToModel(ItemEntity entity) {
-        return new ItemFullModel() {
+public class ItemModelMapper : IModelMapper<ItemEntity, ItemModel> {
+    public ItemModel MapToModel(ItemEntity entity) {
+        return new ItemModel() {
             Id = entity.Id,
             FortniteId = entity.FortniteId,
             FortniteGgId = entity.FortniteGgId,
@@ -27,7 +27,7 @@ public class ItemModelMapper : IModelMapper<ItemEntity, ItemFullModel> {
         };
     }
 
-    public ItemEntity MapToEntity(ItemFullModel model) {
+    public ItemEntity MapToEntity(ItemModel model) {
         return new ItemEntity() {
             Id = model.Id,
             FortniteId = model.FortniteId,

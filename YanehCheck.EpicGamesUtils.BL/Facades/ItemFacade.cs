@@ -6,6 +6,6 @@ using YanehCheck.EpicGamesUtils.DAL.UnitOfWork;
 
 namespace YanehCheck.EpicGamesUtils.BL.Facades;
 
-public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemEntity, ItemFullModel> mapper) : Facade<ItemEntity, ItemFullModel, ItemEntityMapper>(unitOfWorkFactory, mapper) {
+public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemEntity, ItemModel> mapper) : Facade<ItemEntity, ItemModel, ItemEntityMapper>(unitOfWorkFactory, mapper) {
     
 }   

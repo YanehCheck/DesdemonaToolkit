@@ -9,7 +9,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
 public class FortniteGgItemProvider(IFortniteGgScrapper fortniteGgScrapper, IFortniteGgItemMapper mapper, IOptions<ItemFetchOptions> itemOptions) : IFortniteGgItemProvider
 {
-    public async Task<IEnumerable<ItemFullModel>?> GetItemsAsync()
+    public async Task<IEnumerable<ItemModel>?> GetItemsAsync()
     {
         var items = await fortniteGgScrapper.ScrapIdRangeParallelAsync(0, itemOptions.Value.FortniteGgIdRange);
         return items is null or { IsEmpty: true } ?

@@ -149,18 +149,20 @@
                         />
                     </StackPanel>
                     <Separator 
-                        Margin="3, 10"/>
+                        Margin="3, 5"/>
                     <ui:TextBlock 
                         FontSize="14"
                         FontWeight="SemiBold"
                         Text="Status"/>
+                    
+                    <ui:TextBlock 
+                        Margin="0,5,0,0"
+                        Foreground="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToColorConverter}}"
+                        Text="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToStringConverter}}"/>
                     <ui:TextBlock 
                         Visibility="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToVisibilityConverter}}"
                         Text="{Binding ViewModel.DisplayName}"
-                        />
-                    <ui:TextBlock 
-                        Foreground="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToColorConverter}}"
-                        Text="{Binding ViewModel.AccessTokenExpiry, Converter={StaticResource ExpiryDateToStringConverter}}"/>
+                    />
                 </StackPanel>
             </ui:Card>
 
@@ -193,12 +195,13 @@
                         Command="{Binding ViewModel.ButtonFetchItemDataClickCommand}"
                     />
                     <Separator 
-                        Margin="3, 10"/>
+                        Margin="3, 5"/>
                     <ui:TextBlock 
                         FontSize="14"
                         FontWeight="SemiBold"
                         Text="Status"/>
                     <ui:TextBlock 
+                        Margin="0,5,0,0"
                         Foreground="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToColorConverter}}"
                         Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToStringConverter}}"/>
                 </StackPanel>

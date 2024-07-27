@@ -17,6 +17,7 @@
             <converters:ExpiryDateToColorConverter x:Key="ExpiryDateToColorConverter" />
             <converters:ExpiryDateToStringConverter x:Key="ExpiryDateToStringConverter" />
             <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
+            <converters:ItemFetchSourceToStringConverter x:Key="ItemFetchSourceToStringConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

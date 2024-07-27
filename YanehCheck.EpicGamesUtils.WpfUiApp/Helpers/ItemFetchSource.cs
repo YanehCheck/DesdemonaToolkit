@@ -1,6 +1,6 @@
 ﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
 
-public enum ItemSource {
+public enum ItemFetchSource {
     FortniteGg,
     Stable
 }

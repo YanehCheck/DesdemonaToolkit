@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
@@ -14,7 +15,8 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     ISessionService sessionService, 
     IEpicGamesService epicGamesService,
     IFortniteGgItemProvider fortniteGgItemProvider,
-    IUriItemProvider uriItemProvider) : ObservableObject, IViewModel, INavigationAware {
+    IUriItemProvider uriItemProvider,
+    IItemFacade itemFacade) : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
     [ObservableProperty] 
@@ -89,12 +91,14 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         var items = await source.GetItemsAsync();
         if (items == null) {
             snackbarService.Show("Failure", "Could not fetch item data.", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            return;
         }
 
         LastItemFetch = DateTime.Now;
         persistenceProvider.LastItemFetch = LastItemFetch;
         persistenceProvider.Save();
         sessionService.IsItemDataFetched = true;
+        await itemFacade.SaveAsyncByFortniteId(items);
 
         snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
     }

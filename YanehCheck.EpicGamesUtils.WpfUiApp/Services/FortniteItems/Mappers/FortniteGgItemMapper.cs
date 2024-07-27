@@ -21,8 +21,8 @@ public class FortniteGgItemMapper : IFortniteGgItemMapper {
             Set = item.Set,
             Release = item.Release,
             LastSeen = item.LastSeen,
-            Styles = item.Styles,
-            Tags = item.Tags
+            Styles = item.Styles ?? [],
+            Tags = item.Tags ?? []
         };
     }
 

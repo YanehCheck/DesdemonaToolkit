@@ -31,18 +31,8 @@ public abstract class Facade<TEntity, TModel, TEntityMapper>(IUnitOfWorkFactory 
         await using var uow = UnitOfWorkFactory.Create();
         var repo = uow.GetRepository<TEntity, TEntityMapper>();
 
-        var entities = await repo.Get().ToListAsync();
+        var entities = repo.Get();
         return entities.Select(e => Mapper.MapToModel(e)).ToList();
-    }
-
-    public async Task<IEnumerable<TModel>> GetAllAsync(Func<TModel, bool> predicate, IEnumerable<TModel>? models = null) {
-        if(models is null) {
-            var allModels = await GetAllAsync();
-
-            return allModels.Where(predicate);
-        }
-
-        return models.Where(predicate);
     }
 
     public async Task<TModel?> GetAsync(Guid id, bool dontIncludeRelatedObjects = false) {

@@ -8,7 +8,7 @@ using YanehCheck.EpicGamesUtils.Api.Stw;
 namespace YanehCheck.EpicGamesUtils.Api;
 
 public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
-    public async Task<ApiResult> AuthenticateAsClient(AuthClientType clientType) {
+    public async Task<ApiResult> Accounts_AuthenticateAsClient(AuthClientType clientType) {
         
         var authClient = AuthClient.GetClient(clientType);
         var credentialsBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{authClient.Id}:{authClient.Secret}"));
@@ -26,7 +26,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
-    public async Task<ApiResult> AuthenticateAsAccount(AuthClientType clientType, string authCode) {
+    public async Task<ApiResult> Accounts_AuthenticateAsAccount(AuthClientType clientType, string authCode) {
         var authClient = AuthClient.GetClient(clientType);
         var credentialsBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{authClient.Id}:{authClient.Secret}"));
 
@@ -43,7 +43,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
-    public async Task<ApiResult> GetFounderCodes(FounderCodePlatform platform, string accountId, string accessToken) {
+    public async Task<ApiResult> Fortnite_GetFounderCodes(FounderCodePlatform platform, string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/friendcodes/{accountId}/{Enum.GetName(platform)!.ToLower()}");
@@ -56,7 +56,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
-    public async Task<ApiResult> GetByAccountId(string accountId, string accessToken) {
+    public async Task<ApiResult> Accounts_LookupAccountId(string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://account-public-service-prod.ol.epicgames.com/account/api/public/account/{accountId}");
@@ -69,7 +69,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
-    public async Task<ApiResult> GetInventory(string accountId, string accessToken) {
+    public async Task<ApiResult> Fortnite_QueryProfile(string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/profile/{accountId}/client/QueryProfile", Method.Post); 

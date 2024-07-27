@@ -73,7 +73,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             return;
         }
 
-        var resultLookup = await epicGamesService.GetByAccountId(sessionService.AccountId, sessionService.AccessToken);
+        var resultLookup = await epicGamesService.LookupAccountId(sessionService.AccountId, sessionService.AccessToken);
         if (resultLookup) {
             persistenceProvider.DisplayName = resultLookup.DisplayName!;
             sessionService.DisplayName = resultLookup.DisplayName;

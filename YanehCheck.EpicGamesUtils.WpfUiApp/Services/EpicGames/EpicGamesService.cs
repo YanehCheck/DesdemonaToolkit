@@ -7,7 +7,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 
 public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesService {
     public async Task<EpicGamesAuthResult> AuthenticateAccount(string authCode) {
-        var result = await epicGamesClient.AuthenticateAsAccount(AuthClientType.FortnitePcGameClient, authCode);
+        var result = await epicGamesClient.Accounts_AuthenticateAsAccount(AuthClientType.FortnitePcGameClient, authCode);
         if (result.Success) {
             // TODO: Validate JSON structure just to be sure
             return new EpicGamesAuthResult(
@@ -27,8 +27,8 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
             errorMessage: "Can not contact the Epic Games API.");
     }
 
-    public async Task<EpicGamesGetByAccountIdResult> GetByAccountId(string accountId, string accessToken) {
-        var result = await epicGamesClient.GetByAccountId(accountId, accessToken);
+    public async Task<EpicGamesGetByAccountIdResult> LookupAccountId(string accountId, string accessToken) {
+        var result = await epicGamesClient.Accounts_LookupAccountId(accountId, accessToken);
         if (result.Success) {
             return new EpicGamesGetByAccountIdResult(
                 result.StatusCode,

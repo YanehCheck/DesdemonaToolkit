@@ -111,7 +111,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
         LastItemFetch = DateTime.Now;
         persistenceProvider.LastItemFetch = LastItemFetch;
-        persistenceProvider.Save();
+
         sessionService.IsItemDataFetched = true;
         await itemFacade.SaveAsyncByFortniteId(items);
 

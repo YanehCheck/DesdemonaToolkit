@@ -30,14 +30,15 @@ public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemE
     public async Task<IEnumerable<ItemModel>> SaveAsyncByFortniteId(IEnumerable<ItemModel> models) {
         await using var uow = UnitOfWorkFactory.Create();
         var repo = uow.GetRepository<ItemEntity, ItemEntityMapper>();
-        var entities = models.Select(Mapper.MapToEntity);
+        var query = repo.Get();
+        var entities = models.Select(m => {
+            var e = Mapper.MapToEntity(m);
+            e.Id = Guid.NewGuid();
+            return e;
+        }).ToList();
 
-        await repo.Get().ExecuteDeleteAsync();
-
-        entities = await Task.WhenAll(entities.Select(async entity => {
-            entity.Id = Guid.NewGuid();
-            return await repo.AddAsync(entity);
-        }));
+        await query.ExecuteDeleteAsync();
+        await repo.BulkAddAsync(entities);
 
         await uow.SaveChangesAsync();
         return entities.Select(Mapper.MapToModel);

@@ -1,5 +1,7 @@
-﻿using Wpf.Ui;
+﻿using System.Collections.ObjectModel;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 
@@ -13,6 +15,13 @@ public partial class HomeViewModel(ISnackbarService snackbarService, IBrowserSer
 
     [ObservableProperty]
     public DateTime _accessTokenExpiry;
+
+    [ObservableProperty]
+    private ItemFetchSource selectedItemFetchSource = ItemFetchSource.FortniteGg;
+
+    public ObservableCollection<ItemFetchSource> ItemFetchSources { get; set; } = new(Enum.GetValues<ItemFetchSource>());
+
+
 
     public void OnNavigatedTo() {
         if (!_isInitialized) {

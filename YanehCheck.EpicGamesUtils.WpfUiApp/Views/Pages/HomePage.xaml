@@ -102,9 +102,9 @@
                         <LineBreak />
                         You have a couple of options to fetch item information:
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• Fortnite.gg" /> : It’s a bit slow and might not always work, but you’ll always get the latest information.
+                        <Run FontWeight="SemiBold" Text="• Fortnite.gg" /> : Slow and might not always work, but you’ll always get the latest information.
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• GitHub" /> : Fast and stable, but the information might be a bit older.
+                        <Run FontWeight="SemiBold" Text="• Stable" /> : Fast and stable, but newer cosmetics might be missing.
                         <LineBreak />
                     </ui:TextBlock>
                 </StackPanel>
@@ -174,9 +174,16 @@
                     <ui:TextBlock 
                         Text="Source:"
                     />
-                    <ui:DropDownButton
-                        Content="Temporary"
-                        Margin="0, 5, 0, 10"/>
+                    <ComboBox
+                        ItemsSource="{Binding ViewModel.ItemFetchSources}"
+                        SelectedItem="{Binding ViewModel.SelectedItemFetchSource, Mode=TwoWay}"
+                        Margin="0, 5, 0, 10">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource ItemFetchSourceToStringConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                     <ui:Button
                         Content="Fetch"
                     />

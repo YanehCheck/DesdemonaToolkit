@@ -64,27 +64,21 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             persistenceProvider.AccountId = resultAuth.AccountId!;
             persistenceProvider.AccessToken = resultAuth.AccessToken!;
             persistenceProvider.AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
+            persistenceProvider.DisplayName = resultAuth.DisplayName!;
 
             sessionService.AccountId = resultAuth.AccountId!;
             sessionService.AccessToken = resultAuth.AccessToken!;
             sessionService.AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
+            sessionService.DisplayName = resultAuth.DisplayName;
 
+            DisplayName = resultAuth.DisplayName!;
             AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
+
+            snackbarService.Show("Success", $"Successfully authenticated as {resultAuth.DisplayName}.", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
         }
         else {
             snackbarService.Show("Failure", resultAuth.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
             return;
-        }
-
-        var resultLookup = await epicGamesService.GetDisplayName(sessionService.AccountId, sessionService.AccessToken);
-        if (resultLookup) {
-            persistenceProvider.DisplayName = resultLookup.DisplayName!;
-            sessionService.DisplayName = resultLookup.DisplayName;
-            DisplayName = resultLookup.DisplayName!;
-            snackbarService.Show("Success", $"Successfully authenticated as {resultLookup.DisplayName}.", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
-        }
-        else {
-            snackbarService.Show("Failure", resultLookup.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
         }
 
         persistenceProvider.Save();

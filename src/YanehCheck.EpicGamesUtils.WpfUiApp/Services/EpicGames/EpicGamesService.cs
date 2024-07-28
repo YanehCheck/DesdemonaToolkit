@@ -21,7 +21,8 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
                 (string) result.Content!["account_id"]!,
                 (string) result.Content!["access_token"]!,
                 // Newtonsoft throws out timezone info on default, so let's do this for now
-                (DateTime) result.Content!["expires_at"]! + DateTimeOffset.Now.Offset
+                (DateTime) result.Content!["expires_at"]! + DateTimeOffset.Now.Offset,
+                (string) result.Content!["displayName"]!
                 );
     }
 

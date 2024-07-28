@@ -1,5 +1,5 @@
-﻿using System.Text.Json;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using RestSharp;
 using YanehCheck.EpicGamesUtils.BL.Models;
 using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
@@ -19,7 +19,7 @@ public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mappe
             return null;
         }
 
-        var items = (List<FortniteGgItem>) JsonSerializer.Deserialize(response.Content!, typeof(List<FortniteGgItem>))!;
+        var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(response.Content!);
         return items.Select(mapper.MapToModel);
     }
 }

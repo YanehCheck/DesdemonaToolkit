@@ -15,7 +15,6 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
             return new EpicGamesAuthResult(errorParams.Item1, errorMessage: errorParams.Item2);
         }
 
-        var Datetime = (DateTime) result.Content!["expires_at"];
         return new EpicGamesAuthResult(
                 result.StatusCode,
                 (string) result.Content!["account_id"]!,

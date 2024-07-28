@@ -46,7 +46,7 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
             return new EpicGamesItemsResult(errorParams.Item1, errorMessage: errorParams.Item2);
         }
 
-        var items = result.Content!.SelectTokens("$..templateId").Select(x => x.Value<string>("templateId"));
+        var items = result.Content!.SelectTokens("$..templateId").Select(x => x.ToObject<string>());
         var removeFilter = EpicGamesServiceHelpers.GetQueryProfileRemoveFilter();
 
         var filteredItems = items.Where(i => !removeFilter.Any(i.StartsWith));

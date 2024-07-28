@@ -11,8 +11,8 @@ using YanehCheck.EpicGamesUtils.DAL;
 namespace YanehCheck.EpicGamesUtils.DAL.Migrations
 {
     [DbContext(typeof(EpicGamesUtilsDbContext))]
-    [Migration("20240728221055_MovedIndexToFortniteIdProperty")]
-    partial class MovedIndexToFortniteIdProperty
+    [Migration("20240728234259_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

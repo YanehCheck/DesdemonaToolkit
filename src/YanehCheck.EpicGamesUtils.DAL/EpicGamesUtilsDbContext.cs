@@ -11,6 +11,10 @@ public class EpicGamesUtilsDbContext : DbContext {
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<ItemEntity>()
+            .Property(e => e.FortniteId)
+            .HasConversion(v => v.ToLowerInvariant(), 
+                v => v);
+        modelBuilder.Entity<ItemEntity>()
             .Property(e => e.Styles)
             .HasConversion(
                 v => string.Join(',', v),

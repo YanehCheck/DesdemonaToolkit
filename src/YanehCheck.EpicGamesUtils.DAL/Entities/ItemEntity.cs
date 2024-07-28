@@ -3,7 +3,7 @@ using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
 namespace YanehCheck.EpicGamesUtils.DAL.Entities;
 
-[Index(nameof(FortniteGgId))] // Mapping results from EGS API to the items
+[Index(nameof(FortniteId))] // Mapping results from EGS API to the items
 public class ItemEntity : IEntity
 {
     public required Guid Id { get; set; }

@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using System.Text.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using YanehCheck.EpicGamesUtils.Api.Auth;
 using YanehCheck.EpicGamesUtils.Api.Results;
@@ -21,7 +21,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         var response = await client.ExecuteAsync(request);
 
         var jsonDom = response.Content is not null ?
-            JsonDocument.Parse(response.Content!) :
+            JObject.Parse(response.Content!) :
             null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
@@ -37,8 +37,8 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         request.AddParameter("code", authCode);
 
         var response = await client.ExecuteAsync(request);
-        var jsonDom = response.Content is not null ? 
-            JsonDocument.Parse(response.Content!) : 
+        var jsonDom = response.Content is not null ?
+            JObject.Parse(response.Content!) : 
             null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
@@ -51,7 +51,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
 
         var response = await client.ExecuteAsync(request);
         var jsonDom = response.Content is not null ?
-            JsonDocument.Parse(response.Content!) :
+            JObject.Parse(response.Content!) :
             null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
@@ -64,7 +64,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
 
         var response = await client.ExecuteAsync(request);
         var jsonDom = response.Content is not null ?
-            JsonDocument.Parse(response.Content!) :
+            JObject.Parse(response.Content!) :
             null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
@@ -79,7 +79,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
 
         var response = await client.ExecuteAsync(request);
         var jsonDom = response.Content is not null ?
-            JsonDocument.Parse(response.Content!) :
+            JObject.Parse(response.Content!) :
             null;
         return new ApiResult(response.StatusCode, jsonDom);
     }

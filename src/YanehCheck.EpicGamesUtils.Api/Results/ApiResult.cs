@@ -1,11 +1,11 @@
 ﻿using System.Net;
-using System.Text.Json;
+using Newtonsoft.Json.Linq;
 
 namespace YanehCheck.EpicGamesUtils.Api.Results;
 
-public record ApiResult(HttpStatusCode StatusCode, JsonDocument? Content) {
+public record ApiResult(HttpStatusCode StatusCode, JObject? Content) {
     public bool Success => (int) StatusCode is > 199 and < 300;
 
     public static implicit operator bool(ApiResult result) => result.Success;
-    public static implicit operator JsonDocument?(ApiResult result) => result.Content;
+    public static implicit operator JObject?(ApiResult result) => result.Content;
 }

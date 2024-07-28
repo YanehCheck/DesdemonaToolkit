@@ -133,7 +133,7 @@
                         Margin="0, 5, 0, 10"
                         MinWidth="300"
                         Width="300"
-                        Text="{Binding ViewModel.AuthorizationCode, Mode=OneWayToSource}"
+                        Password="{Binding ViewModel.AuthorizationCode, Mode=OneWayToSource}"
                         PlaceholderText=""
                         />
                     <StackPanel

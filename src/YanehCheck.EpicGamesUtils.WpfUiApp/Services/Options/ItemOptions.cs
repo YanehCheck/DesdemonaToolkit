@@ -1,7 +1,7 @@
 ﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 
 public class ItemFetchOptions {
-    public const string Key = "Items:Fetch";
+    public const string Key = "Item:Fetch";
 
     public int FortniteGgIdRange { get; set; } = 14000;
 

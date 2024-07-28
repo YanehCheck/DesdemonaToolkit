@@ -2,6 +2,7 @@
 using YanehCheck.EpicGamesUtils.Api;
 using YanehCheck.EpicGamesUtils.Api.Auth;
 using YanehCheck.EpicGamesUtils.Api.Results;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 
@@ -40,12 +41,19 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
 
     public async Task<EpicGamesItemsResult> GetItems(string accountId, string accessToken) {
         var result = await epicGamesClient.Fortnite_QueryProfile(accountId, accessToken);
-        if(!result.Success) {
+        if (!result.Success) {
             var errorParams = HandleError(result);
             return new EpicGamesItemsResult(errorParams.Item1, errorMessage: errorParams.Item2);
         }
 
-        throw new NotImplementedException();
+        var items = result.Content!.SelectTokens("$..templateId").Select(x => x.Value<string>("templateId"));
+        var removeFilter = EpicGamesServiceHelpers.GetQueryProfileRemoveFilter();
+
+        var filteredItems = items.Where(i => !removeFilter.Any(i.StartsWith));
+        return new EpicGamesItemsResult(
+            result.StatusCode,
+            filteredItems.Select(i => new EpicGamesItem(i!))
+        );
     }
 
     private (HttpStatusCode, string) HandleError(ApiResult result) {

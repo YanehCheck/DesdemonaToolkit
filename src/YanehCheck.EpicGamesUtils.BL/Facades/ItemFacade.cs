@@ -9,7 +9,7 @@ using YanehCheck.EpicGamesUtils.DAL.UnitOfWork;
 namespace YanehCheck.EpicGamesUtils.BL.Facades;
 
 public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemEntity, ItemModel> mapper) : Facade<ItemEntity, ItemModel, ItemEntityMapper>(unitOfWorkFactory, mapper), IItemFacade {
-    public async Task<ItemModel> SaveAsyncByFortniteId(ItemModel model) {
+    public async Task<ItemModel> SaveByFortniteIdAsync(ItemModel model) {
         await using var uow = UnitOfWorkFactory.Create();
         var repo = uow.GetRepository<ItemEntity, ItemEntityMapper>();
         var entity = Mapper.MapToEntity(model);
@@ -27,7 +27,7 @@ public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemE
         return Mapper.MapToModel(entity);
     }
 
-    public async Task<IEnumerable<ItemModel>> SaveAsyncByFortniteId(IEnumerable<ItemModel> models) {
+    public async Task<IEnumerable<ItemModel>> SaveByFortniteIdAsync(IEnumerable<ItemModel> models) {
         await using var uow = UnitOfWorkFactory.Create();
         var repo = uow.GetRepository<ItemEntity, ItemEntityMapper>();
         var query = repo.Get();

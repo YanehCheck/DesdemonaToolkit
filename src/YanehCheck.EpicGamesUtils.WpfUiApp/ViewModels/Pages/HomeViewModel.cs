@@ -108,7 +108,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         persistenceProvider.Save();
 
         sessionService.IsItemDataFetched = true;
-        await itemFacade.SaveAsyncByFortniteId(items);
+        await itemFacade.SaveByFortniteIdAsync(items);
 
         snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
     }

@@ -76,7 +76,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             return;
         }
 
-        var resultLookup = await epicGamesService.LookupAccountId(sessionService.AccountId, sessionService.AccessToken);
+        var resultLookup = await epicGamesService.GetDisplayName(sessionService.AccountId, sessionService.AccessToken);
         if (resultLookup) {
             persistenceProvider.DisplayName = resultLookup.DisplayName!;
             sessionService.DisplayName = resultLookup.DisplayName;
@@ -111,6 +111,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
         LastItemFetch = DateTime.Now;
         persistenceProvider.LastItemFetch = LastItemFetch;
+        persistenceProvider.Save();
 
         sessionService.IsItemDataFetched = true;
         await itemFacade.SaveAsyncByFortniteId(items);

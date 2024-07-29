@@ -18,6 +18,7 @@
     ScrollViewer.CanContentScroll="False"
     mc:Ignorable="d">
     <Grid>
+        <!--
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -37,51 +38,31 @@
                     Icon="Fluent24" />
             </StackPanel>
         </ui:Card>
-
+        -->
         <ui:VirtualizingItemsControl
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-            ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}"
-            VirtualizingPanel.CacheLengthUnit="Item"
-            Grid.Row="1">
+            ItemsSource="{Binding ViewModel.Items, Mode=OneWay}"
+            VirtualizingPanel.CacheLengthUnit="Item">
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:DataColor}">
+                <DataTemplate DataType="{x:Type models:ItemWithImageModel}">
                     <ui:Button
-                        Width="140"
-                        Height="140"
+                        Width="105"
+                        Height="130"
                         Margin="2"
                         Padding="0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Appearance="Secondary"
-                        Background="{Binding Color, Mode=OneWay}"
                         FontSize="25"
-                        Icon="Fluent24" />
+                        Icon="Fluent24">
+                        <ui:Button.Background>
+                            <ImageBrush 
+                                ImageSource="{Binding BitmapFrame, Mode=OneWay}"/>
+
+                        </ui:Button.Background>
+                    </ui:Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ui:VirtualizingItemsControl>
     </Grid>
-    <!--
-    <Grid>
-        <ui:VirtualizingItemsControl
-            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-            ItemsSource="{Binding ViewModel.Colors, Mode=OneWay}"
-            VirtualizingPanel.CacheLengthUnit="Item">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:DataColor}">
-                    <ui:Button
-                        Width="80"
-                        Height="80"
-                        Margin="2"
-                        Padding="0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Appearance="Secondary"
-                        Background="{Binding Color, Mode=OneWay}"
-                        FontSize="25"
-                        Icon="Fluent24" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ui:VirtualizingItemsControl> 
-    </Grid>
-    -->
 </Page>

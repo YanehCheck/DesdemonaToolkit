@@ -53,6 +53,7 @@ public partial class App {
             services.AddTransient<IRestClient, RestClient>();
             services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
 
+            services.AddTransient<IFortniteGgImageDownloader, FortniteGgImageDownloader>();
             services.AddTransient<IFortniteGgItemMapper, FortniteGgItemMapper>();
             services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();
             services.AddSingleton<IFortniteGgItemProvider, FortniteGgItemProvider>();

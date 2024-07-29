@@ -1,5 +1,6 @@
 ﻿namespace YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
+// Order matters for JSON and sorting!!!!
 public enum ItemRarity {
     Unknown,
     Common,
@@ -7,10 +8,6 @@ public enum ItemRarity {
     Rare,
     Epic,
     Legendary,
-    McLaren,
-    Nissan,
-    Tesla,
-    Lamborghini,
     StarWarsSeries,
     SlurpSeries,
     ShadowSeries,
@@ -20,5 +17,9 @@ public enum ItemRarity {
     GamingSeries,
     FrozenSeries,
     DcSeries,
-    DarkSeries
+    DarkSeries,
+    McLaren,
+    Nissan,
+    Tesla,
+    Lamborghini
 }

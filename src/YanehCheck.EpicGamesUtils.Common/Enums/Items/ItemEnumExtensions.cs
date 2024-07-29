@@ -11,6 +11,8 @@ public class ItemEnumExtensions {
             "epic" => ItemRarity.Epic,
             "legendary" => ItemRarity.Legendary,
             "mclaren" => ItemRarity.McLaren,
+            "nissan" => ItemRarity.Nissan,
+            "tesla" => ItemRarity.Tesla,
             "lamborghini" => ItemRarity.Lamborghini,
             "starwarsseries" => ItemRarity.StarWarsSeries,
             "slurpseries" => ItemRarity.SlurpSeries,
@@ -22,7 +24,7 @@ public class ItemEnumExtensions {
             "frozenseries" => ItemRarity.FrozenSeries,
             "dcseries" => ItemRarity.DcSeries,
             "darkseries" => ItemRarity.DarkSeries,
-            _ => throw new ArgumentException($"Unknown item rarity: {value}")
+            _ => ItemRarity.Unknown
         };
     }
 
@@ -36,7 +38,7 @@ public class ItemEnumExtensions {
             "challenges" => ItemSource.Challenges,
             "exclusives" => ItemSource.Exclusives,
             "packs" => ItemSource.Packs,
-            _ => throw new ArgumentException($"Unknown item source: {value}")
+            _ => ItemSource.Unknown
         };
     }
 
@@ -54,6 +56,7 @@ public class ItemEnumExtensions {
             "animated" => ItemTag.Animated,
             "transformation" => ItemTag.Transformation,
             "enlightened" => ItemTag.Enlightened,
+            // TODO: Do something about this exception
             _ => throw new ArgumentException($"Unknown item tag: {value}")
         };
     }
@@ -90,7 +93,7 @@ public class ItemEnumExtensions {
             "keytar" => ItemType.Keytar,
             "microphone" => ItemType.Microphone,
             "aura" => ItemType.Aura,
-            _ => throw new ArgumentException($"Unknown item type: {value}")
+            _ => ItemType.Unknown
         };
     }
 }

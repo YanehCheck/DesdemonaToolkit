@@ -8,6 +8,8 @@ public enum ItemRarity {
     Epic,
     Legendary,
     McLaren,
+    Nissan,
+    Tesla,
     Lamborghini,
     StarWarsSeries,
     SlurpSeries,

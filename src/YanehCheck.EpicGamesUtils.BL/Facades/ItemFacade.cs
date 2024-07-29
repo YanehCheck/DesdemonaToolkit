@@ -43,4 +43,16 @@ public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemE
         await uow.SaveChangesAsync();
         return entities.Select(Mapper.MapToModel);
     }
+    
+    /// <summary>
+    /// Reads items by fortnite ID.
+    /// Models need to have their FortniteId set.
+    /// </summary>
+    public async Task<IEnumerable<ItemModel>> GetByFortniteIdAsync(IEnumerable<ItemModel> models) {
+        await using var uow = UnitOfWorkFactory.Create();
+        var repo = uow.GetRepository<ItemEntity, ItemEntityMapper>();
+        var entities = models.Select(mapper.MapToEntity).ToList();
+        var query = repo.BulkReadAsync(entities, [nameof(ItemEntity.FortniteId)]);
+        return entities.Select(Mapper.MapToModel);
+    }
 }   

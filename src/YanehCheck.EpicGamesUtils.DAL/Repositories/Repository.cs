@@ -32,6 +32,12 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
         await context.BulkInsertAsync(entity);
     }
 
+    public async Task BulkReadAsync(IEnumerable<TEntity> entities, List<string> byProperties = null) {
+        await context.BulkReadAsync(entities, new BulkConfig {
+            UpdateByProperties = byProperties
+        });
+    }
+
     public async Task<TEntity> UpdateAsync(TEntity entity) {
         TEntity originalEntity = await set.SingleAsync(e => e.Id == entity.Id);
         mapper.Map(originalEntity, entity);

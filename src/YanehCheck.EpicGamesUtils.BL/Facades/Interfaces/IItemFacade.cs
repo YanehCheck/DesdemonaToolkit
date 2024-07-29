@@ -6,4 +6,5 @@ namespace YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
 public interface IItemFacade : IFacade<ItemEntity, ItemModel> {
     Task<ItemModel> SaveByFortniteIdAsync(ItemModel model);
     Task<IEnumerable<ItemModel>> SaveByFortniteIdAsync(IEnumerable<ItemModel> models);
+    Task<IEnumerable<ItemModel>> GetByFortniteIdAsync(IEnumerable<ItemModel> models);
 }

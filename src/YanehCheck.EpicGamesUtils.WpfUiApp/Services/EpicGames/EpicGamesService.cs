@@ -52,7 +52,7 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
         var filteredItems = items.Where(i => !removeFilter.Any(i.StartsWith));
         return new EpicGamesItemsResult(
             result.StatusCode,
-            filteredItems.Select(i => new EpicGamesItem(i!))
+            filteredItems.Select(i => new EpicGamesApiItem(i!))
         );
     }
 

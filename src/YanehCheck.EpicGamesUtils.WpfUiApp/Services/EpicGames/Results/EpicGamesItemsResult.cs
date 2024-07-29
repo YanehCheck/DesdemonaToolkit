@@ -3,7 +3,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 
-public class EpicGamesItemsResult(HttpStatusCode statusCode, IEnumerable<EpicGamesItem>? items = null, string? errorMessage = null)
+public class EpicGamesItemsResult(HttpStatusCode statusCode, IEnumerable<EpicGamesApiItem>? items = null, string? errorMessage = null)
     : EpicGamesResult(statusCode, errorMessage) {
-    public IEnumerable<EpicGamesItem>? Items { get; set; } = items;
+    public IEnumerable<EpicGamesApiItem>? Items { get; set; } = items;
 }

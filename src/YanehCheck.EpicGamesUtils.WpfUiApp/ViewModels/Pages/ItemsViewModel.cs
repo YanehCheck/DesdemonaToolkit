@@ -2,6 +2,8 @@
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.BL.Models;
+using YanehCheck.EpicGamesUtils.Common.Enums.Items;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
@@ -15,11 +17,35 @@ public partial class ItemsViewModel(
     ISessionService sessionService,
     ISnackbarService snackbarService,
     IFortniteGgImageDownloader imageDownloader) : ObservableObject, IViewModel, INavigationAware {
-    private int missingItems = 0;
     private string _initializedForAccountId = "";
 
     [ObservableProperty]
+    private IEnumerable<ItemWithImageModel> _presentedItems = [];
+
+    [ObservableProperty]
     private IEnumerable<ItemWithImageModel> _items = [];
+
+    [ObservableProperty] 
+    private string _search = "";
+    [ObservableProperty] 
+    private IEnumerable<ItemSource> _sourceFilter = [];
+    [ObservableProperty]
+    private IEnumerable<ItemRarity> _rarityFilter = [];
+    [ObservableProperty]
+    private IEnumerable<string> _seasonFilter = [];
+    [ObservableProperty]
+    private IEnumerable<ItemTag> _tagFilter = [];
+    [ObservableProperty] 
+    private ItemSortFilter _sortFilter = ItemSortFilter.Newest;
+
+
+    [RelayCommand]
+    public void OnFilterOrSearchUpdate() {
+        PresentedItems = Items.Where((i) => 
+            Search == "" || 
+            i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
+            (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase)));
+    }
 
     public void OnNavigatedTo() {
         if(!sessionService.IsAuthenticated) {
@@ -44,50 +70,42 @@ public partial class ItemsViewModel(
 
         if (_initializedForAccountId != sessionService.AccountId) {
             _initializedForAccountId = sessionService.AccountId!;
-            Task.Run(InitializeViewModel)
-                // Snackbar only works on UI thread
-                .ContinueWith((task) => {
-                    if(missingItems == 0) {
-                        snackbarService.Show(
-                            "Success",
-                            "All inventory items loaded!",
-                            ControlAppearance.Success,
-                            null,
-                            TimeSpan.FromSeconds(5));
-                    }
-                    else {
-                        snackbarService.Show(
-                            "Warning",
-                            $"{missingItems} items could not be loaded. Consider fetching item data from up-to-date source.",
-                            ControlAppearance.Caution,
-                            null,
-                            TimeSpan.FromSeconds(5));
-                    }
-                    missingItems = 0;
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+            InitializeViewModel().ConfigureAwait(false);
         }
     }
 
     public void OnNavigatedFrom() { }
 
     private async Task InitializeViewModel() {
-        await LoadItems();
+        var items = (await FetchItems()).ToList();
+        var filteredItems = items.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
+        var missingItems = items.Count - filteredItems.Count;
+        if(missingItems == 0) {
+            snackbarService.Show(
+                "Success",
+                "All inventory items loaded!",
+                ControlAppearance.Success,
+                null,
+                TimeSpan.FromSeconds(5));
+        }
+        else {
+            snackbarService.Show(
+                "Warning",
+                $"{missingItems} items could not be loaded. Consider fetching item data from up-to-date source.",
+                ControlAppearance.Caution,
+                null,
+                TimeSpan.FromSeconds(5));
+        }
+        Items = filteredItems;
+        PresentedItems = filteredItems;
+
+
+        await Task.Run(() => LoadImages(filteredItems));
     }
 
-    private async Task LoadItems() {
-        var items = await FetchItems();
-        await PresentItems(items);
-    }
-
-    private async Task PresentItems(IEnumerable<ItemWithImageModel> items) {
+    private async Task LoadImages(IEnumerable<ItemWithImageModel> items) {
         await Parallel.ForEachAsync(items, async (item, _) => {
-            if(item.FortniteGgId == null) {
-                missingItems++;
-                return;
-            }
-
             item.BitmapFrame = await imageDownloader.GetImageAsync(item.FortniteGgId);
-            Items = Items.Append(item);
         });
     }
 

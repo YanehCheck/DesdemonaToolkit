@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.RegularExpressions;
 using YanehCheck.EpicGamesUtils.Api;
 using YanehCheck.EpicGamesUtils.Api.Auth;
 using YanehCheck.EpicGamesUtils.Api.Results;
@@ -46,10 +47,16 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
             return new EpicGamesItemsResult(errorParams.Item1, errorMessage: errorParams.Item2);
         }
 
-        var items = result.Content!.SelectTokens("$..templateId").Select(x => x.ToObject<string>());
+        // Able to only write JSON path that does include unobtained things from current Festival pass
+        // (and probably other things in future). The applied regex should result in actually owned things
+        // (be it items, or some other clutter like quests and passes)
+        var itemTokens = result.Content!.SelectTokens("$..templateId");
+        var filteredItemTokens = itemTokens.Where(t => Regex.IsMatch(t.Path, @"profileChanges\[0]\.profile\.items\..{36}\.templateId"));
+        
+        var items = filteredItemTokens.Select(x => x.ToObject<string>());
         var removeFilter = EpicGamesServiceHelpers.GetQueryProfileRemoveFilter();
-
         var filteredItems = items.Where(i => !removeFilter.Any(i.StartsWith));
+        
         return new EpicGamesItemsResult(
             result.StatusCode,
             filteredItems.Select(i => new EpicGamesApiItem(i!))

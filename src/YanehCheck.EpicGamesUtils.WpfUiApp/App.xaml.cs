@@ -75,13 +75,13 @@ public partial class App {
                 .FromAssembliesOf(typeof(App))
                 .AddClasses(c => c.AssignableTo<IViewModel>())
                 .AsSelfWithInterfaces()
-                .WithTransientLifetime());
+                .WithSingletonLifetime());
 
             services.Scan(s => s
                 .FromAssembliesOf(typeof(App))
                 .AddClasses(c => c.AssignableTo(typeof(INavigableView<>)))
                 .AsSelfWithInterfaces()
-                .WithTransientLifetime());
+                .WithSingletonLifetime());
         })
         .Build();
 

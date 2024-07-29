@@ -41,26 +41,34 @@
         -->
         <ui:VirtualizingItemsControl
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+            d:ItemsSource="{d:SampleData}"
             ItemsSource="{Binding ViewModel.Items, Mode=OneWay}"
             VirtualizingPanel.CacheLengthUnit="Item">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:ItemWithImageModel}">
-                    <ui:Button
+                    <Border
                         Width="105"
                         Height="130"
                         Margin="2"
                         Padding="0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Appearance="Secondary"
-                        FontSize="25"
-                        Icon="Fluent24">
-                        <ui:Button.Background>
+                        CornerRadius="4">
+                        <Border.Background>
                             <ImageBrush 
-                                ImageSource="{Binding BitmapFrame, Mode=OneWay}"/>
+                                ImageSource="{Binding BitmapFrame, Mode=OneWay}"
+                                RenderOptions.BitmapScalingMode="LowQuality"/>
+                        </Border.Background>
+                        <ui:Button
+                            Width="105"
+                            Height="130"
+                            CornerRadius="4"
+                            Background="#00000000"
+                            MouseOverBackground="#30FFFFFF"
+                            >
 
-                        </ui:Button.Background>
-                    </ui:Button>
+                        </ui:Button>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ui:VirtualizingItemsControl>

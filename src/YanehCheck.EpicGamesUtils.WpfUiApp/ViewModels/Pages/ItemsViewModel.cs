@@ -15,6 +15,7 @@ public partial class ItemsViewModel(
     ISessionService sessionService,
     ISnackbarService snackbarService,
     IFortniteGgImageDownloader imageDownloader) : ObservableObject, IViewModel, INavigationAware {
+    private int missingItems = 0;
     private string _initializedForAccountId = "";
 
     [ObservableProperty]
@@ -22,17 +23,48 @@ public partial class ItemsViewModel(
 
     public void OnNavigatedTo() {
         if(!sessionService.IsAuthenticated) {
-            // HANDLE
-            //return;
+            snackbarService.Show(
+                "Failure",
+                "No account authenticated. Please authenticate on the Home page.",
+                ControlAppearance.Danger,
+                null,
+                TimeSpan.FromSeconds(5));
+            return;
         }
 
         if(!sessionService.IsItemDataFetched) {
-            // HANDLE
-            //return;
+            snackbarService.Show(
+                "Failure",
+                "No item data found. Please fetch item data on the Home page.",
+                ControlAppearance.Danger,
+                null,
+                TimeSpan.FromSeconds(5));
+            return;
         }
 
-        if(_initializedForAccountId != sessionService.AccountId) {
-            InitializeViewModel().ConfigureAwait(false); // Await or run task
+        if (_initializedForAccountId != sessionService.AccountId) {
+            _initializedForAccountId = sessionService.AccountId!;
+            Task.Run(InitializeViewModel)
+                // Snackbar only works on UI thread
+                .ContinueWith((task) => {
+                    if(missingItems == 0) {
+                        snackbarService.Show(
+                            "Success",
+                            "All inventory items loaded!",
+                            ControlAppearance.Success,
+                            null,
+                            TimeSpan.FromSeconds(5));
+                    }
+                    else {
+                        snackbarService.Show(
+                            "Warning",
+                            $"{missingItems} items could not be loaded. Consider fetching item data from up-to-date source.",
+                            ControlAppearance.Caution,
+                            null,
+                            TimeSpan.FromSeconds(5));
+                    }
+                    missingItems = 0;
+                }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 
@@ -40,14 +72,17 @@ public partial class ItemsViewModel(
 
     private async Task InitializeViewModel() {
         await LoadItems();
-        _initializedForAccountId = sessionService.AccountId!;
     }
 
     private async Task LoadItems() {
         var items = await FetchItems();
+        await PresentItems(items);
+    }
+
+    private async Task PresentItems(IEnumerable<ItemWithImageModel> items) {
         await Parallel.ForEachAsync(items, async (item, _) => {
             if(item.FortniteGgId == null) {
-                // 
+                missingItems++;
                 return;
             }
 

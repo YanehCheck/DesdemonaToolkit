@@ -35,8 +35,30 @@ public partial class ItemsViewModel(
     private IEnumerable<string> _seasonFilter = [];
     [ObservableProperty]
     private IEnumerable<ItemTag> _tagFilter = [];
-    [ObservableProperty] 
+    [ObservableProperty]
     private ItemSortFilter _sortFilter = ItemSortFilter.Newest;
+
+    [ObservableProperty] 
+    private bool _sourceFilterFlyoutOpen = false;
+    [ObservableProperty]
+    private bool _rarityFilterFlyoutOpen = false;
+    [ObservableProperty]
+    private bool _seasonFilterFlyoutOpen = false;
+    [ObservableProperty]
+    private bool _tagFilterFlyoutOpen = false;
+    [ObservableProperty]
+    private bool _sortFilterFlyoutOpen = false;
+
+    [RelayCommand]
+    public void ToggleSourceFilterFlyout() => SourceFilterFlyoutOpen = !SourceFilterFlyoutOpen;
+    [RelayCommand]
+    public void ToggleRarityFilterFlyout() => RarityFilterFlyoutOpen = !RarityFilterFlyoutOpen;
+    [RelayCommand]
+    public void ToggleSeasonFilterFlyout() => SeasonFilterFlyoutOpen = !SeasonFilterFlyoutOpen;
+    [RelayCommand]
+    public void ToggleTagFilterFlyout() => TagFilterFlyoutOpen = !TagFilterFlyoutOpen;
+    [RelayCommand]
+    public void ToggleSortFilterFlyout() => SortFilterFlyoutOpen = !SortFilterFlyoutOpen;
 
 
     [RelayCommand]
@@ -45,6 +67,20 @@ public partial class ItemsViewModel(
             Search == "" || 
             i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
             (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase)));
+    }
+
+    [RelayCommand]
+    public void OnSortUpdate(ItemSortFilter sort) {
+        PresentedItems = sort switch {
+            ItemSortFilter.AtoZ => PresentedItems.OrderBy(i => i.Name),
+            ItemSortFilter.ZtoA => PresentedItems.OrderByDescending(i => i.Name),
+            ItemSortFilter.Newest => PresentedItems.OrderByDescending(i => i.Release),
+            ItemSortFilter.Oldest => PresentedItems.OrderBy(i => i.Release),
+            ItemSortFilter.ShopMostRecent => PresentedItems.OrderByDescending(i => i.LastSeen),
+            ItemSortFilter.ShopLongestWait => PresentedItems.OrderBy(i => i.LastSeen),
+            ItemSortFilter.Rarity => PresentedItems.OrderByDescending(i => i.Rarity)
+                    .ThenBy(i => i.Set) // This should somewhat group related items together
+        };
     }
 
     public void OnNavigatedTo() {

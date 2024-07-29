@@ -7,6 +7,8 @@
     xmlns:local="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Models"
+    xmlns:enums="clr-namespace:YanehCheck.EpicGamesUtils.Common.Enums;assembly=YanehCheck.EpicGamesUtils.Common"
+    xmlns:helpers="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Helpers"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="ItemsPage"
     d:DataContext="{d:DesignInstance local:ItemsPage,
@@ -37,6 +39,7 @@
             <ui:TextBox 
                 Grid.Column="0"
                 Width="200px"
+                PlaceholderText="Search"
                 Text="{Binding ViewModel.Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="TextChanged">
@@ -60,15 +63,73 @@
                 Grid.Column="4"
                 Margin="10,0,0,0"
                 Content="Tag"/>
-            <ui:Button
-                Grid.Column="5"
-                Margin="0,0,10,0"
-                HorizontalAlignment="Right"
-                Content="Sort" />
-            <ui:Button 
+            <Grid
                 Grid.Column="6"
+                Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ui:Flyout
+                    Grid.Row="0"
+                    Placement="Left"
+                    IsOpen="{Binding ViewModel.SortFilterFlyoutOpen, Mode=OneWay}">
+                    <StackPanel>
+                        <UniformGrid Rows="1">
+                            <ui:Button
+                                Content="Newest"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortUpdateCommand}"
+                                CommandParameter="{x:Static helpers:ItemSortFilter.Newest}"/>
+                            <ui:Button 
+                                Content="Oldest"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortUpdateCommand}"
+                                CommandParameter="{x:Static helpers:ItemSortFilter.Oldest}"/>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <ui:Button 
+                                Content="Most recent in shop"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortUpdateCommand}"
+                                CommandParameter="{x:Static helpers:ItemSortFilter.ShopMostRecent}"/>
+                            <ui:Button 
+                                Content="Longest wait in shop"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortUpdateCommand}"
+                                CommandParameter="{x:Static helpers:ItemSortFilter.ShopLongestWait}"/>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <ui:Button 
+                                Content="A to Z"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortUpdateCommand}"
+                                CommandParameter="{x:Static helpers:ItemSortFilter.AtoZ}"/>
+                            <ui:Button 
+                                Content="Z to A"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortUpdateCommand}"
+                                CommandParameter="{x:Static helpers:ItemSortFilter.ZtoA}"/>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                        <ui:Button 
+                                Content="Rarity"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortUpdateCommand}"
+                                CommandParameter="{x:Static helpers:ItemSortFilter.Rarity}"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </ui:Flyout>
+                <ui:Button
+                    Grid.Row="1"
+                    Content="Sort"
+                    Command="{Binding ViewModel.ToggleSortFilterFlyoutCommand}"/>
+            </Grid>
+            <ui:Button 
+                Grid.Column="7"
                 Margin="0,0,10,0"
-                HorizontalContentAlignment="Right"
                 Icon="ArrowDownload24"/>
         </Grid>
         <ui:VirtualizingItemsControl

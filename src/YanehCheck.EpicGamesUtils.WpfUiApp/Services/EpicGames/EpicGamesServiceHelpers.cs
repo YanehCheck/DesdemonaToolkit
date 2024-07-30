@@ -41,9 +41,10 @@ public static class EpicGamesServiceHelpers {
             // ----------------------------------------------------------------
             // The banners fetched are incomplete
             // I will look for another endpoint before including them here
-            // Most banners are listed 2 times with different prefixes and slightly different IDs
+            // Most banners are listed 2 times with different prefixes and slightly different IDs in A grants B relationship
             // You can see the duplicates even on Fortnite.GG
             "HomebaseBannerIcon",
+            "BannerToken",
             "ItemAccessToken"
             // ----------------------------------------------------------------
         ];

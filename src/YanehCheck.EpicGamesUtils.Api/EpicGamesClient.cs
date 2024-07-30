@@ -2,8 +2,8 @@
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using YanehCheck.EpicGamesUtils.Api.Auth;
+using YanehCheck.EpicGamesUtils.Api.Enums;
 using YanehCheck.EpicGamesUtils.Api.Results;
-using YanehCheck.EpicGamesUtils.Api.Stw;
 
 namespace YanehCheck.EpicGamesUtils.Api;
 
@@ -69,12 +69,12 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         return new ApiResult(response.StatusCode, jsonDom);
     }
 
-    public async Task<ApiResult> Fortnite_QueryProfile(string accountId, string accessToken) {
+    public async Task<ApiResult> Fortnite_QueryProfile(string accountId, string accessToken, FortniteProfile profile) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/profile/{accountId}/client/QueryProfile", Method.Post); 
         request.AddHeader("Authorization", $"Bearer {accessToken}");
-        request.AddQueryParameter("profileId", "athena");
+        request.AddQueryParameter("profileId", profile.ToParameterString());
         request.AddBody("{}");
 
         var response = await client.ExecuteAsync(request);

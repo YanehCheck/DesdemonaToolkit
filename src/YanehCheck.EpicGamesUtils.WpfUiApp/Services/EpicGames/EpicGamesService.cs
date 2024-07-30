@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 using YanehCheck.EpicGamesUtils.Api;
 using YanehCheck.EpicGamesUtils.Api.Auth;
+using YanehCheck.EpicGamesUtils.Api.Enums;
 using YanehCheck.EpicGamesUtils.Api.Results;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
@@ -41,7 +42,7 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
     }
 
     public async Task<EpicGamesItemsResult> GetItems(string accountId, string accessToken) {
-        var result = await epicGamesClient.Fortnite_QueryProfile(accountId, accessToken);
+        var result = await epicGamesClient.Fortnite_QueryProfile(accountId, accessToken, FortniteProfile.Athena);
         if (!result.Success) {
             var errorParams = HandleError(result);
             return new EpicGamesItemsResult(errorParams.Item1, errorMessage: errorParams.Item2);

@@ -1,4 +1,4 @@
-﻿namespace YanehCheck.EpicGamesUtils.Api.Stw;
+﻿namespace YanehCheck.EpicGamesUtils.Api.Enums;
 
 public enum FounderCodePlatform
 {

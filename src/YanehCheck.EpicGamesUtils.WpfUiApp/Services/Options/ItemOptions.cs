@@ -6,5 +6,5 @@ public class ItemFetchOptions {
     public int FortniteGgIdRange { get; set; } = 14000;
 
     public string StableSourceUri { get; set; } = // TODO: UPDATE THE REMOTE FILENAME
-        "https://raw.githubusercontent.com/YanehCheck/fortnite-cosmetic-list/main/2024-07-19.json";
+        "https://raw.githubusercontent.com/YanehCheck/fortnite-cosmetic-list/main/items.json";
 }

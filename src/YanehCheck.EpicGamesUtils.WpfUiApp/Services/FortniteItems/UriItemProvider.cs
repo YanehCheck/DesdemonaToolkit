@@ -13,13 +13,18 @@ public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mappe
 {
     public async Task<IEnumerable<ItemModel>?> GetItemsAsync()
     {
-        var request = new RestRequest(options.Value.StableSourceUri);
-        var response = await restClient.GetAsync(request);
-        if (!response.IsSuccessStatusCode) {
+        try {
+            var request = new RestRequest(options.Value.StableSourceUri);
+            var response = await restClient.GetAsync(request);
+            if(!response.IsSuccessStatusCode) {
+                return null;
+            }
+
+            var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(response.Content!);
+            return items.Select(mapper.MapToModel);
+        }
+        catch (Exception e) {
             return null;
         }
-
-        var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(response.Content!);
-        return items.Select(mapper.MapToModel);
     }
 }

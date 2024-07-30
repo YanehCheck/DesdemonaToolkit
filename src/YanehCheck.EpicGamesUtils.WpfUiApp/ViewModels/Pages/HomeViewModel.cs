@@ -2,7 +2,7 @@
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;

@@ -3,7 +3,7 @@ using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.BL.Models;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
@@ -221,10 +221,13 @@ public partial class ItemsViewModel(
         });
     }
 
-    private async Task<IEnumerable<ItemWithImageModel>> FetchItems() {
-        // Handle error
-        var ownedItems = await epicGamesService.GetItems(sessionService.AccountId!, sessionService.AccessToken!);
-        var ownedItemModels = ownedItems.Items!.Select(i => new ItemModel() {
+    private async Task<IEnumerable<ItemWithImageModel>?> FetchItems() {
+        var ownedItemsResult = await epicGamesService.GetItems(sessionService.AccountId!, sessionService.AccessToken!);
+        if (!ownedItemsResult.Success) {
+            snackbarService.Show("Failure", ownedItemsResult.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+        }
+
+        var ownedItemModels = ownedItemsResult.Items!.Select(i => new ItemModel() {
             FortniteId = i.FortniteId.Split(':').Last()
         });
         return (await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemWithImageModel(i));

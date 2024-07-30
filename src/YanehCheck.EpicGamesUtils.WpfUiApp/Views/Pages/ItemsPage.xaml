@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Models"
-    xmlns:helpers="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Helpers"
+    xmlns:helperEnums="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:items="clr-namespace:YanehCheck.EpicGamesUtils.Common.Enums.Items;assembly=YanehCheck.EpicGamesUtils.Common"
     Title="ItemsPage"
@@ -46,10 +46,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.All}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.All}"
                     Background="{Binding ViewModel.TypeFilter,
                     Converter={StaticResource EnumEqualsToColorTintConverter},
-                    ConverterParameter={x:Static helpers:ItemTypeFilter.All}}"/>
+                    ConverterParameter={x:Static helperEnums:ItemTypeFilter.All}}"/>
             </Border>
             <Separator Margin="5"/>
             <Border
@@ -68,10 +68,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllBattleRoyale}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllBattleRoyale}"
                     Background="{Binding ViewModel.TypeFilter,
                     Converter={StaticResource EnumEqualsToColorTintConverter},
-                    ConverterParameter={x:Static helpers:ItemTypeFilter.AllBattleRoyale}}"/>
+                    ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllBattleRoyale}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -89,10 +89,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Outfit}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Outfit}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Outfit}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Outfit}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -110,10 +110,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Emote}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Emote}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Emote}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Emote}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -131,10 +131,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Pickaxe}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Pickaxe}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Pickaxe}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Pickaxe}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -152,10 +152,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Backpack}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Backpack}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Backpack}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Backpack}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -173,10 +173,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Glider}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Glider}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Glider}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Glider}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -194,10 +194,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Wrap}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Wrap}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Wrap}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Wrap}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -215,10 +215,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.LoadingScreen}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.LoadingScreen}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.LoadingScreen}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.LoadingScreen}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -236,10 +236,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Music}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Music}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Music}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Music}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -257,10 +257,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Contrail}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Contrail}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Contrail}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Contrail}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -278,10 +278,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Spray}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Spray}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Spray}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Spray}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -299,10 +299,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Emoji}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Emoji}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Emoji}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Emoji}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -320,10 +320,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Toy}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Toy}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Toy}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Toy}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -341,10 +341,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Banner}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Banner}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Banner}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Banner}}"/>
             </Border>
             <Separator Margin="5"/>
             <Border
@@ -363,10 +363,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllLego}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllLego}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.AllLego}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllLego}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -384,10 +384,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Build}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Build}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Build}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Build}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -405,10 +405,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Decor}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Decor}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Decor}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Decor}}"/>
             </Border>
             <Separator Margin="5"/>
             <Border
@@ -427,10 +427,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllRocketRacing}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllRocketRacing}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.AllRocketRacing}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllRocketRacing}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -448,10 +448,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Car}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Car}"
                     Background="{Binding ViewModel.TypeFilter,
                          Converter={StaticResource EnumEqualsToColorTintConverter},
-                         ConverterParameter={x:Static helpers:ItemTypeFilter.Car}}"/>
+                         ConverterParameter={x:Static helperEnums:ItemTypeFilter.Car}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -469,10 +469,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Decal}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Decal}"
                     Background="{Binding ViewModel.TypeFilter,
                          Converter={StaticResource EnumEqualsToColorTintConverter},
-                         ConverterParameter={x:Static helpers:ItemTypeFilter.Decal}}"/>
+                         ConverterParameter={x:Static helperEnums:ItemTypeFilter.Decal}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -490,10 +490,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Wheels}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Wheels}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Wheels}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Wheels}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -511,10 +511,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Trail}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Trail}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Trail}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Trail}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -532,10 +532,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Boost}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Boost}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Boost}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Boost}}"/>
             </Border>
             <Separator Margin="5"/>
             <Border
@@ -554,10 +554,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllFestival}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllFestival}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.AllFestival}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllFestival}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -575,10 +575,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Jamtrack}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Jamtrack}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Jamtrack}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Jamtrack}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -596,10 +596,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Instruments}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Instruments}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Instruments}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Instruments}}"/>
             </Border>
             <Border
                 CornerRadius="4"
@@ -617,10 +617,10 @@
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch"
                     Command="{Binding ViewModel.TypeCommand}"
-                    CommandParameter="{x:Static helpers:ItemTypeFilter.Aura}"
+                    CommandParameter="{x:Static helperEnums:ItemTypeFilter.Aura}"
                     Background="{Binding ViewModel.TypeFilter,
                      Converter={StaticResource EnumEqualsToColorTintConverter},
-                     ConverterParameter={x:Static helpers:ItemTypeFilter.Aura}}"/>
+                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.Aura}}"/>
             </Border>
         </StackPanel>
         <Grid
@@ -1545,67 +1545,67 @@
                             <ui:Button
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
-                                            ConverterParameter={x:Static helpers:ItemSortFilter.Newest}}"
+                                            ConverterParameter={x:Static helperEnums:ItemSortFilter.Newest}}"
                                 Content="Newest"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
-                                CommandParameter="{x:Static helpers:ItemSortFilter.Newest}"/>
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.Newest}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
-                                            ConverterParameter={x:Static helpers:ItemSortFilter.Oldest}}"
+                                            ConverterParameter={x:Static helperEnums:ItemSortFilter.Oldest}}"
                                 Content="Oldest"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
-                                CommandParameter="{x:Static helpers:ItemSortFilter.Oldest}"/>
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.Oldest}"/>
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
-                                            ConverterParameter={x:Static helpers:ItemSortFilter.ShopMostRecent}}"
+                                            ConverterParameter={x:Static helperEnums:ItemSortFilter.ShopMostRecent}}"
                                 Content="Most recent in shop"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
-                                CommandParameter="{x:Static helpers:ItemSortFilter.ShopMostRecent}"/>
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.ShopMostRecent}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
-                                            ConverterParameter={x:Static helpers:ItemSortFilter.ShopLongestWait}}"
+                                            ConverterParameter={x:Static helperEnums:ItemSortFilter.ShopLongestWait}}"
                                 Content="Longest wait in shop"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
-                                CommandParameter="{x:Static helpers:ItemSortFilter.ShopLongestWait}"/>
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.ShopLongestWait}"/>
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
-                                            ConverterParameter={x:Static helpers:ItemSortFilter.AtoZ}}"
+                                            ConverterParameter={x:Static helperEnums:ItemSortFilter.AtoZ}}"
                                 Content="A to Z"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
-                                CommandParameter="{x:Static helpers:ItemSortFilter.AtoZ}"/>
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.AtoZ}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
-                                            ConverterParameter={x:Static helpers:ItemSortFilter.ZtoA}}"
+                                            ConverterParameter={x:Static helperEnums:ItemSortFilter.ZtoA}}"
                                 Content="Z to A"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
-                                CommandParameter="{x:Static helpers:ItemSortFilter.ZtoA}"/>
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.ZtoA}"/>
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
-                                            ConverterParameter={x:Static helpers:ItemSortFilter.Rarity}}"
+                                            ConverterParameter={x:Static helperEnums:ItemSortFilter.Rarity}}"
                                 Content="Rarity"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
-                                CommandParameter="{x:Static helpers:ItemSortFilter.Rarity}"/>
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.Rarity}"/>
                         </UniformGrid>
                     </StackPanel>
                 </ui:Flyout>

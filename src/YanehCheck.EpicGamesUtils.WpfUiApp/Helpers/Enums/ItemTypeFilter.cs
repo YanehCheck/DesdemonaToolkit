@@ -1,6 +1,6 @@
 ﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 
 public enum ItemTypeFilter
 {
@@ -45,20 +45,25 @@ public enum ItemTypeFilter
     Instruments
 }
 
-public static class ItemTypeFilterExtensions {
-    public static bool Satisfied(this ItemTypeFilter filter, ItemType itemType) {
+public static class ItemTypeFilterExtensions
+{
+    public static bool Satisfied(this ItemTypeFilter filter, ItemType itemType)
+    {
         var filterN = (int)filter;
         var itemTypeN = (int)itemType;
 
-        if(filter == ItemTypeFilter.All) {
+        if (filter == ItemTypeFilter.All)
+        {
             return true;
         }
 
-        if (filterN == itemTypeN) {
+        if (filterN == itemTypeN)
+        {
             return true;
         }
 
-        return filter switch {
+        return filter switch
+        {
             ItemTypeFilter.AllBattleRoyale => itemTypeN is >= 0 and <= 13,
             ItemTypeFilter.AllLego => itemTypeN is 14 or 15,
             ItemTypeFilter.AllRocketRacing => itemTypeN is >= 16 and <= 20,

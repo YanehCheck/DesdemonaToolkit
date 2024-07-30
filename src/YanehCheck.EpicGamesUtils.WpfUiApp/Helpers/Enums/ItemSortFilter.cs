@@ -1,6 +1,7 @@
-﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers;
+﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 
-public enum ItemSortFilter {
+public enum ItemSortFilter
+{
     AtoZ,
     ZtoA,
     Newest,

@@ -1009,10 +1009,6 @@
                     Content="Sort"
                     Command="{Binding ViewModel.ToggleSortFilterFlyoutCommand}"/>
             </Grid>
-            <ui:Button 
-                Grid.Column="7"
-                Margin="0,0,10,0"
-                Icon="ArrowDownload24"/>
         </Grid>
         <ui:VirtualizingItemsControl
             Grid.Row="1"

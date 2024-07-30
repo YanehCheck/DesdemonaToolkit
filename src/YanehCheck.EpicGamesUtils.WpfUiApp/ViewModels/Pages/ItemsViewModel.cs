@@ -200,6 +200,7 @@ public partial class ItemsViewModel(
         }
         Items = filteredItems;
         PresentedItems = filteredItems;
+        SortUpdate(SortFilter);
 
 
         await Task.Run(() => LoadImages(filteredItems));

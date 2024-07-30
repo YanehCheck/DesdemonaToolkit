@@ -22,8 +22,8 @@ public partial class ItemsViewModel(
     [ObservableProperty]
     private IEnumerable<ItemWithImageModel> _presentedItems = [];
 
-    [ObservableProperty]
-    private IEnumerable<ItemWithImageModel> _items = [];
+    private IEnumerable<ItemWithImageModel> sortedItems = [];
+    private IEnumerable<ItemWithImageModel> items = [];
 
     [ObservableProperty] 
     private string _search = "";
@@ -119,14 +119,14 @@ public partial class ItemsViewModel(
         // We want to sort the original collection here
         // Otherwise we would have to resort everytime user applies filter/types character
         SortFilter = sort;
-        Items = sort switch {
-            ItemSortFilter.AtoZ => Items.OrderBy(i => i.Name),
-            ItemSortFilter.ZtoA => Items.OrderByDescending(i => i.Name),
-            ItemSortFilter.Newest => Items.OrderByDescending(i => i.Release),
-            ItemSortFilter.Oldest => Items.OrderBy(i => i.Release),
-            ItemSortFilter.ShopMostRecent => Items.OrderByDescending(i => i.LastSeen),
-            ItemSortFilter.ShopLongestWait => Items.OrderBy(i => i.LastSeen),
-            ItemSortFilter.Rarity => Items.OrderByDescending(i => i.Rarity)
+        sortedItems = sort switch {
+            ItemSortFilter.AtoZ => items.OrderBy(i => i.Name),
+            ItemSortFilter.ZtoA => items.OrderByDescending(i => i.Name),
+            ItemSortFilter.Newest => items.OrderByDescending(i => i.Release),
+            ItemSortFilter.Oldest => items.OrderBy(i => i.Release),
+            ItemSortFilter.ShopMostRecent => items.OrderByDescending(i => i.LastSeen),
+            ItemSortFilter.ShopLongestWait => items.OrderBy(i => i.LastSeen),
+            ItemSortFilter.Rarity => items.OrderByDescending(i => i.Rarity)
                 .ThenBy(i => i.Set) // This should somewhat group related items together
         };
         FilterAndSearchUpdate();
@@ -144,7 +144,7 @@ public partial class ItemsViewModel(
             (!SeasonFilter.Any() || SeasonFilter.Contains(i.Season)) &&
             (!TagFilter.Any()    || TagFilter.Intersect(i.Tags).Any());
 
-        PresentedItems = Items.Where((i) => SearchCond(i) && FiltersCond(i));
+        PresentedItems = sortedItems.Where((i) => SearchCond(i) && FiltersCond(i));
     }
 
     #endregion
@@ -179,9 +179,9 @@ public partial class ItemsViewModel(
     public void OnNavigatedFrom() { }
 
     private async Task InitializeViewModel() {
-        var items = (await FetchItems()).ToList();
-        var filteredItems = items.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
-        var missingItems = items.Count - filteredItems.Count;
+        var fetchedItems = (await FetchItems()).ToList();
+        var filteredItems = fetchedItems.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
+        var missingItems = fetchedItems.Count - filteredItems.Count;
         if(missingItems == 0) {
             snackbarService.Show(
                 "Success",
@@ -198,8 +198,7 @@ public partial class ItemsViewModel(
                 null,
                 TimeSpan.FromSeconds(5));
         }
-        Items = filteredItems;
-        PresentedItems = filteredItems;
+        items = filteredItems;
         SortUpdate(SortFilter);
 
 

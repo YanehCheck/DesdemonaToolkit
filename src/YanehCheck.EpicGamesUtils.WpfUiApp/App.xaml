@@ -19,6 +19,8 @@
             <converters:ExpiryDateToVisibilityConverter x:Key="ExpiryDateToVisibilityConverter" />
 
             <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
+            <converters:EnumEqualsToColorConverter x:Key="EnumEqualsToColorConverter" />
+            <converters:EnumEnumerableContainsToColorConverter x:Key="EnumEnumerableContainsToColorConverter" />
 
             <converters:ItemFetchSourceToStringConverter x:Key="ItemFetchSourceToStringConverter" />
             <converters:FetchDateToColorConverter x:Key="FetchDateToColorConverter" />

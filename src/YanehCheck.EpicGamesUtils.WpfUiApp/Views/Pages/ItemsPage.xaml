@@ -61,40 +61,58 @@
                     <StackPanel>
                         <UniformGrid Rows="1">
                             <ui:Button
+                                Background="{Binding ViewModel.SourceFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemSource.Shop}}"
                                 Content="Shop"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
-                                Command="{Binding ViewModel.SourceUpdateCommand}"
+                                Command="{Binding ViewModel.SourceCommand}"
                                 CommandParameter="{x:Static items:ItemSource.Shop}"/>
                             <ui:Button 
+                                Background="{Binding ViewModel.SourceFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemSource.BattlePass}}"
                                 Content="Battle Pass"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
-                                Command="{Binding ViewModel.SourceUpdateCommand}"
+                                Command="{Binding ViewModel.SourceCommand}"
                                 CommandParameter="{x:Static items:ItemSource.BattlePass}"/>
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
+                                Background="{Binding ViewModel.SourceFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemSource.Crew}}"
                                 Content="Crew"
                                 HorizontalAlignment="Stretch"
-                                Command="{Binding ViewModel.SourceUpdateCommand}"
+                                Command="{Binding ViewModel.SourceCommand}"
                                 CommandParameter="{x:Static items:ItemSource.Crew}"/>
                             <ui:Button 
+                                Background="{Binding ViewModel.SourceFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemSource.Challenges}}"
                                 Content="Challenges"
                                 HorizontalAlignment="Stretch"
-                                Command="{Binding ViewModel.SourceUpdateCommand}"
+                                Command="{Binding ViewModel.SourceCommand}"
                                 CommandParameter="{x:Static items:ItemSource.Challenges}"/>
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
+                                Background="{Binding ViewModel.SourceFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemSource.Exclusives}}"
                                 Content="Exclusives"
                                 HorizontalAlignment="Stretch"
-                                Command="{Binding ViewModel.SourceUpdateCommand}"
+                                Command="{Binding ViewModel.SourceCommand}"
                                 CommandParameter="{x:Static items:ItemSource.Exclusives}"/>
                             <ui:Button 
+                                Background="{Binding ViewModel.SourceFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemSource.Packs}}"
                                 Content="Packs"
                                 HorizontalAlignment="Stretch"
-                                Command="{Binding ViewModel.SourceUpdateCommand}"
+                                Command="{Binding ViewModel.SourceCommand}"
                                 CommandParameter="{x:Static items:ItemSource.Packs}"/>
                         </UniformGrid>
                     </StackPanel>
@@ -112,10 +130,109 @@
                 Grid.Column="3"
                 Margin="10,0,0,0"
                 Content="Season"/>
-            <ui:Button 
+            <Grid
                 Grid.Column="4"
-                Margin="10,0,0,0"
-                Content="Tag"/>
+                Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ui:Flyout
+                    Grid.Row="0"
+                    Placement="Right"
+                    IsOpen="{Binding ViewModel.TagFilterFlyoutOpen, Mode=OneWay}">
+                    <StackPanel>
+                        <UniformGrid Rows="1">
+                            <ui:Button
+                                Background="{Binding ViewModel.TagFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemTag.Forged}}"
+                                Content="Forged"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Forged}"/>
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemTag.Styles}}"
+                                Content="Styles"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Styles}"/>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemTag.Reactive}}"
+                                Content="Reactive"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Reactive}"/>
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemTag.Traversal}}"
+                                Content="Traversal"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Traversal}"/>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemTag.Builtin}}"
+                                Content="Built-in"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Builtin}"/>
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            ConverterParameter={x:Static items:ItemTag.Synced}}"
+                                Content="Synced"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Synced}"/>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <ui:Button 
+                                 Background="{Binding ViewModel.TagFilter,
+                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             ConverterParameter={x:Static items:ItemTag.Animated}}"
+                                 Content="Animated"
+                                 HorizontalAlignment="Stretch"
+                                 Command="{Binding ViewModel.TagCommand}"
+                                 CommandParameter="{x:Static items:ItemTag.Animated}"/>
+                            <ui:Button 
+                                 Background="{Binding ViewModel.TagFilter,
+                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             ConverterParameter={x:Static items:ItemTag.Transformation}}"
+                                 Content="Transformation"
+                                 HorizontalAlignment="Stretch"
+                                 Command="{Binding ViewModel.TagCommand}"
+                                 CommandParameter="{x:Static items:ItemTag.Transformation}"/>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             ConverterParameter={x:Static items:ItemTag.Enlightened}}"
+                                Content="Enlightened"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Enlightened}"/>
+                        </UniformGrid>
+                    </StackPanel>
+                </ui:Flyout>
+                <ui:Button
+                    Grid.Row="1"
+                    Content="Tags"
+                    Command="{Binding ViewModel.ToggleTagFilterFlyoutCommand}"/>
+            </Grid>
             <Grid
                 Grid.Column="6"
                 Margin="0,0,10,0">
@@ -130,12 +247,18 @@
                     <StackPanel>
                         <UniformGrid Rows="1">
                             <ui:Button
+                                Background="{Binding ViewModel.SortFilter,
+                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            ConverterParameter={x:Static helpers:ItemSortFilter.Newest}}"
                                 Content="Newest"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
                                 CommandParameter="{x:Static helpers:ItemSortFilter.Newest}"/>
                             <ui:Button 
+                                Background="{Binding ViewModel.SortFilter,
+                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            ConverterParameter={x:Static helpers:ItemSortFilter.Oldest}}"
                                 Content="Oldest"
                                 VerticalAlignment="Stretch"
                                 HorizontalAlignment="Stretch"
@@ -144,11 +267,17 @@
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
+                                Background="{Binding ViewModel.SortFilter,
+                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            ConverterParameter={x:Static helpers:ItemSortFilter.ShopMostRecent}}"
                                 Content="Most recent in shop"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
                                 CommandParameter="{x:Static helpers:ItemSortFilter.ShopMostRecent}"/>
                             <ui:Button 
+                                Background="{Binding ViewModel.SortFilter,
+                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            ConverterParameter={x:Static helpers:ItemSortFilter.ShopLongestWait}}"
                                 Content="Longest wait in shop"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
@@ -156,11 +285,17 @@
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
+                                Background="{Binding ViewModel.SortFilter,
+                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            ConverterParameter={x:Static helpers:ItemSortFilter.AtoZ}}"
                                 Content="A to Z"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
                                 CommandParameter="{x:Static helpers:ItemSortFilter.AtoZ}"/>
                             <ui:Button 
+                                Background="{Binding ViewModel.SortFilter,
+                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            ConverterParameter={x:Static helpers:ItemSortFilter.ZtoA}}"
                                 Content="Z to A"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
@@ -168,6 +303,9 @@
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
+                                Background="{Binding ViewModel.SortFilter,
+                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            ConverterParameter={x:Static helpers:ItemSortFilter.Rarity}}"
                                 Content="Rarity"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"

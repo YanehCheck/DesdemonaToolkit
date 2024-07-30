@@ -49,6 +49,8 @@ public partial class ItemsViewModel(
     [ObservableProperty]
     private bool _sortFilterFlyoutOpen = false;
 
+    #region FilteringSortingSearchingMethods
+
     [RelayCommand]
     public void ToggleSourceFilterFlyout()  {
         SourceFilterFlyoutOpen = false; // Maybe just keep it true and trigger notify?
@@ -82,14 +84,39 @@ public partial class ItemsViewModel(
     public void OnSort(ItemSortFilter sort) => SortUpdate(sort);
 
     [RelayCommand]
-    public void OnSourceUpdate(ItemSource source) {
+    public void OnSource(ItemSource source) {
         SourceFilter = SourceFilter.Contains(source)
             ? SourceFilter.Where(s => s != source)
             : SourceFilter.Append(source);
         FilterAndSearchUpdate();
     }
 
+    [RelayCommand]
+    public void OnRarity(ItemRarity rarity) {
+        RarityFilter = RarityFilter.Contains(rarity)
+            ? RarityFilter.Where(s => s != rarity)
+            : RarityFilter.Append(rarity);
+        FilterAndSearchUpdate();
+    }
+
+    [RelayCommand]
+    public void OnTag(ItemTag tag) {
+        TagFilter = TagFilter.Contains(tag)
+            ? TagFilter.Where(s => s != tag)
+            : TagFilter.Append(tag);
+        FilterAndSearchUpdate();
+    }
+
+    [RelayCommand]
+    public void OnSeason(string season) {
+        SeasonFilter = SeasonFilter.Contains(season)
+            ? SeasonFilter.Where(s => s != season)
+            : SeasonFilter.Append(season);
+        FilterAndSearchUpdate();
+    }
+
     private void SortUpdate(ItemSortFilter sort) {
+        SortFilter = sort;
         PresentedItems = sort switch {
             ItemSortFilter.AtoZ => PresentedItems.OrderBy(i => i.Name),
             ItemSortFilter.ZtoA => PresentedItems.OrderByDescending(i => i.Name),
@@ -116,6 +143,8 @@ public partial class ItemsViewModel(
 
         PresentedItems = Items.Where((i) => SearchCond(i) && FiltersCond(i));
     }
+
+    #endregion
 
     public void OnNavigatedTo() {
         if(!sessionService.IsAuthenticated) {

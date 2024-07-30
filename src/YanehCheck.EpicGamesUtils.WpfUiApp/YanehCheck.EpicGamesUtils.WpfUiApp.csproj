@@ -30,6 +30,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\ItemTypeIcons\icon-all.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-aura.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-backpack.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-banner.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-bass.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-body.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-boost.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-build.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-bundle.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-contrail.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-decal.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-decor.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-drums.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-emoji.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-emote.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-glider.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-guitar.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-instruments.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-keytar.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-loadingscreen.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-music.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-outfit.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-pickaxe.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-spray.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-toy.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-trail.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-vocal.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-wheels.png" />
+    <None Remove="Assets\Images\ItemTypeIcons\icon-wrap.png" />
     <None Remove="Assets\Images\Rarities\rarity-common.png" />
     <None Remove="Assets\Images\Rarities\rarity-dark.png" />
     <None Remove="Assets\Images\Rarities\rarity-dc.png" />
@@ -62,6 +91,35 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-backpack.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-banner.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-body.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-boost.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-bundle.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-contrail.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-decal.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-emoji.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-emote.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-glider.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-loadingscreen.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-music.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-outfit.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-pickaxe.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-all.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-spray.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-toy.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-trail.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-wheels.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-wrap.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-build.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-decor.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-aura.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-bass.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-drums.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-instruments.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-guitar.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-keytar.png" />
+    <Resource Include="Assets\Images\ItemTypeIcons\icon-vocal.png" />
     <Resource Include="Assets\Images\Rarities\rarity-common.png" />
     <Resource Include="Assets\Images\Rarities\rarity-dark.png" />
     <Resource Include="Assets\Images\Rarities\rarity-dc.png" />

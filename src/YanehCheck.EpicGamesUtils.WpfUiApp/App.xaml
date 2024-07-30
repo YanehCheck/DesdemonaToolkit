@@ -20,6 +20,7 @@
 
             <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
             <converters:EnumEqualsToColorConverter x:Key="EnumEqualsToColorConverter" />
+            <converters:EnumEqualsToColorTintConverter x:Key="EnumEqualsToColorTintConverter" />
             <converters:EnumEnumerableContainsToColorConverter x:Key="EnumEnumerableContainsToColorConverter" />
             <converters:EnumerableAnyToColorConverter x:Key="EnumerableAnyToColorConverter" />
             <converters:EnumEnumerableContainsToColorTintConverter x:Key="EnumEnumerableContainsToColorTintConverter" />

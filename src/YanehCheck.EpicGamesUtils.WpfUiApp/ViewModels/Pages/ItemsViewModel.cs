@@ -27,6 +27,9 @@ public partial class ItemsViewModel(
 
     [ObservableProperty] 
     private string _search = "";
+
+    [ObservableProperty] 
+    private ItemTypeFilter _typeFilter = ItemTypeFilter.All;
     [ObservableProperty] 
     private IEnumerable<ItemSource> _sourceFilter = [];
     [ObservableProperty]
@@ -115,6 +118,12 @@ public partial class ItemsViewModel(
         FilterAndSearchUpdate();
     }
 
+    [RelayCommand]
+    public void OnType(ItemTypeFilter type) {
+        TypeFilter = type;
+        FilterAndSearchUpdate();
+    }
+
     private void SortUpdate(ItemSortFilter sort) {
         // We want to sort the original collection here
         // Otherwise we would have to resort everytime user applies filter/types character
@@ -138,11 +147,12 @@ public partial class ItemsViewModel(
              i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
              (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase));
 
-        bool FiltersCond(ItemWithImageModel i) => 
+        bool FiltersCond(ItemWithImageModel i) =>
             (!SourceFilter.Any() || SourceFilter.Contains(i.Source)) &&
             (!RarityFilter.Any() || RarityFilter.Contains(i.Rarity)) &&
             (!SeasonFilter.Any() || SeasonFilter.Contains(i.Season)) &&
-            (!TagFilter.Any()    || TagFilter.Intersect(i.Tags).Any());
+            (!TagFilter.Any() || TagFilter.Intersect(i.Tags).Any()) &&
+            TypeFilter.Satisfied(i.Type);
 
         PresentedItems = sortedItems.Where((i) => SearchCond(i) && FiltersCond(i));
     }

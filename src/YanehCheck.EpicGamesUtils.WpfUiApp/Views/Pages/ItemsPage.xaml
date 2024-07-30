@@ -23,9 +23,608 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <StackPanel
+            HorizontalAlignment="Center"
+            Orientation="Horizontal"
+            Margin="5,0,5, 10">
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-all.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.All}"
+                    Background="{Binding ViewModel.TypeFilter,
+                    Converter={StaticResource EnumEqualsToColorTintConverter},
+                    ConverterParameter={x:Static helpers:ItemTypeFilter.All}}"/>
+            </Border>
+            <Separator Margin="5"/>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-all.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllBattleRoyale}"
+                    Background="{Binding ViewModel.TypeFilter,
+                    Converter={StaticResource EnumEqualsToColorTintConverter},
+                    ConverterParameter={x:Static helpers:ItemTypeFilter.AllBattleRoyale}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-outfit.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Outfit}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Outfit}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-emote.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Emote}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Emote}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-pickaxe.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Pickaxe}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Pickaxe}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-backpack.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Backpack}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Backpack}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-glider.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Glider}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Glider}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-wrap.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Wrap}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Wrap}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-loadingscreen.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.LoadingScreen}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.LoadingScreen}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-music.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Music}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Music}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-contrail.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Contrail}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Contrail}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-spray.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Spray}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Spray}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-emoji.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Emoji}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Emoji}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-toy.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Toy}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Toy}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-banner.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Banner}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Banner}}"/>
+            </Border>
+            <Separator Margin="5"/>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-all.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllLego}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.AllLego}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-build.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Build}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Build}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-decor.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Decor}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Decor}}"/>
+            </Border>
+            <Separator Margin="5"/>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-all.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllRocketRacing}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.AllRocketRacing}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-body.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Car}"
+                    Background="{Binding ViewModel.TypeFilter,
+                         Converter={StaticResource EnumEqualsToColorTintConverter},
+                         ConverterParameter={x:Static helpers:ItemTypeFilter.Car}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-decal.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Decal}"
+                    Background="{Binding ViewModel.TypeFilter,
+                         Converter={StaticResource EnumEqualsToColorTintConverter},
+                         ConverterParameter={x:Static helpers:ItemTypeFilter.Decal}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-wheels.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Wheels}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Wheels}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-trail.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Trail}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Trail}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-boost.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Boost}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Boost}}"/>
+            </Border>
+            <Separator Margin="5"/>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-all.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.AllFestival}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.AllFestival}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-music.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Jamtrack}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Jamtrack}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-instruments.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Instruments}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Instruments}}"/>
+            </Border>
+            <Border
+                CornerRadius="4"
+                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                BorderThickness="1"
+                Width="40"
+                Height="40">
+                <Border.Background>
+                    <ImageBrush
+                        ImageSource="pack://application:,,,/Assets/Images/ItemTypeIcons/icon-aura.png"
+                        RenderOptions.BitmapScalingMode="LowQuality"
+                        Stretch="UniformToFill" />
+                </Border.Background>
+                <ui:Button
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding ViewModel.TypeCommand}"
+                    CommandParameter="{x:Static helpers:ItemTypeFilter.Aura}"
+                    Background="{Binding ViewModel.TypeFilter,
+                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     ConverterParameter={x:Static helpers:ItemTypeFilter.Aura}}"/>
+            </Border>
+        </StackPanel>
         <Grid
+            Grid.Row="1"
             Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -1018,7 +1617,7 @@
             </Grid>
         </Grid>
         <ui:VirtualizingItemsControl
-            Grid.Row="1"
+            Grid.Row="2"
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
             d:ItemsSource="{d:SampleData}"
             ItemsSource="{Binding ViewModel.PresentedItems, Mode=OneWay}"

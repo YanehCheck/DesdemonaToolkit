@@ -16,7 +16,7 @@ public static class EpicGamesServiceHelpers {
             "ChallengeBundleSchedule", // Related to above 
             "AthenaSeason", // Active seasons in all gamemodes
             "RepeatableDailiesCard", // Related to above
-            "Token", // Related to active seasons and quests
+            "Token", // Related to "ownership" of seasons, passes, quests, founders...
             "CosmeticLocker", // Items in locker, they seem kind of outdated? 
             "CosmeticLoadout", // Loadouts
             "ConditionalAction", // Some conditions mostly related to quests/seasons
@@ -26,6 +26,10 @@ public static class EpicGamesServiceHelpers {
             "PlayerAugmentsPersistence", // ???
             "AthenaRewardGraph", // Has ID related to Winterfest 2021 presents
             "FriendChest", // Has ID related to S17 Invasion season
+            "Currency", // Some probably vbucks related information when querying Common profile
+            "HomebaseBannerColor", // Owned banner color
+            "EventPurchaseTracker", // ??? (Common profile)
+
 
             // ----------------------------------------------------------------
             // Used for Builtin emotes, will be maybe added later
@@ -39,11 +43,8 @@ public static class EpicGamesServiceHelpers {
             // ----------------------------------------------------------------
 
             // ----------------------------------------------------------------
-            // The banners fetched are incomplete
-            // I will look for another endpoint before including them here
             // Most banners are listed 2 times with different prefixes and slightly different IDs in A grants B relationship
             // You can see the duplicates even on Fortnite.GG
-            "HomebaseBannerIcon",
             "BannerToken",
             "ItemAccessToken"
             // ----------------------------------------------------------------

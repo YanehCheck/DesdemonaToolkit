@@ -57,10 +57,18 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
         var items = filteredItemTokens.Select(x => x.ToObject<string>());
         var removeFilter = EpicGamesServiceHelpers.GetQueryProfileRemoveFilter();
         var filteredItems = items.Where(i => !removeFilter.Any(i.StartsWith));
-        
+
+        var bannerResult = await epicGamesClient.Fortnite_QueryProfile(accountId, accessToken, FortniteProfile.CommonCore);
+        var bannerTokens = bannerResult.Content!.SelectTokens("$..templateId");
+        var filteredBannerTokens = bannerTokens.Where(t => Regex.IsMatch(t.Path, @"profileChanges\[0]\.profile\.items\..{36}\.templateId"));
+        var banners = filteredBannerTokens.Select(x => x.ToObject<string>());
+        var filteredBanners = banners.Where(i => !removeFilter.Any(i.StartsWith));
+
+        var allItems = filteredBanners.Concat(filteredItems);
+
         return new EpicGamesItemsResult(
             result.StatusCode,
-            filteredItems.Select(i => new EpicGamesApiItem(i!))
+            allItems.Select(i => new EpicGamesApiItem(i!))
         );
     }
 

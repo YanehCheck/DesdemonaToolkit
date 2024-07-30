@@ -28,8 +28,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
         return entry.Entity;
     }
 
-    public async Task BulkAddAsync(IEnumerable<TEntity> entity) {
-        await context.BulkInsertAsync(entity);
+    public async Task BulkAddOrUpdateAsync(IEnumerable<TEntity> entity) {
+        await context.BulkInsertOrUpdateAsync(entity);
     }
 
     public async Task BulkReadAsync(IEnumerable<TEntity> entities, List<string> byProperties = null) {

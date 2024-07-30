@@ -38,7 +38,7 @@ public class ItemFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<ItemE
         }).ToList();
 
         await query.ExecuteDeleteAsync();
-        await repo.BulkAddAsync(entities);
+        await repo.BulkAddOrUpdateAsync(entities);
 
         await uow.SaveChangesAsync();
         return entities.Select(Mapper.MapToModel);

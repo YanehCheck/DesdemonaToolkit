@@ -25,7 +25,8 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid
+            Margin="0,0,0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
@@ -37,6 +38,7 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <ui:TextBox 
+                Margin="10,0,0,0"
                 Grid.Column="0"
                 Width="200px"
                 PlaceholderText="Search"
@@ -118,6 +120,7 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Margin="0,2,0,0"
                     Background="{Binding ViewModel.SourceFilter,
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
@@ -508,6 +511,7 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Margin="0,2,0,0"
                     Background="{Binding ViewModel.RarityFilter,
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
@@ -817,6 +821,7 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Margin="0,2,0,0"
                     Background="{Binding ViewModel.SeasonFilter,
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
@@ -918,6 +923,7 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Margin="0,2,0,0"
                     Background="{Binding ViewModel.TagFilter,
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
@@ -1005,6 +1011,7 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Margin="0,2,0,0"
                     Grid.Row="1"
                     Content="Sort"
                     Command="{Binding ViewModel.ToggleSortFilterFlyoutCommand}"/>

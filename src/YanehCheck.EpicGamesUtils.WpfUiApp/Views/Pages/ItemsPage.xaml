@@ -126,10 +126,288 @@
                 Grid.Column="2"
                 Margin="10,0,0,0"
                 Content="Rarity"/>
-            <ui:Button 
-                Grid.Column="3"
-                Margin="10,0,0,0"
-                Content="Season"/>
+            <Grid
+                 Grid.Column="3"
+                 Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ui:Flyout
+                     Grid.Row="0"
+                     Placement="Right"
+                     IsOpen="{Binding ViewModel.SeasonFilterFlyoutOpen, Mode=OneWay}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>C1:</Label>
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s1'}"
+                                Content="S1"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s1'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s2'}"
+                                Content="S2"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s2'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s3'}"
+                                Content="S3"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s3'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s4'}"
+                                Content="S4"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s4'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s5'}"
+                                Content="S5"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s5'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s6'}"
+                                Content="S6"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s6'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s7'}"
+                                Content="S7"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s7'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s8'}"
+                                Content="S8"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s8'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1s9'}"
+                                Content="S9"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1s9'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c1sX'}"
+                                Content="SX"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c1sX'
+                            />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>C2:</Label>
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s1'}"
+                                Content="S1"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s1'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s2'}"
+                                Content="S2"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s2'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s3'}"
+                                Content="S3"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s3'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s4'}"
+                                Content="S4"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s4'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s5'}"
+                                Content="S5"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s5'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s6'}"
+                                Content="S6"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s6'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s7'}"
+                                Content="S7"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s7'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c2s8'}"
+                                Content="S8"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c2s8'
+                            />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>C3:</Label>
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c3s1'}"
+                                Content="S1"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c3s1'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c3s2'}"
+                                Content="S2"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c3s2'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c3s3'}"
+                                Content="S3"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c3s3'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                    ConverterParameter='c3s4'}"
+                                Content="S4"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c3s4'
+                            />
+                     </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>C4:</Label>
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c4s1'}"
+                                Content="S1"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c4s1'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c4s2'}"
+                                Content="S2"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c4s2'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c4s3'}"
+                                Content="S3"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c4s3'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c4s4'}"
+                                Content="S4"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c4s4'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c4sOG'}"
+                                Content="OG"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c4sOG'
+                            />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Label>C5:</Label>
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c5s1'}"
+                                Content="S1"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c5s1'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c5s2'}"
+                                Content="S2"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c5s2'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c5s3'}"
+                                Content="S3"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c5s3'
+                            />
+                            <ui:Button
+                                Background="{Binding ViewModel.SeasonFilter,
+                                   Converter={StaticResource StringEnumerableContainsToColorConverter},
+                                   ConverterParameter='c5s4'}"
+                                Content="S4"
+                                Command="{Binding ViewModel.SeasonCommand}"
+                                CommandParameter='c5s4'
+                            />
+                        </StackPanel>
+                    </StackPanel>
+                </ui:Flyout>
+                <ui:Button
+                 Grid.Row="1"
+                 Content="Source"
+                 Command="{Binding ViewModel.ToggleSeasonFilterFlyoutCommand}"/>
+            </Grid>
             <Grid
                 Grid.Column="4"
                 Margin="10,0,0,0">
@@ -161,6 +439,14 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.TagCommand}"
                                 CommandParameter="{x:Static items:ItemTag.Styles}"/>
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             ConverterParameter={x:Static items:ItemTag.Enlightened}}"
+                                Content="Enlightened"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Enlightened}"/>
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
@@ -179,6 +465,14 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.TagCommand}"
                                 CommandParameter="{x:Static items:ItemTag.Traversal}"/>
+                            <ui:Button 
+                                Background="{Binding ViewModel.TagFilter,
+                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             ConverterParameter={x:Static items:ItemTag.Transformation}}"
+                                Content="Transformation"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.TagCommand}"
+                                CommandParameter="{x:Static items:ItemTag.Transformation}"/>
                         </UniformGrid>
                         <UniformGrid Rows="1">
                             <ui:Button 
@@ -197,34 +491,14 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.TagCommand}"
                                 CommandParameter="{x:Static items:ItemTag.Synced}"/>
-                        </UniformGrid>
-                        <UniformGrid Rows="1">
-                            <ui:Button 
-                                 Background="{Binding ViewModel.TagFilter,
-                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
-                                             ConverterParameter={x:Static items:ItemTag.Animated}}"
-                                 Content="Animated"
-                                 HorizontalAlignment="Stretch"
-                                 Command="{Binding ViewModel.TagCommand}"
-                                 CommandParameter="{x:Static items:ItemTag.Animated}"/>
-                            <ui:Button 
-                                 Background="{Binding ViewModel.TagFilter,
-                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
-                                             ConverterParameter={x:Static items:ItemTag.Transformation}}"
-                                 Content="Transformation"
-                                 HorizontalAlignment="Stretch"
-                                 Command="{Binding ViewModel.TagCommand}"
-                                 CommandParameter="{x:Static items:ItemTag.Transformation}"/>
-                        </UniformGrid>
-                        <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
                                              Converter={StaticResource EnumEnumerableContainsToColorConverter},
-                                             ConverterParameter={x:Static items:ItemTag.Enlightened}}"
-                                Content="Enlightened"
+                                             ConverterParameter={x:Static items:ItemTag.Animated}}"
+                                Content="Animated"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.TagCommand}"
-                                CommandParameter="{x:Static items:ItemTag.Enlightened}"/>
+                                CommandParameter="{x:Static items:ItemTag.Animated}"/>
                         </UniformGrid>
                     </StackPanel>
                 </ui:Flyout>

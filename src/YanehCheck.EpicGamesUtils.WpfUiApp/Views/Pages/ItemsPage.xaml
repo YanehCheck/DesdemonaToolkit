@@ -118,6 +118,8 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Background="{Binding ViewModel.SourceFilter,
+                                            Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
                     Content="Source"
                     Command="{Binding ViewModel.ToggleSourceFilterFlyoutCommand}"/>
@@ -506,6 +508,8 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Background="{Binding ViewModel.RarityFilter,
+                                            Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
                     Content="Rarity"
                     Command="{Binding ViewModel.ToggleRarityFilterFlyoutCommand}"/>
@@ -813,9 +817,11 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
-                 Grid.Row="1"
-                 Content="Season"
-                 Command="{Binding ViewModel.ToggleSeasonFilterFlyoutCommand}"/>
+                    Background="{Binding ViewModel.SeasonFilter,
+                                            Converter={StaticResource EnumerableAnyToColorConverter}}"
+                    Grid.Row="1"
+                    Content="Season"
+                    Command="{Binding ViewModel.ToggleSeasonFilterFlyoutCommand}"/>
             </Grid>
             <Grid
                 Grid.Column="4"
@@ -912,6 +918,8 @@
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button
+                    Background="{Binding ViewModel.TagFilter,
+                                            Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
                     Content="Tags"
                     Command="{Binding ViewModel.ToggleTagFilterFlyoutCommand}"/>

@@ -7,7 +7,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters;
 
 public class EnumerableAnyToColorConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-        if(value == null || parameter == null) {
+        if(value == null) {
             return Colors.Transparent;
         }
 

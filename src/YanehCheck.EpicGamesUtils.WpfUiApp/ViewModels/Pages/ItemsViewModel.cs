@@ -116,17 +116,20 @@ public partial class ItemsViewModel(
     }
 
     private void SortUpdate(ItemSortFilter sort) {
+        // We want to sort the original collection here
+        // Otherwise we would have to resort everytime user applies filter/types character
         SortFilter = sort;
-        PresentedItems = sort switch {
-            ItemSortFilter.AtoZ => PresentedItems.OrderBy(i => i.Name),
-            ItemSortFilter.ZtoA => PresentedItems.OrderByDescending(i => i.Name),
-            ItemSortFilter.Newest => PresentedItems.OrderByDescending(i => i.Release),
-            ItemSortFilter.Oldest => PresentedItems.OrderBy(i => i.Release),
-            ItemSortFilter.ShopMostRecent => PresentedItems.OrderByDescending(i => i.LastSeen),
-            ItemSortFilter.ShopLongestWait => PresentedItems.OrderBy(i => i.LastSeen),
-            ItemSortFilter.Rarity => PresentedItems.OrderByDescending(i => i.Rarity)
+        Items = sort switch {
+            ItemSortFilter.AtoZ => Items.OrderBy(i => i.Name),
+            ItemSortFilter.ZtoA => Items.OrderByDescending(i => i.Name),
+            ItemSortFilter.Newest => Items.OrderByDescending(i => i.Release),
+            ItemSortFilter.Oldest => Items.OrderBy(i => i.Release),
+            ItemSortFilter.ShopMostRecent => Items.OrderByDescending(i => i.LastSeen),
+            ItemSortFilter.ShopLongestWait => Items.OrderBy(i => i.LastSeen),
+            ItemSortFilter.Rarity => Items.OrderByDescending(i => i.Rarity)
                 .ThenBy(i => i.Set) // This should somewhat group related items together
         };
+        FilterAndSearchUpdate();
     }
 
     private void FilterAndSearchUpdate() {

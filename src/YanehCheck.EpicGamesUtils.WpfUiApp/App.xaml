@@ -21,6 +21,8 @@
             <converters:EnumToStringConverter x:Key="EnumToStringConverter" />
             <converters:EnumEqualsToColorConverter x:Key="EnumEqualsToColorConverter" />
             <converters:EnumEnumerableContainsToColorConverter x:Key="EnumEnumerableContainsToColorConverter" />
+            <converters:EnumerableAnyToColorConverter x:Key="EnumerableAnyToColorConverter" />
+            <converters:EnumEnumerableContainsToColorTintConverter x:Key="EnumEnumerableContainsToColorTintConverter" />
             <converters:StringEnumerableContainsToColorConverter x:Key="StringEnumerableContainsToColorConverter" />
 
             <converters:ItemFetchSourceToStringConverter x:Key="ItemFetchSourceToStringConverter" />

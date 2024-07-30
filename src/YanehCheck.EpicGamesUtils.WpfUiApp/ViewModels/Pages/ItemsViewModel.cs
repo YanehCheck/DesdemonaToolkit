@@ -50,27 +50,46 @@ public partial class ItemsViewModel(
     private bool _sortFilterFlyoutOpen = false;
 
     [RelayCommand]
-    public void ToggleSourceFilterFlyout() => SourceFilterFlyoutOpen = !SourceFilterFlyoutOpen;
+    public void ToggleSourceFilterFlyout()  {
+        SourceFilterFlyoutOpen = false; // Maybe just keep it true and trigger notify?
+        SourceFilterFlyoutOpen = true;
+    }
     [RelayCommand]
-    public void ToggleRarityFilterFlyout() => RarityFilterFlyoutOpen = !RarityFilterFlyoutOpen;
+    public void ToggleRarityFilterFlyout() {
+        RarityFilterFlyoutOpen = false;
+        RarityFilterFlyoutOpen = true;
+    }
     [RelayCommand]
-    public void ToggleSeasonFilterFlyout() => SeasonFilterFlyoutOpen = !SeasonFilterFlyoutOpen;
+    public void ToggleSeasonFilterFlyout() {
+        SeasonFilterFlyoutOpen = false;
+        SeasonFilterFlyoutOpen = true;
+    }
     [RelayCommand]
-    public void ToggleTagFilterFlyout() => TagFilterFlyoutOpen = !TagFilterFlyoutOpen;
+    public void ToggleTagFilterFlyout() {
+        TagFilterFlyoutOpen = false;
+        TagFilterFlyoutOpen = true;
+    }
     [RelayCommand]
-    public void ToggleSortFilterFlyout() => SortFilterFlyoutOpen = !SortFilterFlyoutOpen;
-
-
-    [RelayCommand]
-    public void OnFilterOrSearchUpdate() {
-        PresentedItems = Items.Where((i) => 
-            Search == "" || 
-            i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
-            (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase)));
+    public void ToggleSortFilterFlyout() {
+        SortFilterFlyoutOpen = false;
+        SortFilterFlyoutOpen = true;
     }
 
     [RelayCommand]
-    public void OnSortUpdate(ItemSortFilter sort) {
+    public void OnSearch() => FilterAndSearchUpdate();
+
+    [RelayCommand]
+    public void OnSort(ItemSortFilter sort) => SortUpdate(sort);
+
+    [RelayCommand]
+    public void OnSourceUpdate(ItemSource source) {
+        SourceFilter = SourceFilter.Contains(source)
+            ? SourceFilter.Where(s => s != source)
+            : SourceFilter.Append(source);
+        FilterAndSearchUpdate();
+    }
+
+    private void SortUpdate(ItemSortFilter sort) {
         PresentedItems = sort switch {
             ItemSortFilter.AtoZ => PresentedItems.OrderBy(i => i.Name),
             ItemSortFilter.ZtoA => PresentedItems.OrderByDescending(i => i.Name),
@@ -79,8 +98,23 @@ public partial class ItemsViewModel(
             ItemSortFilter.ShopMostRecent => PresentedItems.OrderByDescending(i => i.LastSeen),
             ItemSortFilter.ShopLongestWait => PresentedItems.OrderBy(i => i.LastSeen),
             ItemSortFilter.Rarity => PresentedItems.OrderByDescending(i => i.Rarity)
-                    .ThenBy(i => i.Set) // This should somewhat group related items together
+                .ThenBy(i => i.Set) // This should somewhat group related items together
         };
+    }
+
+    private void FilterAndSearchUpdate() {
+        bool SearchCond(ItemWithImageModel i) => 
+             Search == "" ||
+             i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
+             (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase));
+
+        bool FiltersCond(ItemWithImageModel i) => 
+            (!SourceFilter.Any() || SourceFilter.Contains(i.Source)) &&
+            (!RarityFilter.Any() || RarityFilter.Contains(i.Rarity)) &&
+            (!SeasonFilter.Any() || SeasonFilter.Contains(i.Season)) &&
+            (!TagFilter.Any()    || TagFilter.Intersect(i.Tags).Any());
+
+        PresentedItems = Items.Where((i) => SearchCond(i) && FiltersCond(i));
     }
 
     public void OnNavigatedTo() {

@@ -139,7 +139,12 @@
                      IsOpen="{Binding ViewModel.SeasonFilterFlyoutOpen, Mode=OneWay}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label>C1:</Label>
+                            <ui:Button 
+                                Content="C1:"
+                                BorderBrush="#00000000"
+                                Background="#00000000"
+                                MouseOverBackground="#00000000"
+                                MouseOverBorderBrush="#00000000"/>
                             <ui:Button
                                 Background="{Binding ViewModel.SeasonFilter,
                                     Converter={StaticResource StringEnumerableContainsToColorConverter},
@@ -222,7 +227,12 @@
                             />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label>C2:</Label>
+                            <ui:Button 
+                                Content="C2:"
+                                BorderBrush="#00000000"
+                                Background="#00000000"
+                                MouseOverBackground="#00000000"
+                                MouseOverBorderBrush="#00000000"/>
                             <ui:Button
                                 Background="{Binding ViewModel.SeasonFilter,
                                     Converter={StaticResource StringEnumerableContainsToColorConverter},
@@ -289,7 +299,12 @@
                             />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label>C3:</Label>
+                            <ui:Button 
+                                Content="C3:"
+                                BorderBrush="#00000000"
+                                Background="#00000000"
+                                MouseOverBackground="#00000000"
+                                MouseOverBorderBrush="#00000000"/>
                             <ui:Button
                                 Background="{Binding ViewModel.SeasonFilter,
                                     Converter={StaticResource StringEnumerableContainsToColorConverter},
@@ -324,7 +339,12 @@
                             />
                      </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label>C4:</Label>
+                            <ui:Button 
+                                Content="C4:"
+                                BorderBrush="#00000000"
+                                Background="#00000000"
+                                MouseOverBackground="#00000000"
+                                MouseOverBorderBrush="#00000000"/>
                             <ui:Button
                                 Background="{Binding ViewModel.SeasonFilter,
                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
@@ -367,7 +387,12 @@
                             />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label>C5:</Label>
+                            <ui:Button 
+                                Content="C5:"
+                                BorderBrush="#00000000"
+                                Background="#00000000"
+                                MouseOverBackground="#00000000"
+                                MouseOverBorderBrush="#00000000"/>
                             <ui:Button
                                 Background="{Binding ViewModel.SeasonFilter,
                                    Converter={StaticResource StringEnumerableContainsToColorConverter},
@@ -405,7 +430,7 @@
                 </ui:Flyout>
                 <ui:Button
                  Grid.Row="1"
-                 Content="Source"
+                 Content="Season"
                  Command="{Binding ViewModel.ToggleSeasonFilterFlyoutCommand}"/>
             </Grid>
             <Grid

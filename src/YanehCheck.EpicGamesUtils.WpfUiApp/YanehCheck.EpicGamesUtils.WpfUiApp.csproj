@@ -30,6 +30,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Images\Rarities\rarity-common.png" />
+    <None Remove="Assets\Images\Rarities\rarity-dark.png" />
+    <None Remove="Assets\Images\Rarities\rarity-dc.png" />
+    <None Remove="Assets\Images\Rarities\rarity-epic.png" />
+    <None Remove="Assets\Images\Rarities\rarity-frozen.png" />
+    <None Remove="Assets\Images\Rarities\rarity-gaming.png" />
+    <None Remove="Assets\Images\Rarities\rarity-icon.png" />
+    <None Remove="Assets\Images\Rarities\rarity-lamborghini.png" />
+    <None Remove="Assets\Images\Rarities\rarity-lava.png" />
+    <None Remove="Assets\Images\Rarities\rarity-legendary.png" />
+    <None Remove="Assets\Images\Rarities\rarity-marvel.png" />
+    <None Remove="Assets\Images\Rarities\rarity-mclaren.png" />
+    <None Remove="Assets\Images\Rarities\rarity-nissan.png" />
+    <None Remove="Assets\Images\Rarities\rarity-rare.png" />
+    <None Remove="Assets\Images\Rarities\rarity-shadow.png" />
+    <None Remove="Assets\Images\Rarities\rarity-slurp.png" />
+    <None Remove="Assets\Images\Rarities\rarity-starwars.png" />
+    <None Remove="Assets\Images\Rarities\rarity-tesla.png" />
+    <None Remove="Assets\Images\Rarities\rarity-uncommon.png" />
     <None Remove="Assets\wpfui-icon-256.png" />
     <None Remove="Assets\wpfui-icon-1024.png" />
     <None Remove="Assets\desdemona-bg-1920.jpg" />
@@ -43,6 +62,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Images\Rarities\rarity-common.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-dark.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-dc.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-epic.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-frozen.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-gaming.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-icon.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-lamborghini.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-lava.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-legendary.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-marvel.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-mclaren.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-nissan.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-rare.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-shadow.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-slurp.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-starwars.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-tesla.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-uncommon.png" />
     <Resource Include="Assets\wpfui-icon-256.png" />
     <Resource Include="Assets\wpfui-icon-1024.png" />
     <Resource Include="Assets\Images\desdemona-bg-1920.jpg" />

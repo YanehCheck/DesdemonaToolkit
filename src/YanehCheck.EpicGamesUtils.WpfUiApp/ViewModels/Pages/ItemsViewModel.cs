@@ -78,6 +78,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         RarityFilter = [];
         SeasonFilter = [];
         TagFilter = [];
+        OnPropertyChanged(nameof(AnyFilterApplied));
         FilterAndSearchUpdate();
     }
 

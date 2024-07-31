@@ -1574,7 +1574,7 @@
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.ShopMostRecent}}"
-                                Content="Most recent in shop"
+                                Content="Most Recent in Shop"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
                                 CommandParameter="{x:Static helperEnums:ItemSortFilter.ShopMostRecent}"/>
@@ -1582,7 +1582,7 @@
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.ShopLongestWait}}"
-                                Content="Longest wait in shop"
+                                Content="Longest Wait in Shop"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
                                 CommandParameter="{x:Static helperEnums:ItemSortFilter.ShopLongestWait}"/>
@@ -1610,10 +1610,18 @@
                                 Background="{Binding ViewModel.SortFilter,
                                             Converter={StaticResource EnumEqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.Rarity}}"
-                                Content="Rarity"
+                                Content="Item Rarity"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ViewModel.SortCommand}"
                                 CommandParameter="{x:Static helperEnums:ItemSortFilter.Rarity}"/>
+                            <ui:Button 
+                                Background="{Binding ViewModel.SortFilter,
+                                             Converter={StaticResource EnumEqualsToColorConverter},
+                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.Type}}"
+                                Content="Item Type"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.SortCommand}"
+                                CommandParameter="{x:Static helperEnums:ItemSortFilter.Type}"/>
                         </UniformGrid>
                     </StackPanel>
                 </ui:Flyout>

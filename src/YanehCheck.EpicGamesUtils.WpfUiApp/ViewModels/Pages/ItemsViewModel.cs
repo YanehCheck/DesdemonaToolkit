@@ -173,6 +173,9 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             ItemSortFilter.ShopLongestWait => items.OrderBy(i => i.LastSeen),
             ItemSortFilter.Rarity => items.OrderByDescending(i => i.Rarity)
                 .ThenBy(i => i.Set) // This should somewhat group related items together
+                .ThenBy(i => i.Type), 
+            ItemSortFilter.Type => items.OrderBy(i => i.Type)
+                .ThenByDescending(i => i.Rarity)
         };
         FilterAndSearchUpdate();
     }

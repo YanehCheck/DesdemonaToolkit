@@ -8,5 +8,6 @@ public enum ItemSortFilter
     Oldest,
     ShopMostRecent,
     ShopLongestWait,
-    Rarity
+    Rarity,
+    Type
 }

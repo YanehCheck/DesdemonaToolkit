@@ -224,7 +224,10 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     public void OnNavigatedFrom() { }
 
     private async Task InitializeViewModel() {
-        var fetchedItems = (await FetchItems()).ToList();
+        var fetchedItems = (await FetchItems())?.ToList();
+        if(fetchedItems == null) {
+            return;
+        }
         var filteredItems = fetchedItems.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
         var missingItems = fetchedItems.Count - filteredItems.Count;
         if(missingItems == 0) {
@@ -260,6 +263,8 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         var ownedItemsResult = await epicGamesService.GetItems(sessionService.AccountId!, sessionService.AccessToken!);
         if (!ownedItemsResult.Success) {
             snackbarService.Show("Failure", ownedItemsResult.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            _initializedForAccountId = "";
+            return null;
         }
 
         var ownedItemModels = ownedItemsResult.Items!.Select(i => new ItemModel() {

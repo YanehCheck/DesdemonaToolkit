@@ -23,7 +23,7 @@ public partial class SettingsViewModel : ObservableObject, IViewModel, INavigati
 
     private void InitializeViewModel() {
         CurrentTheme = ApplicationThemeManager.GetAppTheme();
-        AppVersion = $"UiDesktopApp1 - {GetAssemblyVersion()}";
+        AppVersion = $"Development version: {GetAssemblyVersion()}";
 
         _isInitialized = true;
     }

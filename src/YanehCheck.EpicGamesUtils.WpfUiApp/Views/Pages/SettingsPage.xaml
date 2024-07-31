@@ -30,7 +30,7 @@
             Margin="0,12,0,0"
             Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
             CommandParameter="theme_light"
-            Content="Light"
+            Content="Light (Experimental)"
             GroupName="themeSelect"
             IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
         <RadioButton
@@ -45,7 +45,7 @@
             Margin="0,24,0,0"
             FontSize="20"
             FontWeight="Medium"
-            Text="About YanehCheck.EpicGamesUtils.WpfUiApp" />
+            Text="About" />
         <TextBlock Margin="0,12,0,0" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
     </StackPanel>
 </Page>

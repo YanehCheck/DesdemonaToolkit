@@ -3,8 +3,10 @@ using YanehCheck.EpicGamesUtils.BL.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 
-public class ItemWithImageModel : ItemModel {
-    public BitmapFrame? BitmapFrame { get; set; }
+[INotifyPropertyChanged]
+public partial class ItemWithImageModel : ItemModel {
+    [ObservableProperty] 
+    private BitmapFrame? _bitmapFrame;
 
     public ItemWithImageModel() { }
 

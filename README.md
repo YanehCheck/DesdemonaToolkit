@@ -12,7 +12,7 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 ⭐ <b>Open-source</b> - All code is licenced under GPL-3.0!  
 ⭐ <b>Made to last</b> - Our goal is to avoid mandatory updates to restore basic functionality  .
 
-#### ⚠️Desdemona Toolkit is currently in early active development. You should expect bugs, major changes and lack of features early-on.⚠️
+### ⚠️Desdemona Toolkit is currently in early active development. You should expect bugs, major changes and lack of features early-on.⚠️
 
 ## Roadmap
 
@@ -20,16 +20,20 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 - Fetch newest item data on-demand 
 - Authenticate and view your fortnite inventory with advanced sorting 
 #### 🛠️ 0.1.0
-- Inventory statistics like total price, number of items, ...
-- Detail view of items
+- Polish UX of search and filtering
+- Inventory statistics like total price, number of items and so on
+- Item name on hover + Detailed view of items on click (videos?)
 - Export your inventory selection as a list or an image
+- Handling for DB, data format and connection issues
 #### 🛠️ 0.2.0
 - General account information page
 - STW: Claim daily quest
 - STW: Check founder codes
 ####  🛠️ 1.0.0
 - More auth options
-- UI polish
+- UI and UX polish, Full light mode support
+- Custom filter section
+- ????
 
 ## Gallery
 

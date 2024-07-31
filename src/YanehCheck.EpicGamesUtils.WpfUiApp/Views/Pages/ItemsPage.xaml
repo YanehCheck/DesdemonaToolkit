@@ -1651,8 +1651,8 @@
                             CornerRadius="4"
                             Background="#00000000"
                             MouseOverBackground="#30FFFFFF"
+                            ToolTip="{Binding Name, Mode=OneWay}"
                             >
-
                         </ui:Button>
                     </Border>
                 </DataTemplate>

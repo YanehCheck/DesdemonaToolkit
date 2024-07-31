@@ -12,7 +12,7 @@
     <StartupObject>YanehCheck.EpicGamesUtils.WpfUiApp.App</StartupObject>
     <SignAssembly>False</SignAssembly>
     <Title>Desdemona Toolkit</Title>
-    <Version>0.1.0</Version>
+    <Version>0.1.0-prerelease</Version>
     <Authors>YanehCheck</Authors>
     <Description>A collection of fortnite utillities.</Description>
     <Copyright>GPL-3.0</Copyright>
@@ -45,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\icon.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-all.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-aura.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-backpack.png" />
@@ -115,6 +116,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\icon.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-backpack.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-banner.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-body.png" />

@@ -1637,7 +1637,10 @@
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
             d:ItemsSource="{d:SampleData}"
             ItemsSource="{Binding ViewModel.PresentedItems, Mode=OneWay}"
-            VirtualizingPanel.CacheLengthUnit="Item">
+            VirtualizingPanel.CacheLengthUnit="Item"
+            VirtualizingPanel.CacheLength="8"
+            VirtualizingPanel.IsVirtualizing="True"
+            VirtualizingPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:ItemWithImageModel}">
                     <Border
@@ -1648,6 +1651,9 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         CornerRadius="4">
+                        <!-- <Border.CacheMode>
+                            <BitmapCache />
+                        </Border.CacheMode> -->
                         <Border.Background>
                             <ImageBrush 
                                 ImageSource="{Binding BitmapFrame, Mode=OneWay}"

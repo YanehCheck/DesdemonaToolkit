@@ -22,10 +22,10 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private string _initializedForAccountId = "";
 
     [ObservableProperty]
-    private IEnumerable<ItemWithImageModel> _presentedItems = [];
+    private IEnumerable<ItemPresentationModel> _presentedItems = [];
 
-    private IEnumerable<ItemWithImageModel> sortedItems = [];
-    private IEnumerable<ItemWithImageModel> items = [];
+    private IEnumerable<ItemPresentationModel> sortedItems = [];
+    private IEnumerable<ItemPresentationModel> items = [];
 
     public bool AnyFilterApplied => SourceFilter.Any() || RarityFilter.Any() || SeasonFilter.Any() || TagFilter.Any();
 
@@ -181,12 +181,12 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     }
 
     private void FilterAndSearchUpdate() {
-        bool SearchCond(ItemWithImageModel i) => 
+        bool SearchCond(ItemPresentationModel i) => 
              Search == "" ||
              i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
              (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase));
 
-        bool FiltersCond(ItemWithImageModel i) =>
+        bool FiltersCond(ItemPresentationModel i) =>
             (!SourceFilter.Any() || SourceFilter.Contains(i.Source)) &&
             (!RarityFilter.Any() || RarityFilter.Contains(i.Rarity)) &&
             (!SeasonFilter.Any() || SeasonFilter.Contains(i.Season)) &&
@@ -257,13 +257,13 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         await Task.Run(() => LoadImages(filteredItems));
     }
 
-    private async Task LoadImages(IEnumerable<ItemWithImageModel> items) {
+    private async Task LoadImages(IEnumerable<ItemPresentationModel> items) {
         await Parallel.ForEachAsync(items, async (item, _) => {
             item.BitmapFrame = await imageDownloader.GetImageAsync(item.FortniteGgId);
         });
     }
 
-    private async Task<IEnumerable<ItemWithImageModel>?> FetchItems() {
+    private async Task<IEnumerable<ItemPresentationModel>?> FetchItems() {
         var ownedItemsResult = await epicGamesService.GetItems(sessionService.AccountId!, sessionService.AccessToken!);
         if (!ownedItemsResult.Success) {
             snackbarService.Show("Failure", ownedItemsResult.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
@@ -274,6 +274,6 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         var ownedItemModels = ownedItemsResult.Items!.Select(i => new ItemModel() {
             FortniteId = i.FortniteId.Split(':').Last()
         });
-        return (await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemWithImageModel(i));
+        return (await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemPresentationModel(i));
     }
 }

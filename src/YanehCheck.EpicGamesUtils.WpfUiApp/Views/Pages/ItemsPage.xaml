@@ -10,6 +10,7 @@
     xmlns:helperEnums="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:items="clr-namespace:YanehCheck.EpicGamesUtils.Common.Enums.Items;assembly=YanehCheck.EpicGamesUtils.Common"
+    xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage"
     Title="ItemsPage"
     d:DataContext="{d:DesignInstance local:ItemsPage,
                                      IsDesignTimeCreatable=False}"
@@ -20,6 +21,14 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     ScrollViewer.CanContentScroll="False"
     mc:Ignorable="d">
+    <Page.Resources>
+        <converters:ItemRarityToStringConverter x:Key="ItemRarityToStringConverter" />
+        <converters:ItemSourceToStringConverter x:Key="ItemSourceToStringConverter" />
+        <converters:ItemTagToStringConverter x:Key="ItemTagToStringConverter" />
+        <converters:ItemTypeToStringConverter x:Key="ItemTypeToStringConverter" />
+        <converters:SeasonStringToReadableStringConverter x:Key="SeasonStringToReadableStringConverter" />
+    </Page.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -48,7 +57,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.All}"
                     Background="{Binding ViewModel.TypeFilter,
-                    Converter={StaticResource EnumEqualsToColorTintConverter},
+                    Converter={StaticResource EqualsToColorTintConverter},
                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.All}}"/>
             </Border>
             <Separator Margin="5"/>
@@ -70,7 +79,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllBattleRoyale}"
                     Background="{Binding ViewModel.TypeFilter,
-                    Converter={StaticResource EnumEqualsToColorTintConverter},
+                    Converter={StaticResource EqualsToColorTintConverter},
                     ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllBattleRoyale}}"/>
             </Border>
             <Border
@@ -91,7 +100,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Outfit}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Outfit}}"/>
             </Border>
             <Border
@@ -112,7 +121,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Emote}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Emote}}"/>
             </Border>
             <Border
@@ -133,7 +142,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Pickaxe}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Pickaxe}}"/>
             </Border>
             <Border
@@ -154,7 +163,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Backpack}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Backpack}}"/>
             </Border>
             <Border
@@ -175,7 +184,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Glider}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Glider}}"/>
             </Border>
             <Border
@@ -196,7 +205,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Wrap}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Wrap}}"/>
             </Border>
             <Border
@@ -217,7 +226,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.LoadingScreen}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.LoadingScreen}}"/>
             </Border>
             <Border
@@ -238,7 +247,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Music}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Music}}"/>
             </Border>
             <Border
@@ -259,7 +268,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Contrail}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Contrail}}"/>
             </Border>
             <Border
@@ -280,7 +289,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Spray}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Spray}}"/>
             </Border>
             <Border
@@ -301,7 +310,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Emoji}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Emoji}}"/>
             </Border>
             <Border
@@ -322,7 +331,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Toy}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Toy}}"/>
             </Border>
             <Border
@@ -343,7 +352,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Banner}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Banner}}"/>
             </Border>
             <Separator Margin="5"/>
@@ -365,7 +374,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllLego}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllLego}}"/>
             </Border>
             <Border
@@ -386,7 +395,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Build}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Build}}"/>
             </Border>
             <Border
@@ -407,7 +416,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Decor}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Decor}}"/>
             </Border>
             <Separator Margin="5"/>
@@ -429,7 +438,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllRocketRacing}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllRocketRacing}}"/>
             </Border>
             <Border
@@ -450,7 +459,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Car}"
                     Background="{Binding ViewModel.TypeFilter,
-                         Converter={StaticResource EnumEqualsToColorTintConverter},
+                         Converter={StaticResource EqualsToColorTintConverter},
                          ConverterParameter={x:Static helperEnums:ItemTypeFilter.Car}}"/>
             </Border>
             <Border
@@ -471,7 +480,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Decal}"
                     Background="{Binding ViewModel.TypeFilter,
-                         Converter={StaticResource EnumEqualsToColorTintConverter},
+                         Converter={StaticResource EqualsToColorTintConverter},
                          ConverterParameter={x:Static helperEnums:ItemTypeFilter.Decal}}"/>
             </Border>
             <Border
@@ -492,7 +501,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Wheels}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Wheels}}"/>
             </Border>
             <Border
@@ -513,7 +522,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Trail}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Trail}}"/>
             </Border>
             <Border
@@ -534,7 +543,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Boost}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Boost}}"/>
             </Border>
             <Separator Margin="5"/>
@@ -556,7 +565,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.AllFestival}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.AllFestival}}"/>
             </Border>
             <Border
@@ -577,7 +586,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Jamtrack}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Jamtrack}}"/>
             </Border>
             <Border
@@ -598,7 +607,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Instruments}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Instruments}}"/>
             </Border>
             <Border
@@ -619,7 +628,7 @@
                     Command="{Binding ViewModel.TypeCommand}"
                     CommandParameter="{x:Static helperEnums:ItemTypeFilter.Aura}"
                     Background="{Binding ViewModel.TypeFilter,
-                     Converter={StaticResource EnumEqualsToColorTintConverter},
+                     Converter={StaticResource EqualsToColorTintConverter},
                      ConverterParameter={x:Static helperEnums:ItemTypeFilter.Aura}}"/>
             </Border>
         </StackPanel>
@@ -663,7 +672,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button
                                 Background="{Binding ViewModel.SourceFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemSource.Shop}}"
                                 Content="Shop"
                                 VerticalAlignment="Stretch"
@@ -672,7 +681,7 @@
                                 CommandParameter="{x:Static items:ItemSource.Shop}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SourceFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemSource.BattlePass}}"
                                 Content="Battle Pass"
                                 VerticalAlignment="Stretch"
@@ -683,7 +692,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SourceFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemSource.Crew}}"
                                 Content="Crew"
                                 HorizontalAlignment="Stretch"
@@ -691,7 +700,7 @@
                                 CommandParameter="{x:Static items:ItemSource.Crew}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SourceFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemSource.Challenges}}"
                                 Content="Challenges"
                                 HorizontalAlignment="Stretch"
@@ -701,7 +710,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SourceFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemSource.Exclusives}}"
                                 Content="Exclusives"
                                 HorizontalAlignment="Stretch"
@@ -709,7 +718,7 @@
                                 CommandParameter="{x:Static items:ItemSource.Exclusives}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SourceFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemSource.Packs}}"
                                 Content="Packs"
                                 HorizontalAlignment="Stretch"
@@ -755,7 +764,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Common}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Common}}"/>
                             </Border>
                             <Border
@@ -774,7 +783,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Uncommon}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Uncommon}}"/>
                             </Border>
                             <Border
@@ -793,7 +802,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Rare}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Rare}}"/>
                             </Border>
                             <Border
@@ -812,7 +821,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Epic}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Epic}}"/>
                             </Border>
                             <Border
@@ -831,7 +840,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Legendary}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Legendary}}"/>
                             </Border>
                         </UniformGrid>
@@ -852,7 +861,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.FrozenSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.FrozenSeries}}"/>
                             </Border>
                             <Border
@@ -871,7 +880,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.LavaSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.LavaSeries}}"/>
                             </Border>
                             <Border
@@ -890,7 +899,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.DarkSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.DarkSeries}}"/>
                             </Border>
                             <Border
@@ -909,7 +918,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.SlurpSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.SlurpSeries}}"/>
                             </Border>
                             <Border
@@ -928,7 +937,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.ShadowSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.ShadowSeries}}"/>
                             </Border>
                         </UniformGrid>
@@ -949,7 +958,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.GamingSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.GamingSeries}}"/>
                             </Border>
                             <Border
@@ -968,7 +977,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.IconSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.IconSeries}}"/>
                             </Border>
                             <Border
@@ -987,7 +996,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.DcSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.DcSeries}}"/>
                             </Border>
                             <Border
@@ -1006,7 +1015,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.MarvelSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.MarvelSeries}}"/>
                             </Border>
                             <Border
@@ -1025,7 +1034,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.StarWarsSeries}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.StarWarsSeries}}"/>
                             </Border>
                         </UniformGrid>
@@ -1046,7 +1055,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Lamborghini}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Lamborghini}}"/>
                             </Border>
                             <Border
@@ -1065,7 +1074,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.McLaren}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.McLaren}}"/>
                             </Border>
                             <Border
@@ -1084,7 +1093,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Nissan}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Nissan}}"/>
                             </Border>
                             <Border
@@ -1103,7 +1112,7 @@
                                     Command="{Binding ViewModel.RarityCommand}"
                                     CommandParameter="{x:Static items:ItemRarity.Tesla}"
                                     Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumEnumerableContainsToColorTintConverter},
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Tesla}}"/>
                             </Border>
                         </UniformGrid>
@@ -1442,7 +1451,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button
                                 Background="{Binding ViewModel.TagFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemTag.Forged}}"
                                 Content="Forged"
                                 VerticalAlignment="Stretch"
@@ -1451,7 +1460,7 @@
                                 CommandParameter="{x:Static items:ItemTag.Forged}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemTag.Styles}}"
                                 Content="Styles"
                                 VerticalAlignment="Stretch"
@@ -1460,7 +1469,7 @@
                                 CommandParameter="{x:Static items:ItemTag.Styles}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             Converter={StaticResource EnumerableContainsToColorConverter},
                                              ConverterParameter={x:Static items:ItemTag.Enlightened}}"
                                 Content="Enlightened"
                                 HorizontalAlignment="Stretch"
@@ -1470,7 +1479,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemTag.Reactive}}"
                                 Content="Reactive"
                                 HorizontalAlignment="Stretch"
@@ -1478,7 +1487,7 @@
                                 CommandParameter="{x:Static items:ItemTag.Reactive}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemTag.Traversal}}"
                                 Content="Traversal"
                                 HorizontalAlignment="Stretch"
@@ -1486,7 +1495,7 @@
                                 CommandParameter="{x:Static items:ItemTag.Traversal}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             Converter={StaticResource EnumerableContainsToColorConverter},
                                              ConverterParameter={x:Static items:ItemTag.Transformation}}"
                                 Content="Transformation"
                                 HorizontalAlignment="Stretch"
@@ -1496,7 +1505,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemTag.Builtin}}"
                                 Content="Built-in"
                                 HorizontalAlignment="Stretch"
@@ -1504,7 +1513,7 @@
                                 CommandParameter="{x:Static items:ItemTag.Builtin}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                            Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                            Converter={StaticResource EnumerableContainsToColorConverter},
                                             ConverterParameter={x:Static items:ItemTag.Synced}}"
                                 Content="Synced"
                                 HorizontalAlignment="Stretch"
@@ -1512,7 +1521,7 @@
                                 CommandParameter="{x:Static items:ItemTag.Synced}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.TagFilter,
-                                             Converter={StaticResource EnumEnumerableContainsToColorConverter},
+                                             Converter={StaticResource EnumerableContainsToColorConverter},
                                              ConverterParameter={x:Static items:ItemTag.Animated}}"
                                 Content="Animated"
                                 HorizontalAlignment="Stretch"
@@ -1552,7 +1561,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button
                                 Background="{Binding ViewModel.SortFilter,
-                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            Converter={StaticResource EqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.Newest}}"
                                 Content="Newest"
                                 VerticalAlignment="Stretch"
@@ -1561,7 +1570,7 @@
                                 CommandParameter="{x:Static helperEnums:ItemSortFilter.Newest}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
-                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            Converter={StaticResource EqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.Oldest}}"
                                 Content="Oldest"
                                 VerticalAlignment="Stretch"
@@ -1572,7 +1581,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
-                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            Converter={StaticResource EqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.ShopMostRecent}}"
                                 Content="Most Recent in Shop"
                                 HorizontalAlignment="Stretch"
@@ -1580,7 +1589,7 @@
                                 CommandParameter="{x:Static helperEnums:ItemSortFilter.ShopMostRecent}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
-                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            Converter={StaticResource EqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.ShopLongestWait}}"
                                 Content="Longest Wait in Shop"
                                 HorizontalAlignment="Stretch"
@@ -1590,7 +1599,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
-                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            Converter={StaticResource EqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.AtoZ}}"
                                 Content="A to Z"
                                 HorizontalAlignment="Stretch"
@@ -1598,7 +1607,7 @@
                                 CommandParameter="{x:Static helperEnums:ItemSortFilter.AtoZ}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
-                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            Converter={StaticResource EqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.ZtoA}}"
                                 Content="Z to A"
                                 HorizontalAlignment="Stretch"
@@ -1608,7 +1617,7 @@
                         <UniformGrid Rows="1">
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
-                                            Converter={StaticResource EnumEqualsToColorConverter},
+                                            Converter={StaticResource EqualsToColorConverter},
                                             ConverterParameter={x:Static helperEnums:ItemSortFilter.Rarity}}"
                                 Content="Item Rarity"
                                 HorizontalAlignment="Stretch"
@@ -1616,7 +1625,7 @@
                                 CommandParameter="{x:Static helperEnums:ItemSortFilter.Rarity}"/>
                             <ui:Button 
                                 Background="{Binding ViewModel.SortFilter,
-                                             Converter={StaticResource EnumEqualsToColorConverter},
+                                             Converter={StaticResource EqualsToColorConverter},
                                              ConverterParameter={x:Static helperEnums:ItemSortFilter.Type}}"
                                 Content="Item Type"
                                 HorizontalAlignment="Stretch"
@@ -1642,7 +1651,7 @@
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:ItemWithImageModel}">
+                <DataTemplate DataType="{x:Type models:ItemPresentationModel}">
                     <Border
                         Width="105"
                         Height="130"
@@ -1659,15 +1668,64 @@
                                 ImageSource="{Binding BitmapFrame, Mode=OneWay}"
                                 RenderOptions.BitmapScalingMode="LowQuality"/>
                         </Border.Background>
-                        <ui:Button
+                        <Grid
                             Width="105"
-                            Height="130"
-                            CornerRadius="4"
-                            Background="#00000000"
-                            MouseOverBackground="#30FFFFFF"
-                            ToolTip="{Binding Name, Mode=OneWay}"
-                            >
-                        </ui:Button>
+                            Height="130">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <ui:Flyout
+                                Grid.Row="0"
+                                IsOpen="{Binding DetailFlyoutOpened, Mode=OneWay}">
+                                <StackPanel>
+                                    <ui:TextBlock
+                                        HorizontalAlignment="Center"
+                                        FontSize="26"
+                                        Text="{Binding Name, Mode=OneWay}"
+                                        />
+                                    <StackPanel 
+                                        HorizontalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <ui:TextBlock
+                                            FontSize="18"
+                                            Text="{Binding Rarity, 
+                                            Converter={StaticResource ItemRarityToStringConverter}}" />
+                                        <ui:TextBlock FontSize="18" Text=" " />
+                                        <ui:TextBlock
+                                            FontSize="18"
+                                            Text="{Binding Type, 
+                                            Converter={StaticResource ItemTypeToStringConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel 
+                                        Orientation="Horizontal">
+                                        <ui:TextBlock
+                                            Text="Source: " />
+                                        <ui:TextBlock
+                                            Text="{Binding Source, 
+                                            Converter={StaticResource ItemSourceToStringConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel
+                                         Orientation="Horizontal">
+                                        <ui:TextBlock
+                                            Text="Season: " />
+                                        <ui:TextBlock
+                                            Text="{Binding Season, 
+                                            Converter={StaticResource SeasonStringToReadableStringConverter}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </ui:Flyout>
+                            <ui:Button
+                                Grid.Row="1"
+                                Width="105"
+                                Height="130"
+                                CornerRadius="4"
+                                Background="#00000000"
+                                MouseOverBackground="#30FFFFFF"
+                                ToolTip="{Binding Name, Mode=OneWay}"
+                                Command="{Binding ToggleItemDetailFlyoutCommand}"
+                            />
+                        </Grid>
                     </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

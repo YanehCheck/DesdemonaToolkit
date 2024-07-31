@@ -3,14 +3,23 @@ using YanehCheck.EpicGamesUtils.BL.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 
+/// <summary>
+/// Version of <see cref="ItemModel"/> with added presentation-related properties and commands.
+/// </summary>
 [INotifyPropertyChanged]
-public partial class ItemWithImageModel : ItemModel {
+public partial class ItemPresentationModel : ItemModel {
     [ObservableProperty] 
     private BitmapFrame? _bitmapFrame;
 
-    public ItemWithImageModel() { }
+    [ObservableProperty] 
+    private bool _detailFlyoutOpened;
 
-    public ItemWithImageModel(ItemModel item) {
+    [RelayCommand]
+    public void ToggleItemDetailFlyout() => DetailFlyoutOpened = !DetailFlyoutOpened;
+
+    public ItemPresentationModel() { }
+
+    public ItemPresentationModel(ItemModel item) {
         Id = item.Id;
         FortniteId = item.FortniteId;
         FortniteGgId = item.FortniteGgId;

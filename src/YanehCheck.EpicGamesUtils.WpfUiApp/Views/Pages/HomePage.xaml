@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:homePage="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.HomePage"
     Title="Home Page"
     d:DataContext="{d:DesignInstance local:HomePage,
                                      IsDesignTimeCreatable=False}"
@@ -15,6 +16,16 @@
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <homePage:ExpiryDateToColorConverter x:Key="ExpiryDateToColorConverter" />
+        <homePage:ExpiryDateToStringConverter x:Key="ExpiryDateToStringConverter" />
+        <homePage:ExpiryDateToVisibilityConverter x:Key="ExpiryDateToVisibilityConverter" />
+
+        <homePage:ItemFetchSourceToStringConverter x:Key="ItemFetchSourceToStringConverter" />
+        <homePage:FetchDateToColorConverter x:Key="FetchDateToColorConverter" />
+        <homePage:FetchDateToStringConverter x:Key="FetchDateToStringConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>

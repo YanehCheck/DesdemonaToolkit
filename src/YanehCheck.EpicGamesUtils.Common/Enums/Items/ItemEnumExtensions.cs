@@ -1,6 +1,6 @@
 ﻿namespace YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
-public class ItemEnumExtensions {
+public static class ItemEnumExtensions {
     public static ItemRarity FromStringToItemRarity(string value) {
         string formattedValue = string.Concat(value.Split(' ', '-')).ToLower();
 
@@ -28,6 +28,31 @@ public class ItemEnumExtensions {
         };
     }
 
+    public static string ToReadableString(this ItemRarity rarity) {
+        return rarity switch {
+            ItemRarity.Common => "Common",
+            ItemRarity.Uncommon => "Uncommon",
+            ItemRarity.Rare => "Rare",
+            ItemRarity.Epic => "Epic",
+            ItemRarity.Legendary => "Legendary",
+            ItemRarity.McLaren => "McLaren",
+            ItemRarity.Nissan => "Nissan",
+            ItemRarity.Tesla => "Tesla",
+            ItemRarity.Lamborghini => "Lamborghini",
+            ItemRarity.StarWarsSeries => "Star Wars Series",
+            ItemRarity.SlurpSeries => "Slurp Series",
+            ItemRarity.ShadowSeries => "Shadow Series",
+            ItemRarity.MarvelSeries => "Marvel Series",
+            ItemRarity.LavaSeries => "Lava Series",
+            ItemRarity.IconSeries => "Icon Series",
+            ItemRarity.GamingSeries => "Gaming Legends Series",
+            ItemRarity.FrozenSeries => "Frozen Series",
+            ItemRarity.DcSeries => "DC Series",
+            ItemRarity.DarkSeries => "Dark Series",
+            _ => "Unknown"
+        };
+    }
+
     public static ItemSource FromStringToItemSource(string value) {
         string formattedValue = string.Concat(value.Split(' ', '-')).ToLower();
 
@@ -39,6 +64,18 @@ public class ItemEnumExtensions {
             "exclusives" => ItemSource.Exclusives,
             "packs" => ItemSource.Packs,
             _ => ItemSource.Unknown
+        };
+    }
+
+    public static string ToReadableString(this ItemSource source) {
+        return source switch {
+            ItemSource.Shop => "Shop",
+            ItemSource.BattlePass => "Battle Pass",
+            ItemSource.Crew => "Fortnite Crew",
+            ItemSource.Challenges => "Challenges",
+            ItemSource.Exclusives => "Exclusives",
+            ItemSource.Packs => "Packs",
+            _ => "Unknown"
         };
     }
 
@@ -58,6 +95,21 @@ public class ItemEnumExtensions {
             "enlightened" => ItemTag.Enlightened,
             // TODO: Do something about this exception
             _ => throw new ArgumentException($"Unknown item tag: {value}")
+        };
+    }
+
+    public static string ToReadableString(this ItemTag tag) {
+        return tag switch {
+            ItemTag.Forged => "Forged",
+            ItemTag.Styles => "Selectable/Unlockable Styles",
+            ItemTag.Reactive => "Reactive",
+            ItemTag.Traversal => "Traversal",
+            ItemTag.Builtin => "Built-in",
+            ItemTag.Synced => "Synced Emote",
+            ItemTag.Animated => "Animated",
+            ItemTag.Transformation => "Transformation",
+            ItemTag.Enlightened => "Enlightened",
+            _ => throw new ArgumentException($"Unknown item tag: {tag}")
         };
     }
 
@@ -94,6 +146,40 @@ public class ItemEnumExtensions {
             "microphone" => ItemType.Microphone,
             "aura" => ItemType.Aura,
             _ => ItemType.Unknown
+        };
+    }
+
+    public static string ToReadableString(this ItemType type) {
+        return type switch {
+            ItemType.Outfit => "Outfit",
+            ItemType.Backpack => "Backbling",
+            ItemType.Wrap => "Wrap",
+            ItemType.Pickaxe => "Pickaxe",
+            ItemType.Bundle => "Bundle",
+            ItemType.Emote => "Emote",
+            ItemType.Glider => "Glider",
+            ItemType.LoadingScreen => "Loading Screen",
+            ItemType.Music => "Music",
+            ItemType.Contrail => "Contrail",
+            ItemType.Spray => "Spray",
+            ItemType.Emoji => "Emoji",
+            ItemType.Toy => "Toy",
+            ItemType.Banner => "Banner",
+            ItemType.Build => "Build",
+            ItemType.Decor => "Decor",
+            ItemType.Car => "Car",
+            ItemType.Decal => "Decal",
+            ItemType.Wheels => "Wheels",
+            ItemType.Trail => "Trail",
+            ItemType.Boost => "Boost",
+            ItemType.Jamtrack => "Jam Track",
+            ItemType.Guitar => "Guitar",
+            ItemType.Bass => "Bass",
+            ItemType.Drums => "Drums",
+            ItemType.Keytar => "Keytar",
+            ItemType.Microphone => "Microphone",
+            ItemType.Aura => "Aura",
+            _ => "Unknown"
         };
     }
 }

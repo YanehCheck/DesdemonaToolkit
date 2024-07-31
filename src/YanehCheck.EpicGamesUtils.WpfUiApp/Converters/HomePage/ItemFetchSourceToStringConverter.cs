@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.HomePage;
 
 public class ItemFetchSourceToStringConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {

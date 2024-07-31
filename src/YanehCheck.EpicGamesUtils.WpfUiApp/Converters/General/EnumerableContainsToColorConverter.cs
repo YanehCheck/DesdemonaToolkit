@@ -1,17 +1,18 @@
-﻿using System.Globalization;
+﻿using System.Collections;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 
-public class EnumEqualsToColorConverter : IValueConverter {
+public class EnumerableContainsToColorConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if(value == null || parameter == null) {
             return Colors.Transparent;
         }
 
-        if(value.GetType().IsEnum && parameter.GetType().IsEnum) {
-            if(value.Equals(parameter)) {
+        if(value is IEnumerable list) {
+            if (list.Cast<object?>().Any(item => item.Equals(parameter))) {
                 return Application.Current.Resources["SolidBackgroundFillColorTertiaryBrush"] ?? Brushes.Red;
             }
         }

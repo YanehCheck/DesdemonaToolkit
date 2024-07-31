@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 

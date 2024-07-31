@@ -1,4 +1,5 @@
-﻿using Wpf.Ui;
+﻿using System.Collections.ObjectModel;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.BL.Models;
@@ -11,12 +12,13 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
-public partial class ItemsViewModel(
-    IEpicGamesService epicGamesService,
-    IItemFacade itemFacade,
-    ISessionService sessionService,
-    ISnackbarService snackbarService,
-    IFortniteGgImageDownloader imageDownloader) : ObservableObject, IViewModel, INavigationAware {
+public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationAware {
+    private readonly IEpicGamesService epicGamesService;
+    private readonly IItemFacade itemFacade;
+    private readonly ISessionService sessionService;
+    private readonly ISnackbarService snackbarService;
+    private readonly IFortniteGgImageDownloader imageDownloader;
+
     private string _initializedForAccountId = "";
 
     [ObservableProperty]
@@ -25,19 +27,21 @@ public partial class ItemsViewModel(
     private IEnumerable<ItemWithImageModel> sortedItems = [];
     private IEnumerable<ItemWithImageModel> items = [];
 
+    public bool AnyFilterApplied => SourceFilter.Any() || RarityFilter.Any() || SeasonFilter.Any() || TagFilter.Any();
+
     [ObservableProperty] 
     private string _search = "";
 
     [ObservableProperty] 
     private ItemTypeFilter _typeFilter = ItemTypeFilter.All;
     [ObservableProperty] 
-    private IEnumerable<ItemSource> _sourceFilter = [];
+    private ObservableCollection<ItemSource> _sourceFilter = [];
     [ObservableProperty]
-    private IEnumerable<ItemRarity> _rarityFilter = [];
+    private ObservableCollection<ItemRarity> _rarityFilter = [];
     [ObservableProperty]
-    private IEnumerable<string> _seasonFilter = [];
+    private ObservableCollection<string> _seasonFilter = [];
     [ObservableProperty]
-    private IEnumerable<ItemTag> _tagFilter = [];
+    private ObservableCollection<ItemTag> _tagFilter = [];
     [ObservableProperty]
     private ItemSortFilter _sortFilter = ItemSortFilter.Newest;
 
@@ -52,7 +56,30 @@ public partial class ItemsViewModel(
     [ObservableProperty]
     private bool _sortFilterFlyoutOpen = false;
 
+
+    /// <inheritdoc/>
+    public ItemsViewModel(IEpicGamesService epicGamesService,
+        IItemFacade itemFacade,
+        ISessionService sessionService,
+        ISnackbarService snackbarService,
+        IFortniteGgImageDownloader imageDownloader) {
+        this.epicGamesService = epicGamesService;
+        this.itemFacade = itemFacade;
+        this.sessionService = sessionService;
+        this.snackbarService = snackbarService;
+        this.imageDownloader = imageDownloader;
+    }
+
     #region FilteringSortingSearchingMethods
+
+    [RelayCommand]
+    public void ClearFilters() {
+        SourceFilter = [];
+        RarityFilter = [];
+        SeasonFilter = [];
+        TagFilter = [];
+        FilterAndSearchUpdate();
+    }
 
     [RelayCommand]
     public void ToggleSourceFilterFlyout()  {
@@ -88,33 +115,41 @@ public partial class ItemsViewModel(
 
     [RelayCommand]
     public void OnSource(ItemSource source) {
-        SourceFilter = SourceFilter.Contains(source)
+        SourceFilter = new ObservableCollection<ItemSource>(
+            SourceFilter.Contains(source)
             ? SourceFilter.Where(s => s != source)
-            : SourceFilter.Append(source);
+            : SourceFilter.Append(source));
+        OnPropertyChanged(nameof(AnyFilterApplied));
         FilterAndSearchUpdate();
     }
 
     [RelayCommand]
     public void OnRarity(ItemRarity rarity) {
-        RarityFilter = RarityFilter.Contains(rarity)
+        RarityFilter = new ObservableCollection<ItemRarity>(
+            RarityFilter.Contains(rarity)
             ? RarityFilter.Where(s => s != rarity)
-            : RarityFilter.Append(rarity);
+            : RarityFilter.Append(rarity));
+        OnPropertyChanged(nameof(AnyFilterApplied));
         FilterAndSearchUpdate();
     }
 
     [RelayCommand]
     public void OnTag(ItemTag tag) {
-        TagFilter = TagFilter.Contains(tag)
+        TagFilter = new ObservableCollection<ItemTag>(
+            TagFilter.Contains(tag)
             ? TagFilter.Where(s => s != tag)
-            : TagFilter.Append(tag);
+            : TagFilter.Append(tag));
+        OnPropertyChanged(nameof(AnyFilterApplied));
         FilterAndSearchUpdate();
     }
 
     [RelayCommand]
     public void OnSeason(string season) {
-        SeasonFilter = SeasonFilter.Contains(season)
+        SeasonFilter = new ObservableCollection<string>(
+            SeasonFilter.Contains(season)
             ? SeasonFilter.Where(s => s != season)
-            : SeasonFilter.Append(season);
+            : SeasonFilter.Append(season));
+        OnPropertyChanged(nameof(AnyFilterApplied));
         FilterAndSearchUpdate();
     }
 

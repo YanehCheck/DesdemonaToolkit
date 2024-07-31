@@ -13,6 +13,7 @@
                 <ui:ThemesDictionary Theme="Light" />
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
             <converters:ExpiryDateToColorConverter x:Key="ExpiryDateToColorConverter" />
             <converters:ExpiryDateToStringConverter x:Key="ExpiryDateToStringConverter" />

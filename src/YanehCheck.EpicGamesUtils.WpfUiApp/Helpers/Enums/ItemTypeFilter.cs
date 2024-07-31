@@ -4,7 +4,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 
 public enum ItemTypeFilter
 {
-    // Follows structure of ItemType type
+    // Follows structure of (ItemType type - 1)
     Outfit, // 0
     Backpack,
     Wrap,
@@ -50,7 +50,7 @@ public static class ItemTypeFilterExtensions
     public static bool Satisfied(this ItemTypeFilter filter, ItemType itemType)
     {
         var filterN = (int)filter;
-        var itemTypeN = (int)itemType;
+        var itemTypeN = (int)itemType - 1;
 
         if (filter == ItemTypeFilter.All)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Web;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
 using YanehCheck.EpicGamesUtils.BL.Models;
@@ -9,6 +10,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
+/// <inheritdoc cref="IUriItemProvider"/>
 public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mapper, IOptions<ItemFetchOptions> options) : IUriItemProvider
 {
     public async Task<IEnumerable<ItemModel>?> GetItemsAsync()
@@ -21,7 +23,14 @@ public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mappe
             }
 
             var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(response.Content!);
-            return items.Select(mapper.MapToModel);
+            return items.Select(i => {
+                i.Name = HttpUtility.HtmlDecode(i.Name);
+                i.Description = HttpUtility.HtmlDecode(i.Description);
+                i.SourceDescription = HttpUtility.HtmlDecode(i.SourceDescription);
+                i.Set = HttpUtility.HtmlDecode(i.Set);
+                i.Styles = i.Styles.Select(HttpUtility.HtmlDecode)!;
+                return mapper.MapToModel(i);
+            });
         }
         catch (Exception e) {
             return null;

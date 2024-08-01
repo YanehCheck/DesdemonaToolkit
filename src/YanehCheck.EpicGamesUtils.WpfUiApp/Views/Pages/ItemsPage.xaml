@@ -1678,6 +1678,11 @@
                             <ui:Flyout
                                 Grid.Row="0"
                                 IsOpen="{Binding DetailFlyoutOpened, Mode=OneWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostMouseCapture">
+                                        <i:InvokeCommandAction Command="{Binding ToggleItemDetailFlyoutCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                                 <StackPanel>
                                     <TextBlock
                                         HorizontalAlignment="Center"

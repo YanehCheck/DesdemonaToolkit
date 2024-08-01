@@ -17,6 +17,8 @@ public partial class ItemPresentationModel : ItemModel {
     [RelayCommand]
     public void ToggleItemDetailFlyout() => DetailFlyoutOpened = !DetailFlyoutOpened;
 
+    public bool FromChallenge => PriceVbucks == null && PriceUsd == null && SourceDescription != null;
+
     public ItemPresentationModel() { }
 
     public ItemPresentationModel(ItemModel item) {

@@ -24,9 +24,10 @@
     <Page.Resources>
         <converters:ItemRarityToStringConverter x:Key="ItemRarityToStringConverter" />
         <converters:ItemSourceToStringConverter x:Key="ItemSourceToStringConverter" />
-        <converters:ItemTagToStringConverter x:Key="ItemTagToStringConverter" />
+        <converters:ItemTagEnumerableToStringConverter x:Key="ItemTagEnumerableToStringConverter" />
         <converters:ItemTypeToStringConverter x:Key="ItemTypeToStringConverter" />
         <converters:SeasonStringToReadableStringConverter x:Key="SeasonStringToReadableStringConverter" />
+        <converters:StringToStringTitleCaseConverter x:Key="StringToStringTitleCaseConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -1644,7 +1645,6 @@
         <ui:VirtualizingItemsControl
             Grid.Row="2"
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-            d:ItemsSource="{d:SampleData}"
             ItemsSource="{Binding ViewModel.PresentedItems, Mode=OneWay}"
             VirtualizingPanel.CacheLengthUnit="Item"
             VirtualizingPanel.CacheLength="8"
@@ -1679,14 +1679,15 @@
                                 Grid.Row="0"
                                 IsOpen="{Binding DetailFlyoutOpened, Mode=OneWay}">
                                 <StackPanel>
-                                    <ui:TextBlock
+                                    <TextBlock
                                         HorizontalAlignment="Center"
                                         FontSize="26"
                                         Text="{Binding Name, Mode=OneWay}"
                                         />
                                     <StackPanel 
                                         HorizontalAlignment="Center"
-                                        Orientation="Horizontal">
+                                        Orientation="Horizontal"
+                                        Margin="0,2">
                                         <ui:TextBlock
                                             FontSize="18"
                                             Text="{Binding Rarity, 
@@ -1697,8 +1698,96 @@
                                             Text="{Binding Type, 
                                             Converter={StaticResource ItemTypeToStringConverter}}" />
                                     </StackPanel>
-                                    <StackPanel 
+                                    <StackPanel
+                                        HorizontalAlignment="Center" 
                                         Orientation="Horizontal">
+                                        <StackPanel
+                                            HorizontalAlignment="Center" 
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding PriceVbucks, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                            <ui:Image
+                                                Background="Transparent"
+                                                Width="20"
+                                                Height="20"
+                                                Margin="0,2,1,0"
+                                                Source="pack://application:,,,/Assets/Images/vbucks.png"
+                                            />
+                                            <ui:TextBlock
+                                                FontSize="18"
+                                                Text="{Binding PriceVbucks}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Visibility="{Binding SourceDescription, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                                <ui:TextBlock
+                                                    FontSize="18"
+                                                    Text=" (" />
+                                                <ui:TextBlock
+                                                    FontSize="18"
+                                                    Text="{Binding SourceDescription, Converter={StaticResource StringToStringTitleCaseConverter}}" />
+                                                <ui:TextBlock
+                                                    FontSize="18"
+                                                    Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel
+                                            HorizontalAlignment="Center" 
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding PriceUsd, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                            <ui:TextBlock
+                                                FontSize="18"
+                                                Text="$"/>
+                                            <ui:TextBlock
+                                                FontSize="18"
+                                                Text="{Binding PriceUsd}" />
+                                            <StackPanel
+                                                Orientation="Horizontal"
+                                                Visibility="{Binding SourceDescription, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                                <ui:TextBlock
+                                                    FontSize="18"
+                                                    Text=" (" />
+                                                <ui:TextBlock
+                                                    FontSize="18"
+                                                    Text="{Binding SourceDescription, Converter={StaticResource StringToStringTitleCaseConverter}}" />
+                                                <ui:TextBlock
+                                                    FontSize="18"
+                                                    Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                        <StackPanel
+                                            HorizontalAlignment="Center" 
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding FromChallenge, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                            <ui:Image
+                                                Background="Transparent"
+                                                Width="20"
+                                                Height="20"
+                                                Margin="0,2,2,0"
+                                                Source="pack://application:,,,/Assets/Images/challenges.png"
+                                            />
+                                            <ui:TextBlock
+                                                FontSize="18"
+                                                Text="{Binding SourceDescription, Converter={StaticResource StringToStringTitleCaseConverter}}" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <TextBlock
+                                        Margin="0,5,0,0"
+                                        Visibility="{Binding Description, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}"
+                                        Text="{Binding Description}"
+                                        FontStyle="Italic"
+                                        HorizontalAlignment="Center"
+                                        />
+                                    <TextBlock
+                                        Margin="0,5,0,0"
+                                        Visibility="{Binding Tags, Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}"
+                                        Text="{Binding Tags, 
+                                             Converter={StaticResource ItemTagEnumerableToStringConverter}}"
+                                        HorizontalAlignment="Center"/>
+                                    <StackPanel 
+                                        Margin="0,5,0,0"
+                                        Orientation="Horizontal"
+                                        Visibility="{Binding Source, Converter={StaticResource EqualsToVisibilityCollapseConverter},
+                                                    ConverterParameter={x:Static items:ItemSource.Unknown}}">
                                         <ui:TextBlock
                                             Text="Source: " />
                                         <ui:TextBlock
@@ -1706,12 +1795,39 @@
                                             Converter={StaticResource ItemSourceToStringConverter}}" />
                                     </StackPanel>
                                     <StackPanel
-                                         Orientation="Horizontal">
+                                         Orientation="Horizontal"
+                                         Visibility="{Binding Season, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
                                         <ui:TextBlock
                                             Text="Season: " />
                                         <ui:TextBlock
                                             Text="{Binding Season, 
                                             Converter={StaticResource SeasonStringToReadableStringConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Visibility="{Binding Release, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                        <ui:TextBlock
+                                            Text="Released: " />
+                                        <ui:TextBlock
+                                            Text="{Binding Release, 
+                                            Converter={StaticResource DateTimeToDateStringConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Visibility="{Binding LastSeen, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                        <ui:TextBlock
+                                            Text="Last seen: " />
+                                        <ui:TextBlock
+                                            Text="{Binding LastSeen, 
+                                            Converter={StaticResource DateTimeToDateStringConverter}}" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Orientation="Horizontal"
+                                        Visibility="{Binding Set, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                        <ui:TextBlock
+                                            Text="Set: " />
+                                        <ui:TextBlock
+                                            Text="{Binding Set}" />
                                     </StackPanel>
                                 </StackPanel>
                             </ui:Flyout>

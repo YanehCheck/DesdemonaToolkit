@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <None Remove="Assets\icon.png" />
+    <None Remove="Assets\Images\challenges.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-all.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-aura.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-backpack.png" />
@@ -95,6 +96,7 @@
     <None Remove="Assets\Images\Rarities\rarity-tesla.png" />
     <None Remove="Assets\Images\Rarities\rarity-uncommon.png" />
     <None Remove="Assets\desdemona-bg-1920.jpg" />
+    <None Remove="Assets\Images\vbucks.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -117,6 +119,7 @@
 
   <ItemGroup>
     <Resource Include="Assets\icon.png" />
+    <Resource Include="Assets\Images\challenges.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-backpack.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-banner.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-body.png" />
@@ -166,6 +169,7 @@
     <Resource Include="Assets\Images\Rarities\rarity-tesla.png" />
     <Resource Include="Assets\Images\Rarities\rarity-uncommon.png" />
     <Resource Include="Assets\Images\desdemona-bg-1920.jpg" />
+    <Resource Include="Assets\Images\vbucks.png" />
   </ItemGroup>
 
   <ItemGroup>

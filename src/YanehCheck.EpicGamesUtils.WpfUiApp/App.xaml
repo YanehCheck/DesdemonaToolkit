@@ -15,7 +15,16 @@
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
 
+            <generalConverters:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter"/>
+
+            <generalConverters:EnumerableAnyToVisibilityCollapseConverter x:Key="EnumerableAnyToVisibilityCollapseConverter"/>
+
             <generalConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <generalConverters:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverter" />
+            <generalConverters:ObjectNullToVisibilityConverter x:Key="ObjectNullToVisibilityConverter" />
+            <generalConverters:ObjectNullToVisibilityCollapseConverter x:Key="ObjectNullToVisibilityCollapseConverter" />
+            <generalConverters:EqualsToVisibilityConverter x:Key="EqualsToVisibilityConverter" />
+            <generalConverters:EqualsToVisibilityCollapseConverter x:Key="EqualsToVisibilityCollapseConverter" />
             <generalConverters:EnumToStringConverter x:Key="EnumToStringConverter" />
 
             <generalConverters:EnumerableAnyToColorConverter x:Key="EnumerableAnyToColorConverter" />

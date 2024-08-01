@@ -1,16 +1,11 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
-using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 
-public class ItemTagToStringConverter : IValueConverter {
+public class ObjectNullToVisibilityConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-        return value switch {
-            null => "",
-            ItemTag tag => tag.ToReadableString(),
-            _ => ""
-        };
+        return value is not null ? Visibility.Visible : Visibility.Hidden;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

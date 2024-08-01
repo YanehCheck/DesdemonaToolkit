@@ -65,6 +65,7 @@ public partial class App {
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ISnackbarService, SnackbarService>();
 
+            services.AddSingleton<IFileSaveDialogService, FileSaveDialogService>();
             services.AddSingleton<IBrowserService, BrowserService>();
             services.AddSingleton<IPersistenceProvider, PersistenceProvider>();
             services.AddSingleton<ISessionService, SessionService>();

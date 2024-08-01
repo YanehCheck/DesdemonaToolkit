@@ -18,6 +18,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private readonly ISessionService sessionService;
     private readonly ISnackbarService snackbarService;
     private readonly IFortniteGgImageDownloader imageDownloader;
+    private readonly IFileSaveDialogService fileSaveService;
 
     private string _initializedForAccountId = "";
 
@@ -45,6 +46,9 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     [ObservableProperty]
     private ItemSortFilter _sortFilter = ItemSortFilter.Newest;
 
+
+    [ObservableProperty]
+    private bool _exportFlyoutOpen = false;
     [ObservableProperty] 
     private bool _sourceFilterFlyoutOpen = false;
     [ObservableProperty]
@@ -62,12 +66,30 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         IItemFacade itemFacade,
         ISessionService sessionService,
         ISnackbarService snackbarService,
-        IFortniteGgImageDownloader imageDownloader) {
+        IFortniteGgImageDownloader imageDownloader,
+        IFileSaveDialogService fileSaveService) {
         this.epicGamesService = epicGamesService;
         this.itemFacade = itemFacade;
         this.sessionService = sessionService;
         this.snackbarService = snackbarService;
         this.imageDownloader = imageDownloader;
+        this.fileSaveService = fileSaveService;
+    }
+
+    [RelayCommand]
+    public void ExportInventory(InventoryExport to) {
+        if (to == InventoryExport.Text) {
+            var names = PresentedItems.Select(i => i.Name);
+            var content = string.Join('\n', names);
+            var fileName = $"{sessionService.DisplayName}-inventory-{DateTime.Now:yyyy-M-d}";
+            fileSaveService.SaveTextFile(content, fileName);
+        }
+    }
+
+    [RelayCommand]
+    public void ToggleExportFlyout() {
+        ExportFlyoutOpen = false; // Maybe just keep it true and trigger notify?
+        ExportFlyoutOpen = true;
     }
 
     #region FilteringSortingSearchingMethods

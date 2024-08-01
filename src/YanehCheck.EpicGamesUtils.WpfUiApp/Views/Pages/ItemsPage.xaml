@@ -645,6 +645,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <ui:TextBox 
                 Margin="10,0,0,0"
@@ -1640,6 +1641,37 @@
                     Grid.Row="1"
                     Content="Sort"
                     Command="{Binding ViewModel.ToggleSortFilterFlyoutCommand}"/>
+            </Grid>
+            <Grid
+                Grid.Column="8"
+                Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <ui:Flyout
+                    Grid.Row="0"
+                    Placement="Left"
+                    IsOpen="{Binding ViewModel.ExportFlyoutOpen, Mode=OneWay}">
+                    <StackPanel
+                        Orientation="Vertical">
+                        <ui:Button 
+                                Content="Text"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ViewModel.ExportInventoryCommand}"
+                                CommandParameter="{x:Static helperEnums:InventoryExport.Text}"/>
+                        <ui:Button 
+                            Content="Image"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding ViewModel.ExportInventoryCommand}"
+                            CommandParameter="{x:Static helperEnums:InventoryExport.Image}"/>
+                    </StackPanel>
+                </ui:Flyout>
+                <ui:Button
+                    Margin="0,2,0,0"
+                    Grid.Row="1"
+                    Content="Export"
+                    Command="{Binding ViewModel.ToggleExportFlyoutCommand}"/>
             </Grid>
         </Grid>
         <ui:VirtualizingItemsControl

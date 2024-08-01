@@ -21,7 +21,7 @@ public class FileSaveDialogService : IFileSaveDialogService {
         }
     }
 
-    public void SaveImageFile(Image<Rgba32> image, string fileName, string defaultExt = ".png", string filter = "Image files (*.png)|*.png|All files (*.*)|*.*") {
+    public void SaveImageFile(Image<Bgra32> image, string fileName, string defaultExt = ".png", string filter = "Image files (*.png)|*.png|All files (*.*)|*.*") {
         var dialog = new SaveFileDialog {
             FileName = fileName,
             DefaultExt = defaultExt,

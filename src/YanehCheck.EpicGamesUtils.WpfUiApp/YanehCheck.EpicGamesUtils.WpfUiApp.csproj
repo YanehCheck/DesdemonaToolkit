@@ -39,6 +39,7 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.122" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Scrutor" Version="4.2.2" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
     <PackageReference Include="WPF-UI" Version="3.0.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0 " />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2 " />

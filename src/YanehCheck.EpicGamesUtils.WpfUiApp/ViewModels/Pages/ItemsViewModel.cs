@@ -152,10 +152,14 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         sortedItems = sort switch {
             ItemSortFilter.AtoZ => items.OrderBy(i => i.Name),
             ItemSortFilter.ZtoA => items.OrderByDescending(i => i.Name),
-            ItemSortFilter.Newest => items.OrderByDescending(i => i.Release),
-            ItemSortFilter.Oldest => items.OrderBy(i => i.Release),
-            ItemSortFilter.ShopMostRecent => items.OrderByDescending(i => i.LastSeen),
-            ItemSortFilter.ShopLongestWait => items.OrderBy(i => i.LastSeen),
+            ItemSortFilter.Newest => items.OrderByDescending(i => i.Release ?? DateTime.MaxValue)
+                .ThenBy(i => i.Set)
+                .ThenBy(i => i.Type),
+            ItemSortFilter.Oldest => items.OrderBy(i => i.Release ?? DateTime.MaxValue)
+                .ThenBy(i => i.Set)
+                .ThenBy(i => i.Type),
+            ItemSortFilter.ShopMostRecent => items.OrderByDescending(i => i.LastSeen ?? DateTime.MinValue),
+            ItemSortFilter.ShopLongestWait => items.OrderBy(i => i.LastSeen ?? DateTime.MaxValue),
             ItemSortFilter.Rarity => items.OrderByDescending(i => i.Rarity)
                 .ThenBy(i => i.Set) // This should somewhat group related items together
                 .ThenBy(i => i.Type), 

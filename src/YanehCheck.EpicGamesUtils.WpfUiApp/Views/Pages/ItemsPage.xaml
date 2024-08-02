@@ -1671,6 +1671,7 @@
                     Margin="0,2,0,0"
                     Grid.Row="1"
                     Content="Export"
+                    IsEnabled="{Binding ViewModel.PresentedItems, Converter={StaticResource EnumerableAnyToBoolConverter}}"
                     Command="{Binding ToggleExportFlyoutCommand}"/>
             </Grid>
         </Grid>

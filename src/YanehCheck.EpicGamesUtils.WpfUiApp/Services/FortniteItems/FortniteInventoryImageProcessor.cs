@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Microsoft.Extensions.Options;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -6,92 +7,103 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Extensions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using Color = SixLabors.ImageSharp.Color;
+using Font = SixLabors.Fonts.Font;
+using FontFamily = SixLabors.Fonts.FontFamily;
+using Image = SixLabors.ImageSharp.Image;
 using Point = SixLabors.ImageSharp.Point;
+using PointF = SixLabors.ImageSharp.PointF;
+using Rectangle = SixLabors.ImageSharp.Rectangle;
+using RectangleF = SixLabors.ImageSharp.RectangleF;
+using Size = SixLabors.ImageSharp.Size;
+using TextOptions = SixLabors.Fonts.TextOptions;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
 public interface IFortniteInventoryImageProcessor {
     Image Create(List<ItemPresentationModel> items);
 }
-public class FortniteInventoryImageProcessor : IFortniteInventoryImageProcessor {
-    private readonly bool addWatermark = true;
-    private int watermarkHeight = 250;
-    private readonly string watermarkMainText = "DESDEMONA TOOLKIT";
-    private readonly string watermarkSecondaryText = "FREE AND OPEN-SOURCE.";
-    private readonly string watermarkTernaryText = "GITHUB.COM/YANEHCHECK/DESDEMONATOOLKIT";
-
-    private int itemsPerRow = 10;
-    private readonly int spacing = 0;
-
-    private readonly int itemHeight = 260;
-    private readonly int itemWidth = 210;
-    private readonly Color backgroundColor = Color.Black;
-
-    private readonly int nameTextPaddingLr = 5;
-    private readonly int nameTextPaddingTb = 2;
-    private readonly byte nameRectangleTransparency = 160;
-    private readonly int nameRectangleHeight = 40;
-    private readonly Color fontColor = Color.White;
-    private readonly float fontSize = 35f;
-    private readonly float fontDownsizeStep = 1f;
+public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> options) : IFortniteInventoryImageProcessor {
+    private readonly bool addLogo = true;
+    private readonly int logoHeight = 250;
+    private readonly string logoMainText = "DESDEMONA TOOLKIT";
+    private readonly string logoSecondaryText = "FREE AND OPEN-SOURCE";
+    private readonly string logoTernaryText = "GITHUB.COM/YANEHCHECK/DESDEMONATOOLKIT";
+    private readonly int logoSeparatorWidth = 10;
 
     public Image Create(List<ItemPresentationModel> items) {
-        if (items.Count < 10) {
+        var itemsPerRow = options.Value.ItemsPerRow;
+        if (items.Count < itemsPerRow) { 
             itemsPerRow = items.Count;
         }
 
-        int imageHeight = itemHeight;
-        var width = itemsPerRow * (itemWidth + spacing) - spacing;
-        var height = (int) Math.Ceiling((double) items.Count / itemsPerRow) * (imageHeight + spacing) - spacing;
-        height += addWatermark ? watermarkHeight : 0;
+        var fontColor = Color.ParseHex(options.Value.NameFontColor);
+        var width = itemsPerRow * (options.Value.ItemWidth + options.Value.ItemSpacing) - options.Value.ItemSpacing;
+        var height = (int) Math.Ceiling((double) items.Count / itemsPerRow) * (options.Value.ItemHeight + options.Value.ItemSpacing) - options.Value.ItemSpacing;
+        height += addLogo ? logoHeight : 0;
         Image image = new Image<Bgra32>(width, height);
 
-        image.Mutate(ctx => ctx.BackgroundColor(backgroundColor));
+        image.Mutate(ctx => ctx.BackgroundColor(Color.ParseHex(options.Value.BackgroundColor)));
 
-        if (items.Count > 10 && addWatermark) {
-            DrawLogo(image);
+        if (items.Count > 20 && addLogo) {
+            DrawLogo(image, fontColor);
         }
 
         for (int i = 0; i < items.Count; i++) {
             var row = i / itemsPerRow;
             var col = i % itemsPerRow;
-            var x = col * (itemWidth + spacing);
-            var y = addWatermark ? 
-                row * (imageHeight + spacing) + watermarkHeight : 
-                row * (imageHeight + spacing);
+            var x = col * (options.Value.ItemWidth + options.Value.ItemSpacing);
+            var y = addLogo ? 
+                row * (options.Value.ItemHeight + options.Value.ItemSpacing) + logoHeight : 
+                row * (options.Value.ItemHeight + options.Value.ItemSpacing);
 
             using var itemImage = items[i].BitmapFrame!.ToImageSharpImage();
             var itemName = items[i].Name;
-            DrawItem(image, itemName?.ToUpper() ?? "", itemImage, x, y);
+            DrawItem(image, itemName?.ToUpper() ?? "", itemImage, x, y, fontColor);
         }
         
         return image;
     }
 
-    private void DrawLogo(Image image) {
+    private void DrawLogo(Image image, Color fontColor) {
+        // Draw bg
+        using var backgroundImage = GetLogoBackground();
+        image.Mutate(ctx => 
+            ctx.DrawImage(backgroundImage, new Point(0, 0), 1)
+                .DrawLine(Color.Black, logoSeparatorWidth, [new PointF(0, logoHeight), new PointF(image.Width, logoHeight)]));
+
+        // Draw text
+        // Let's not overcomplicate and hard code some of this
+        // I can't ever see someone wanting to (especially partially) change this
         var family = GetFortniteFontFamily();
         var mainFont = family.CreateFont(80);
-        var mainSize = MeasureTextSize(watermarkMainText, mainFont);
+        var mainSize = MeasureTextSize(logoMainText, mainFont);
         var mainLeftShift = (image.Width - mainSize.Width) / 2;
-        var mainTopShift = (watermarkHeight - mainSize.Height) / 2;
-        var mainPosition = new PointF(0 + mainLeftShift, 0 + mainTopShift - 30);
+        var mainTopShift = (logoHeight - mainSize.Height) / 2;
+        var mainPosition = new PointF(mainLeftShift, mainTopShift - 30);
 
-        image.Mutate(ctx => ctx.DrawText(watermarkMainText, mainFont, fontColor, mainPosition));
+        image.Mutate(ctx => ctx.DrawText(logoMainText, mainFont, fontColor, mainPosition));
 
         var secondaryFont = family.CreateFont(50);
-        var secondarySize = MeasureTextSize(watermarkMainText, secondaryFont);
+        var secondarySize = MeasureTextSize(logoSecondaryText, secondaryFont);
         var secondaryLeftShift = (image.Width - secondarySize.Width) / 2;
-        var secondaryTopShift = (watermarkHeight - secondarySize.Height) / 2;
-        var secondaryPosition = new PointF(0 + secondaryLeftShift, secondaryTopShift + 50);
-        image.Mutate(ctx => ctx.DrawText(watermarkSecondaryText, secondaryFont, fontColor, secondaryPosition));
+        var secondaryTopShift = (logoHeight - secondarySize.Height) / 2;
+        var secondaryPosition = new PointF(secondaryLeftShift, secondaryTopShift + 50);
+        image.Mutate(ctx => ctx.DrawText(logoSecondaryText, secondaryFont, fontColor, secondaryPosition));
 
         var ternaryFont = family.CreateFont(30);
-        var ternarySize = MeasureTextSize(watermarkTernaryText, ternaryFont);
+        var ternarySize = MeasureTextSize(logoTernaryText, ternaryFont);
         var ternaryPosition = new PointF(image.Width - 20 - ternarySize.Width, 0 + 20);
-        image.Mutate(ctx => ctx.DrawText(watermarkTernaryText, ternaryFont, fontColor, ternaryPosition));
+        image.Mutate(ctx => ctx.DrawText(logoTernaryText, ternaryFont, fontColor, ternaryPosition));
     }
 
-    private void DrawItem(Image inventoryImage, string itemName, Image itemImage, int x, int y) {
+    private void DrawItem(Image inventoryImage, string itemName, Image itemImage, int x, int y, Color fontColor) {
+        var itemWidth = options.Value.ItemWidth;
+        var itemHeight = options.Value.ItemHeight;
+        var nameRectangleHeight = options.Value.NameRectangleHeight;
+        var nameRectangleTransparency = options.Value.NameRectangleTransparency;
+
         // Draw item
         itemImage.Mutate(ctx => ctx.Resize(itemWidth, itemHeight)); // Just to be sure
         inventoryImage.Mutate(ctx => ctx.DrawImage(itemImage, new Point(x, y), 1));
@@ -111,17 +123,17 @@ public class FortniteInventoryImageProcessor : IFortniteInventoryImageProcessor 
 
     private Font GetFontWithRightSize(string text, out FontRectangle size) {
         var fontFamily = GetFortniteFontFamily();
-        var currentFontSize = fontSize;
+        var currentFontSize = options.Value.NameFontSize;
 
         do {
             var font = fontFamily.CreateFont(currentFontSize);
             size = MeasureTextSize(text, font);
-            if(size.Width <= itemWidth - nameTextPaddingLr * 2 && 
-               size.Height <= nameRectangleHeight - nameTextPaddingTb * 2) {
+            if(size.Width <= options.Value.ItemWidth - options.Value.NameTextPaddingLr * 2 && 
+               size.Height <= options.Value.NameRectangleHeight - options.Value.NameTextPaddingTb * 2) {
                 break;
             }
 
-            currentFontSize -= fontDownsizeStep;
+            currentFontSize -= options.Value.NameFontDownsizeStep;
         } while(true);
 
         return fontFamily.CreateFont(currentFontSize);
@@ -131,7 +143,7 @@ public class FortniteInventoryImageProcessor : IFortniteInventoryImageProcessor 
         return TextMeasurer.MeasureSize(text, new TextOptions(font));
     }
 
-    public static FontFamily GetFortniteFontFamily() {
+    private FontFamily GetFortniteFontFamily() {
         var uri = new Uri("pack://application:,,,/Assets/Fonts/Fortnite.ttf");
         using var resourceStream = Application.GetResourceStream(uri)?.Stream;
 
@@ -141,5 +153,23 @@ public class FortniteInventoryImageProcessor : IFortniteInventoryImageProcessor 
 
         FontCollection fontCollection = new FontCollection();
         return fontCollection.Add(memoryStream);
+    }
+
+    private Image GetLogoBackground() {
+        var uri = new Uri("pack://application:,,,/Assets/Images/desdemona-bg-1920.jpg");
+        using var resourceStream = Application.GetResourceStream(uri)?.Stream;
+
+        using var memoryStream = new MemoryStream();
+        resourceStream.CopyTo(memoryStream);
+        memoryStream.Position = 0;
+        var image = Image.Load(memoryStream);
+
+        // Scale and crop
+        var oldWidth = image.Width;
+        var newWidth = options.Value.ItemsPerRow * (options.Value.ItemWidth + options.Value.ItemSpacing);
+        image.Mutate(ctx => ctx.Resize(new Size(newWidth, 0)));
+        var cropY = (int) ((double) image.Width / oldWidth * 350);
+        image.Mutate(ctx => ctx.Crop(new Rectangle(0, cropY, newWidth, logoHeight)));
+        return image;
     }
 }

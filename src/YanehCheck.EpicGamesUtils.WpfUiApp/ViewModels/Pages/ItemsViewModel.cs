@@ -7,6 +7,7 @@ using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 
@@ -17,6 +18,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private readonly IItemFacade itemFacade;
     private readonly ISessionService sessionService;
     private readonly ISnackbarService snackbarService;
+    private readonly IFortniteInventoryImageProcessor inventoryProcessor;
     private readonly IFortniteGgImageDownloader imageDownloader;
     private readonly IFileSaveDialogService fileSaveService;
 
@@ -67,22 +69,29 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         ISessionService sessionService,
         ISnackbarService snackbarService,
         IFortniteGgImageDownloader imageDownloader,
+        IFortniteInventoryImageProcessor inventoryProcessor,
         IFileSaveDialogService fileSaveService) {
         this.epicGamesService = epicGamesService;
         this.itemFacade = itemFacade;
         this.sessionService = sessionService;
         this.snackbarService = snackbarService;
         this.imageDownloader = imageDownloader;
+        this.inventoryProcessor = inventoryProcessor;
         this.fileSaveService = fileSaveService;
     }
 
     [RelayCommand]
-    public void ExportInventory(InventoryExport to) {
+    public async Task ExportInventory(InventoryExport to) {
+        var fileName = $"{sessionService.DisplayName}-inventory-{DateTime.Now:yyyy-M-d}";
+
         if (to == InventoryExport.Text) {
             var names = PresentedItems.Select(i => i.Name);
             var content = string.Join('\n', names);
-            var fileName = $"{sessionService.DisplayName}-inventory-{DateTime.Now:yyyy-M-d}";
-            fileSaveService.SaveTextFile(content, fileName);
+            await fileSaveService.SaveTextFile(content, fileName);
+        }
+        else if (to == InventoryExport.Image) {
+            using var image = inventoryProcessor.Create(PresentedItems.ToList());
+            await fileSaveService.SaveImageFile(image, fileName);
         }
     }
 

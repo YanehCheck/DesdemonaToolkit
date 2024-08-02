@@ -49,20 +49,6 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private ItemSortFilter _sortFilter = ItemSortFilter.Newest;
 
 
-    [ObservableProperty]
-    private bool _exportFlyoutOpen = false;
-    [ObservableProperty] 
-    private bool _sourceFilterFlyoutOpen = false;
-    [ObservableProperty]
-    private bool _rarityFilterFlyoutOpen = false;
-    [ObservableProperty]
-    private bool _seasonFilterFlyoutOpen = false;
-    [ObservableProperty]
-    private bool _tagFilterFlyoutOpen = false;
-    [ObservableProperty]
-    private bool _sortFilterFlyoutOpen = false;
-
-
     /// <inheritdoc/>
     public ItemsViewModel(IEpicGamesService epicGamesService,
         IItemFacade itemFacade,
@@ -95,12 +81,6 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }
     }
 
-    [RelayCommand]
-    public void ToggleExportFlyout() {
-        ExportFlyoutOpen = false; // Maybe just keep it true and trigger notify?
-        ExportFlyoutOpen = true;
-    }
-
     #region FilteringSortingSearchingMethods
 
     [RelayCommand]
@@ -111,32 +91,6 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         TagFilter = [];
         OnPropertyChanged(nameof(AnyFilterApplied));
         FilterAndSearchUpdate();
-    }
-
-    [RelayCommand]
-    public void ToggleSourceFilterFlyout()  {
-        SourceFilterFlyoutOpen = false; // Maybe just keep it true and trigger notify?
-        SourceFilterFlyoutOpen = true;
-    }
-    [RelayCommand]
-    public void ToggleRarityFilterFlyout() {
-        RarityFilterFlyoutOpen = false;
-        RarityFilterFlyoutOpen = true;
-    }
-    [RelayCommand]
-    public void ToggleSeasonFilterFlyout() {
-        SeasonFilterFlyoutOpen = false;
-        SeasonFilterFlyoutOpen = true;
-    }
-    [RelayCommand]
-    public void ToggleTagFilterFlyout() {
-        TagFilterFlyoutOpen = false;
-        TagFilterFlyoutOpen = true;
-    }
-    [RelayCommand]
-    public void ToggleSortFilterFlyout() {
-        SortFilterFlyoutOpen = false;
-        SortFilterFlyoutOpen = true;
     }
 
     [RelayCommand]

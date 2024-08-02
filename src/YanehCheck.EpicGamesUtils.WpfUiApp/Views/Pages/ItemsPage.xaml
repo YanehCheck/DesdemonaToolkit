@@ -669,7 +669,7 @@
                 <ui:Flyout
                     Grid.Row="0"
                     Placement="Right"
-                    IsOpen="{Binding ViewModel.SourceFilterFlyoutOpen, Mode=OneWay}">
+                    IsOpen="{Binding SourceFilterFlyoutOpen, Mode=OneWay}">
                     <StackPanel>
                         <UniformGrid Rows="1">
                             <ui:Button
@@ -735,7 +735,7 @@
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
                     Content="Source"
-                    Command="{Binding ViewModel.ToggleSourceFilterFlyoutCommand}"/>
+                    Command="{Binding ToggleSourceFilterFlyoutCommand}"/>
             </Grid>
             <Grid
                 Grid.Column="2"
@@ -747,7 +747,7 @@
                 <ui:Flyout
                     Grid.Row="0"
                     Placement="Right"
-                    IsOpen="{Binding ViewModel.RarityFilterFlyoutOpen, Mode=OneWay}">
+                    IsOpen="{Binding RarityFilterFlyoutOpen, Mode=OneWay}">
                     <StackPanel>
                         <UniformGrid Rows="1">
                             <Border
@@ -1126,7 +1126,7 @@
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
                     Content="Rarity"
-                    Command="{Binding ViewModel.ToggleRarityFilterFlyoutCommand}"/>
+                    Command="{Binding ToggleRarityFilterFlyoutCommand}"/>
             </Grid>
             <Grid
                  Grid.Column="3"
@@ -1138,7 +1138,7 @@
                 <ui:Flyout
                      Grid.Row="0"
                      Placement="Right"
-                     IsOpen="{Binding ViewModel.SeasonFilterFlyoutOpen, Mode=OneWay}">
+                     IsOpen="{Binding SeasonFilterFlyoutOpen, Mode=OneWay}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <ui:Button 
@@ -1436,7 +1436,7 @@
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
                     Content="Season"
-                    Command="{Binding ViewModel.ToggleSeasonFilterFlyoutCommand}"/>
+                    Command="{Binding ToggleSeasonFilterFlyoutCommand}"/>
             </Grid>
             <Grid
                 Grid.Column="4"
@@ -1448,7 +1448,7 @@
                 <ui:Flyout
                     Grid.Row="0"
                     Placement="Right"
-                    IsOpen="{Binding ViewModel.TagFilterFlyoutOpen, Mode=OneWay}">
+                    IsOpen="{Binding TagFilterFlyoutOpen, Mode=OneWay}">
                     <StackPanel>
                         <UniformGrid Rows="1">
                             <ui:Button
@@ -1538,7 +1538,7 @@
                                             Converter={StaticResource EnumerableAnyToColorConverter}}"
                     Grid.Row="1"
                     Content="Tags"
-                    Command="{Binding ViewModel.ToggleTagFilterFlyoutCommand}"/>
+                    Command="{Binding ToggleTagFilterFlyoutCommand}"/>
             </Grid>
             <ui:Button
                 Grid.Column="5"
@@ -1558,7 +1558,7 @@
                 <ui:Flyout
                     Grid.Row="0"
                     Placement="Left"
-                    IsOpen="{Binding ViewModel.SortFilterFlyoutOpen, Mode=OneWay}">
+                    IsOpen="{Binding SortFilterFlyoutOpen, Mode=OneWay}">
                     <StackPanel>
                         <UniformGrid Rows="1">
                             <ui:Button
@@ -1640,7 +1640,7 @@
                     Margin="0,2,0,0"
                     Grid.Row="1"
                     Content="Sort"
-                    Command="{Binding ViewModel.ToggleSortFilterFlyoutCommand}"/>
+                    Command="{Binding ToggleSortFilterFlyoutCommand}"/>
             </Grid>
             <Grid
                 Grid.Column="8"
@@ -1652,7 +1652,7 @@
                 <ui:Flyout
                     Grid.Row="0"
                     Placement="Left"
-                    IsOpen="{Binding ViewModel.ExportFlyoutOpen, Mode=OneWay}">
+                    IsOpen="{Binding ExportFlyoutOpen, Mode=OneWay}">
                     <StackPanel
                         Orientation="Vertical">
                         <ui:Button 
@@ -1671,7 +1671,7 @@
                     Margin="0,2,0,0"
                     Grid.Row="1"
                     Content="Export"
-                    Command="{Binding ViewModel.ToggleExportFlyoutCommand}"/>
+                    Command="{Binding ToggleExportFlyoutCommand}"/>
             </Grid>
         </Grid>
         <ui:VirtualizingItemsControl

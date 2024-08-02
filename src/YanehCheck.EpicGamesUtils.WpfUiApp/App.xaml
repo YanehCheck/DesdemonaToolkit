@@ -33,6 +33,8 @@
             <generalConverters:EnumerableContainsToColorTintConverter x:Key="EnumerableContainsToColorTintConverter" />
             <generalConverters:EqualsToColorConverter x:Key="EqualsToColorConverter" />
             <generalConverters:EqualsToColorTintConverter x:Key="EqualsToColorTintConverter" />
+
+            <FontFamily x:Key="FortniteTypeface">pack://application:,,,/Assets/Fonts/#Fortnite</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

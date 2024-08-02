@@ -46,6 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\Fortnite.ttf" />
     <None Remove="Assets\icon.png" />
     <None Remove="Assets\Images\challenges.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-all.png" />
@@ -119,6 +120,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Assets\Fonts\Fortnite.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\icon.png" />
     <Resource Include="Assets\Images\challenges.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-backpack.png" />

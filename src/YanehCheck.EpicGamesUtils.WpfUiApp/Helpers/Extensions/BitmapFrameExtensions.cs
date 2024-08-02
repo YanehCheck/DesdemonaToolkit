@@ -12,7 +12,7 @@ public static class BitmapFrameExtensions {
     /// </summary>
     public static Image ToImageSharpImage(this BitmapFrame bitmapFrame) {
         if(bitmapFrame == null) {
-            throw new ArgumentNullException(nameof(bitmapFrame));
+            throw new ArgumentNullException("BitmapFrame was null when converting to Image.");
         }
 
         var width = bitmapFrame.PixelWidth;

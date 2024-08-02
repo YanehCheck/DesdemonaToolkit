@@ -76,8 +76,18 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             await fileSaveService.SaveTextFile(content, fileName);
         }
         else if (to == InventoryExport.Image) {
-            using var image = inventoryProcessor.Create(PresentedItems.ToList());
-            await fileSaveService.SaveImageFile(image, fileName);
+            try {
+                using var image = inventoryProcessor.Create(PresentedItems.ToList());
+                await fileSaveService.SaveImageFile(image, fileName);
+            }
+            catch (ArgumentException e) {
+                snackbarService.Show(
+                    "Failure",
+                    $"An error occured while exporting the image. Please check your connection and if all the images load properly.\nError: {e.Message}",
+                    ControlAppearance.Danger,
+                    null,
+                    TimeSpan.FromSeconds(5));
+            }
         }
     }
 
@@ -255,7 +265,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private async Task<IEnumerable<ItemPresentationModel>?> FetchItems() {
         var ownedItemsResult = await epicGamesService.GetItems(sessionService.AccountId!, sessionService.AccessToken!);
         if (!ownedItemsResult.Success) {
-            snackbarService.Show("Failure", ownedItemsResult.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            snackbarService.Show("Failure", $"An error occured while fetching your inventory.\nError: {ownedItemsResult.ErrorMessage!}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
             _initializedForAccountId = "";
             return null;
         }
@@ -263,6 +273,12 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         var ownedItemModels = ownedItemsResult.Items!.Select(i => new ItemModel() {
             FortniteId = i.FortniteId.Split(':').Last()
         });
-        return (await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemPresentationModel(i));
+        try {
+            return (await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemPresentationModel(i));
+        }
+        catch (Exception ex) {
+            snackbarService.Show("Failure", $"An error occured while fetching item data from database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            return null;
+        }
     }
 }

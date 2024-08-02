@@ -55,7 +55,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     [RelayCommand]
     public async Task OnButtonConfirmClick() {
         if(AuthorizationCode is null or { Length: not 32}) {
-            snackbarService.Show("Error", "The authorization code must be 32 characters long.", ControlAppearance.Caution, null, TimeSpan.FromSeconds(5));
+            snackbarService.Show("Error", "Authorization code must be 32 characters long.", ControlAppearance.Caution, null, TimeSpan.FromSeconds(5));
             return;
         }
 
@@ -99,17 +99,25 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
         var items = await source.GetItemsAsync();
         if (items == null) {
-            snackbarService.Show("Failure", "Could not fetch item data.", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            snackbarService.Show("Failure",
+                "An error occured while fetching item data. Please check your connection or use different source.",
+                ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
             return;
         }
 
-        LastItemFetch = DateTime.Now;
-        persistenceProvider.LastItemFetch = LastItemFetch;
-        persistenceProvider.Save();
+        try {
+            await itemFacade.SaveByFortniteIdAsync(items);
 
-        sessionService.IsItemDataFetched = true;
-        await itemFacade.SaveByFortniteIdAsync(items);
+            LastItemFetch = DateTime.Now;
+            persistenceProvider.LastItemFetch = LastItemFetch;
+            persistenceProvider.Save();
+            sessionService.IsItemDataFetched = true;
 
-        snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
+            snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success,
+                null, TimeSpan.FromSeconds(5));
+        }
+        catch (Exception ex) {
+            snackbarService.Show("Failure", $"An error occured while saving item data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+        }
     }
 }

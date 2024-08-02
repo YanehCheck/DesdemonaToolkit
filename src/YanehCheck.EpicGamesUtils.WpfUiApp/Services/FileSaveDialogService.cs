@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
-using SixLabors.ImageSharp.PixelFormats;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services;
@@ -21,7 +20,7 @@ public class FileSaveDialogService : IFileSaveDialogService {
         }
     }
 
-    public async Task SaveImageFile(Image<Bgra32> image, string fileName, string defaultExt = ".png", string filter = "Image files (*.png)|*.png|All files (*.*)|*.*") {
+    public async Task SaveImageFile(Image image, string fileName, string defaultExt = ".png", string filter = "Image files (*.png)|*.png|All files (*.*)|*.*") {
         var dialog = new SaveFileDialog {
             FileName = fileName,
             DefaultExt = defaultExt,

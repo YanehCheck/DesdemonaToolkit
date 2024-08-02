@@ -8,7 +8,7 @@ using Point = SixLabors.ImageSharp.Point;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
 public interface IFortniteInventoryImageProcessor {
-    Image<Bgra32> Create(List<ItemPresentationModel> items);
+    Image Create(List<ItemPresentationModel> items);
 }
 public class FortniteInventoryImageProcessor : IFortniteInventoryImageProcessor {
     // TODO: Un-hardcode this
@@ -17,7 +17,7 @@ public class FortniteInventoryImageProcessor : IFortniteInventoryImageProcessor 
     private readonly int itemWidth = 210;
     private readonly Color backgroundColor = Color.Black;
 
-    public Image<Bgra32> Create(List<ItemPresentationModel> items) {
+    public Image Create(List<ItemPresentationModel> items) {
         
         var width = itemsPerRow * itemWidth;
         var height = (int) Math.Ceiling((double) items.Count / itemsPerRow) * itemHeight;

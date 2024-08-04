@@ -66,4 +66,10 @@ public abstract class Facade<TEntity, TModel, TEntityMapper>(IUnitOfWorkFactory 
         await uow.SaveChangesAsync();
         return Mapper.MapToModel(entity);
     }
+
+    public async Task<bool> AnyAsync() {
+        await using var uow = UnitOfWorkFactory.Create();
+        var repo = uow.GetRepository<TEntity, TEntityMapper>();
+        return await repo.Get().AnyAsync();
+    }
 }

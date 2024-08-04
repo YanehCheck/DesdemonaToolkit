@@ -46,7 +46,13 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
     private void InitializeViewModel() {
         AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
-        LastItemFetch = persistenceProvider.LastItemFetch;
+        // TODO: Move this responsibility elsewhere
+        var dataReallyFetched = itemFacade.AnyAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+        LastItemFetch = dataReallyFetched ? 
+            persistenceProvider.LastItemFetch :
+            DateTime.MinValue;
+        sessionService.IsItemDataFetched = dataReallyFetched;
+        // -----------------------------
         DisplayName = persistenceProvider.DisplayName;
     }
 

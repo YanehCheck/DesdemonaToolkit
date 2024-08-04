@@ -1,7 +1,8 @@
-﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Enums;
+﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 
 [Flags]
-public enum TokenType {
+public enum TokenType
+{
     EndOfFile = 1,
     ListOperator = 2,
     Operator = 4,
@@ -25,13 +26,14 @@ public enum TokenType {
     Or = 1048576
 }
 
-public static class TokenTypeExtensions {
+public static class TokenTypeExtensions
+{
     public static TokenType AnyLiteral() =>
         TokenType.IntLiteral | TokenType.DoubleLiteral | TokenType.StringLiteral | TokenType.NullLiteral |
         TokenType.DateLiteral | TokenType.ItemSourceEnumLiteral | TokenType.ItemRarityEnumLiteral |
         TokenType.ItemTypeEnumLiteral | TokenType.ItemTagEnumLiteral;
 
     public static bool IsLiteral(TokenType token) =>
-        (int) token >= (int) TokenType.DoubleLiteral &&
-        (int) token <= (int) TokenType.ItemTagEnumLiteral;
+        (int)token >= (int)TokenType.DoubleLiteral &&
+        (int)token <= (int)TokenType.ItemTagEnumLiteral;
 }

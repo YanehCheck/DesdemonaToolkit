@@ -1,4 +1,4 @@
-﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Enums;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 

@@ -1,6 +1,6 @@
-﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Enums;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 
 /// <summary>
 /// Value should be boxed target type.

@@ -2,9 +2,9 @@
 using System.Text.RegularExpressions;
 using YanehCheck.EpicGamesUtils.BL.Models;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Enums;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 
 internal class FilterLexer {
     private string sourceString;

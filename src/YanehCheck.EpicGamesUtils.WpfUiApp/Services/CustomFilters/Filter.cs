@@ -1,5 +1,6 @@
 ﻿using YanehCheck.EpicGamesUtils.BL.Models;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Enums;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;

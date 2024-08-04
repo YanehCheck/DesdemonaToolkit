@@ -7,8 +7,8 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 
-/// <inheritdoc cref="IFilterParser"/>
-public class FilterParser : IFilterParser {
+/// <inheritdoc cref="ICustomFilterParser"/>
+public class CustomFilterParser : ICustomFilterParser {
     public IFilter Parse(string filterString) {
         var lexer = new FilterLexer(filterString);
         var filter = new Filter();

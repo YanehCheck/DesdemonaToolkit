@@ -6,7 +6,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 /// Parses a filter from a string. Represents syntax and semantic analysis.
 /// </summary>
 /// <exception cref="FilterParserException">When source code is invalid.</exception>
-public interface IFilterParser
+public interface ICustomFilterParser
 {
     IFilter Parse(string filterString);
 }

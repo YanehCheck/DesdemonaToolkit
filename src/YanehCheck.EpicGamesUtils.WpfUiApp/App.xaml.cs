@@ -13,6 +13,8 @@ using YanehCheck.EpicGamesUtils.DAL;
 using YanehCheck.EpicGamesUtils.DAL.Migrators;
 using YanehCheck.EpicGamesUtils.FortniteGGScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
@@ -52,27 +54,31 @@ public partial class App {
             services.AddHostedService<ApplicationHostService>();
 
             services.AddTransient<IRestClient, RestClient>();
-            services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
 
+            // Fortnite related
+            services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
+            services.AddSingleton<IEpicGamesService, EpicGamesService>();
             services.AddTransient<IFortniteGgImageDownloader, FortniteGgImageDownloader>();
             services.AddTransient<IFortniteGgItemMapper, FortniteGgItemMapper>();
             services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();
             services.AddSingleton<IFortniteGgItemProvider, FortniteGgItemProvider>();
             services.AddSingleton<IFortniteInventoryImageProcessor, FortniteInventoryImageProcessor>();
             services.AddSingleton<IUriItemProvider, UriItemProvider>();
+            services.AddSingleton<ICustomFilterParser, CustomFilterParser>();
+            services.AddSingleton<ICustomFilterProvider, CustomFilterProvider>();
 
+            // General
+            services.AddSingleton<IFileSaveDialogService, FileSaveDialogService>();
+            services.AddSingleton<IBrowserService, BrowserService>();
+            services.AddSingleton<IPersistenceProvider, PersistenceProvider>();
+            services.AddSingleton<ISessionService, SessionService>();
+
+            // UI services
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<ITaskBarService, TaskBarService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ISnackbarService, SnackbarService>();
-
-            services.AddSingleton<IFileSaveDialogService, FileSaveDialogService>();
-            services.AddSingleton<IBrowserService, BrowserService>();
-            services.AddSingleton<IPersistenceProvider, PersistenceProvider>();
-            services.AddSingleton<ISessionService, SessionService>();
-            services.AddSingleton<IEpicGamesService, EpicGamesService>();
-
             services.AddSingleton<INavigationWindow, MainWindow>();
             services.Scan(s => s
                 .FromAssembliesOf(typeof(App))

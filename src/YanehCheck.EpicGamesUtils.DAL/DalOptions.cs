@@ -1,4 +1,6 @@
-﻿namespace YanehCheck.EpicGamesUtils.DAL;
+﻿using System.Diagnostics;
+
+namespace YanehCheck.EpicGamesUtils.DAL;
 
 public class DalOptions {
     public const string Key = "DAL";
@@ -6,7 +8,7 @@ public class DalOptions {
     public string DatabaseName { get; set; } = "desdemonatoolkit.db";
 
     public string DatabaseDirectory { get; set; } =
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName)!, "data");
     public string DatabasePath => Path.Combine(DatabaseDirectory, DatabaseName);
     public bool ResetDatabase { get; set; } = false;
     public bool SeedDatabase { get; set; } = false;

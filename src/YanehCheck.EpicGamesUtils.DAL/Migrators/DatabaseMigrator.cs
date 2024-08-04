@@ -13,6 +13,7 @@ public class DatabaseMigrator(IDbContextFactory<EpicGamesUtilsDbContext> dbConte
             await dbContext.Database.EnsureDeletedAsync(cancellationToken);
         }
 
+        Directory.CreateDirectory(options.Value.DatabaseDirectory);
         await dbContext.Database.EnsureCreatedAsync(cancellationToken);
     }
 }

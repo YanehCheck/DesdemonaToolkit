@@ -24,9 +24,14 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
     private string _initializedForAccountId = "";
 
+    // Having custom filter and the search bar responsive to typing
+    // can be expensive. Multiple "backing" fields provide performance
+    // and even stability.
+
     [ObservableProperty]
     private IEnumerable<ItemPresentationModel> _presentedItems = [];
 
+    private IEnumerable<ItemPresentationModel> filteredItems = [];
     private IEnumerable<ItemPresentationModel> sortedItems = [];
     private IEnumerable<ItemPresentationModel> items = [];
 
@@ -100,11 +105,11 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         SeasonFilter = [];
         TagFilter = [];
         OnPropertyChanged(nameof(AnyFilterApplied));
-        FilterAndSearchUpdate();
+        FilterUpdate();
     }
 
     [RelayCommand]
-    public void OnSearch() => FilterAndSearchUpdate();
+    public void OnSearch() => FilterUpdate();
 
     [RelayCommand]
     public void OnSort(ItemSortFilter sort) => SortUpdate(sort);
@@ -116,7 +121,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             ? SourceFilter.Where(s => s != source)
             : SourceFilter.Append(source));
         OnPropertyChanged(nameof(AnyFilterApplied));
-        FilterAndSearchUpdate();
+        FilterUpdate();
     }
 
     [RelayCommand]
@@ -126,7 +131,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             ? RarityFilter.Where(s => s != rarity)
             : RarityFilter.Append(rarity));
         OnPropertyChanged(nameof(AnyFilterApplied));
-        FilterAndSearchUpdate();
+        FilterUpdate();
     }
 
     [RelayCommand]
@@ -136,7 +141,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             ? TagFilter.Where(s => s != tag)
             : TagFilter.Append(tag));
         OnPropertyChanged(nameof(AnyFilterApplied));
-        FilterAndSearchUpdate();
+        FilterUpdate();
     }
 
     [RelayCommand]
@@ -146,13 +151,13 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             ? SeasonFilter.Where(s => s != season)
             : SeasonFilter.Append(season));
         OnPropertyChanged(nameof(AnyFilterApplied));
-        FilterAndSearchUpdate();
+        FilterUpdate();
     }
 
     [RelayCommand]
     public void OnType(ItemTypeFilter type) {
         TypeFilter = type;
-        FilterAndSearchUpdate();
+        FilterUpdate();
     }
 
     private void SortUpdate(ItemSortFilter sort) {
@@ -176,15 +181,10 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             ItemSortFilter.Type => items.OrderBy(i => i.Type)
                 .ThenByDescending(i => i.Rarity)
         };
-        FilterAndSearchUpdate();
+        FilterUpdate();
     }
 
-    private void FilterAndSearchUpdate() {
-        bool SearchCond(ItemPresentationModel i) => 
-             Search == "" ||
-             i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
-             (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase));
-
+    private void FilterUpdate() {
         bool FiltersCond(ItemPresentationModel i) =>
             (!SourceFilter.Any() || SourceFilter.Contains(i.Source)) &&
             (!RarityFilter.Any() || RarityFilter.Contains(i.Rarity)) &&
@@ -192,7 +192,17 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             (!TagFilter.Any() || TagFilter.Intersect(i.Tags).Any()) &&
             TypeFilter.Satisfied(i.Type);
 
-        PresentedItems = sortedItems.Where((i) => SearchCond(i) && FiltersCond(i));
+        filteredItems = sortedItems.Where(FiltersCond);
+        SearchUpdate();
+    }
+
+    private void SearchUpdate() {
+        bool SearchCond(ItemPresentationModel i) =>
+            Search == "" ||
+            i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
+            (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase));
+
+        PresentedItems = filteredItems.Where(SearchCond);
     }
 
     #endregion

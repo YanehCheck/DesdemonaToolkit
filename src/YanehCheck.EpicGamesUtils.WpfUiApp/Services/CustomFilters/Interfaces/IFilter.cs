@@ -14,4 +14,5 @@ public interface IFilter
     string Author { get; set; }
     public IEnumerable<ChainedCondition> DnfExpression { get; set; }
     IEnumerable<ItemModel> Apply(IEnumerable<ItemModel> items);
+    bool Apply(ItemModel item);
 }

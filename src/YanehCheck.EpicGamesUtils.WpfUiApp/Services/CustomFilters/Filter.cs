@@ -34,4 +34,8 @@ public class Filter : IFilter {
             items : 
             items.Where(i => DnfExpression.Any(r => r.Satisfied(i)));
     }
+
+    public virtual bool Apply(ItemModel item) {
+        return !DnfExpression.Any() || DnfExpression.Any(r => r.Satisfied(item));
+    }
 }

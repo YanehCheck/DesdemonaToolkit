@@ -8,4 +8,5 @@ public interface IFacade<TEntity, TModel> where TEntity : class, IEntity where T
     Task<IEnumerable<TModel>> GetAllAsync();
     Task<TModel?> GetAsync(Guid id, bool includeRelatedObjects = true);
     Task<TModel> SaveAsync(TModel model);
+    Task<bool> AnyAsync();
 }

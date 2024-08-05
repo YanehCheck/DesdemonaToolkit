@@ -49,7 +49,7 @@ public class ChainedCondition {
             if(condition!.FollowingTerm == null) {
                 return i;
             }
-            condition = FollowingTerm;
+            condition = condition.FollowingTerm;
         }
 
         throw new FilterSpecialException("Reached max number of terms in a clause");
@@ -61,7 +61,7 @@ public class ChainedCondition {
             if (condition!.FollowingTerm is null) {
                 return condition;
             }
-            condition = FollowingTerm;
+            condition = condition.FollowingTerm;
         }
 
         throw new FilterSpecialException("Reached max number of terms in a clause");
@@ -91,22 +91,49 @@ public class ChainedCondition {
             return false;
         }
 
+        var propertyType = property.PropertyType;
         var propertyValue = property.GetValue(item);
 
-        return propertyValue switch {
-            //null => HandleNull(propertyValue, Operation, parameter),
-            string strValue => HandleString(strValue, Operation, parameter),
-            int intValue => HandleInt(intValue, Operation, parameter),
-            double doubleValue => HandleDouble(doubleValue, Operation, parameter),
-            DateTime dateTimeValue => HandleDateTime(dateTimeValue, Operation, parameter),
-            ItemSource itemSourceValue => HandleEnum(itemSourceValue, Operation, parameter),
-            ItemRarity itemRarityValue => HandleEnum(itemRarityValue, Operation, parameter),
-            IEnumerable<string> stringEnumerableValue => HandleStringEnumerableValue(stringEnumerableValue, Operation,
-                parameter),
-            IEnumerable<ItemTag> itemTagEnumerableValue => HandleItemTagEnumerableValue(itemTagEnumerableValue,
-                Operation, parameter),
-            _ => throw new FilterUnsupportedDataTypeException($"Type {property.PropertyType} of property {property.Name} is unsupported.")
-        };
+        if(propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(Nullable<>)) {
+            propertyType = Nullable.GetUnderlyingType(propertyType);
+        }
+
+
+        if (parameter == null) {
+            return HandleNull(propertyValue, Operation, parameter);
+        }
+        else if (propertyValue == null) {
+            return false;
+        }
+
+        if (propertyType == typeof(string)) {
+            return HandleString((string) propertyValue!, Operation, parameter);
+        }
+        else if(propertyType == typeof(int)) {
+            return HandleInt((int) propertyValue!, Operation, parameter);
+        }
+        else if(propertyType == typeof(double)) {
+            return HandleDouble((double) propertyValue!, Operation, parameter);
+        }
+        else if(propertyType == typeof(DateTime)) {
+            return HandleDateTime((DateTime) propertyValue!, Operation, parameter);
+        }
+        else if(propertyType == typeof(ItemSource)) {
+            return HandleEnum((ItemSource) propertyValue!, Operation, parameter);
+        }
+        else if(propertyType == typeof(ItemRarity)) {
+            return HandleEnum((ItemRarity) propertyValue!, Operation, parameter);
+        }
+        else if(propertyType == typeof(IEnumerable<string>)) {
+            return HandleStringEnumerableValue((IEnumerable<string>) propertyValue!, Operation, parameter);
+        }
+        else if(propertyType == typeof(IEnumerable<ItemTag>)) {
+            return HandleItemTagEnumerableValue((IEnumerable<ItemTag>) propertyValue!, Operation, parameter);
+        }
+        else {
+            throw new FilterUnsupportedDataTypeException(
+                $"Type {property.PropertyType} of property {property.Name} is unsupported.");
+        }
     }
 
     private bool HandleItemTagEnumerableValue(IEnumerable<ItemTag> enumTagEnumerableValue, Operation operation, object? parameter) {
@@ -223,8 +250,8 @@ public class ChainedCondition {
 
     private bool HandleNull(object? propertyValue, Operation operation, object? parameter) {
         return operation switch {
-            Operation.Equals => propertyValue is null && parameter is null,
-            Operation.NotEquals => propertyValue is not null && parameter is not null,
+            Operation.Equals => propertyValue is null,
+            Operation.NotEquals => propertyValue is not null,
             _ => throw new FilterUnsupportedOperationException($"Operation {Enum.GetName(operation)!} is not valid for null type.")
         };
     }

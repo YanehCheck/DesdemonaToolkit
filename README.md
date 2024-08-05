@@ -19,8 +19,9 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 #### ✅ 0.1.0-prerelease  
 - Fetch newest item data on-demand 
 - Authenticate and view your fortnite inventory with advanced sorting 
-#### 🛠️ 0.1.0
+#### 🛠️ 0.1.0 (Planned to release before 8.8.2024) 
 - Polish UX of search and filtering
+- Custom filters
 - Inventory statistics like total price, number of items and so on
 - Item name on hover + Detailed view of items on click (videos?)
 - Export your inventory selection as a list or an image

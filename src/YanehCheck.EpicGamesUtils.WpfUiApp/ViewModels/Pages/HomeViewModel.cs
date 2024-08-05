@@ -86,8 +86,11 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
     [RelayCommand]
     public void OnButtonGetCodeClick() {
-        browserService.StartAndNavigateToAuthCode();
+        browserService.StartAndNavigateToAuthCodeWebsite();
     }
+
+    [RelayCommand]
+    public void OnHyperlinkDataFolderClick() => browserService.StartAndNavigateToDataDirectory();
 
     [RelayCommand]
     public async Task OnButtonFetchItemDataClick() {

@@ -2,5 +2,6 @@
 
 public interface IBrowserService {
     void StartAndNavigate(string url);
-    void StartAndNavigateToAuthCode();
+    void StartAndNavigateToAuthCodeWebsite(); 
+    void StartAndNavigateToDataDirectory();
 }

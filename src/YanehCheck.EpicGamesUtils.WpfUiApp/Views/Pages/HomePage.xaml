@@ -223,7 +223,14 @@
             Grid.Row="2"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            Margin="0, 16">
+            Margin="0, 16"
+            Orientation="Horizontal">
+            <ui:HyperlinkButton 
+                Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                Icon="{ui:SymbolIcon Link24}"
+                Content="Data folder"
+                Command="{Binding ViewModel.HyperlinkDataFolderClickCommand}"
+                Margin="0,0,10,0"/>
             <ui:HyperlinkButton 
                 Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"
                 Icon="{ui:SymbolIcon Link24}"

@@ -1,0 +1,55 @@
+###Version=1
+###Name=Rare Items v1
+###Description=Rare, exclusive and unique items. Tries to not show accessories.
+###Author=Desdemona Toolkit
+
+# Long wait in Shop
+LastSeen<2020-6-20 && Source==Shop
+
+||# STW test and creator banners
+SourceDescription*{["STW ALPHA TEST", "SURVIVORS AND SELECT A YOUTUBER"]
+
+||# STW Founder
+SourceDescription=="STW Founder's Pack" && Type@!=[Backpack, Pickaxe]
+
+||# Early crew
+Source==Crew && Release<=2021-9-1
+
+||# Llama-rama
+SourceDescription{"llama-rama"
+
+||# Samsung galaxy
+SourceDescription{"Samsung Galaxy" && Type==Outfit
+
+||# Xbox bundles
+SourceDescription@{["xbox", "bundle"] && Type==Outfit
+
+||# Nvidia things
+Name{"Reflex" && Type==Outfit
+
+||# Switch bundle
+SourceDescription{"Nintendo Switch"
+
+||# Honor
+SourceDescription{"Honor 20"
+
+||# Twitch prime
+SourceDescription{"prime pack" && Type==Outfit
+
+||# PS4
+SourceDescription{"PlayStation" && Type==Outfit
+
+||# Early starter packs
+Name*==["ROGUE AGENT", "WINGMAN"]
+
+||# S1 (also an extra check for mislabeled unreleased items)
+Season=="c1s1" && Release<2018-1-1 && Source==BattlePass && Type!=Backpack
+
+||# S2
+Season=="c1s2" && Rarity*==[Legendary, Epic] && Source==BattlePass
+
+||# S3
+Name*==["THE REAPER", "ELITE AGENT", "DARK VOYAGER"] && Type==Outfit
+
+||# Merry mint pick
+Name=="MERRY MINT AXE"

@@ -12,7 +12,7 @@
     <StartupObject>YanehCheck.EpicGamesUtils.WpfUiApp.App</StartupObject>
     <SignAssembly>False</SignAssembly>
     <Title>Desdemona Toolkit</Title>
-    <Version>0.1.0-prerelease</Version>
+    <Version>0.1.0</Version>
     <Authors>YanehCheck</Authors>
     <Description>A collection of fortnite utillities.</Description>
     <Copyright>GPL-3.0</Copyright>
@@ -193,5 +193,21 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+
+  <ItemGroup>
+    <Filters Include="Assets\Filters\*.dtkf"/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <Target Name="CopyFilters" AfterTargets="Build">
+    <Message Text="Copying files to: $(OutputPath)data\filters" Importance="high" />
+    <Copy
+      SourceFiles="@(Filters)"
+      DestinationFolder="$(OutputPath)data\filters"
+      SkipUnchangedFiles="true" />
+  </Target>
 
 </Project>

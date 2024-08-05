@@ -1,4 +1,4 @@
-﻿ <Application
+﻿<Application
     x:Class="YanehCheck.EpicGamesUtils.WpfUiApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -16,24 +16,30 @@
             </ResourceDictionary.MergedDictionaries>
 
             <generalConverters:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter"/>
-
-            <generalConverters:EnumerableAnyToVisibilityCollapseConverter x:Key="EnumerableAnyToVisibilityCollapseConverter"/>
-            <generalConverters:EnumerableAnyToBoolConverter x:Key="EnumerableAnyToBoolConverter" />
+            <generalConverters:EnumToStringConverter x:Key="EnumToStringConverter" />
 
             <generalConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <generalConverters:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverter" />
+
+            <generalConverters:ObjectNullToColorConverter x:Key="ObjectNullToColorConverter" />
+            <generalConverters:ObjectNullToColorTintConverter x:Key="ObjectNullToColorTintConverter" />
             <generalConverters:ObjectNullToVisibilityConverter x:Key="ObjectNullToVisibilityConverter" />
             <generalConverters:ObjectNullToVisibilityCollapseConverter x:Key="ObjectNullToVisibilityCollapseConverter" />
-            <generalConverters:EqualsToVisibilityConverter x:Key="EqualsToVisibilityConverter" />
-            <generalConverters:EqualsToVisibilityCollapseConverter x:Key="EqualsToVisibilityCollapseConverter" />
-            <generalConverters:EnumToStringConverter x:Key="EnumToStringConverter" />
 
-            <generalConverters:EnumerableAnyToColorConverter x:Key="EnumerableAnyToColorConverter" />
-            <generalConverters:EnumerableContainsToColorConverter x:Key="EnumerableContainsToColorConverter" />
-            <generalConverters:StringEnumerableContainsToColorConverter x:Key="StringEnumerableContainsToColorConverter" />
-            <generalConverters:EnumerableContainsToColorTintConverter x:Key="EnumerableContainsToColorTintConverter" />
             <generalConverters:EqualsToColorConverter x:Key="EqualsToColorConverter" />
             <generalConverters:EqualsToColorTintConverter x:Key="EqualsToColorTintConverter" />
+            <generalConverters:EqualsToColorMultiConverter x:Key="EqualsToColorMultiConverter" />
+            <generalConverters:EqualsToVisibilityConverter x:Key="EqualsToVisibilityConverter" />
+            <generalConverters:EqualsToVisibilityCollapseConverter x:Key="EqualsToVisibilityCollapseConverter" />
+
+            <generalConverters:EnumerableAnyToColorConverter x:Key="EnumerableAnyToColorConverter" />
+            <generalConverters:EnumerableAnyToVisibilityCollapseConverter x:Key="EnumerableAnyToVisibilityCollapseConverter"/>
+            <generalConverters:EnumerableAnyToBoolConverter x:Key="EnumerableAnyToBoolConverter" />
+
+            <generalConverters:StringEnumerableContainsToColorConverter x:Key="StringEnumerableContainsToColorConverter" />
+            <generalConverters:EnumerableContainsToColorTintConverter x:Key="EnumerableContainsToColorTintConverter" />
+            <generalConverters:EnumerableContainsToColorConverter x:Key="EnumerableContainsToColorConverter" />
+
 
             <FontFamily x:Key="FortniteTypeface">pack://application:,,,/Assets/Fonts/#Fortnite</FontFamily>
         </ResourceDictionary>

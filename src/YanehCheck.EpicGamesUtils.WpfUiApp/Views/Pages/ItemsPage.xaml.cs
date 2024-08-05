@@ -18,6 +18,8 @@ public partial class ItemsPage : INavigableView<ItemsViewModel> {
     private bool _tagFilterFlyoutOpen = false;
     [ObservableProperty]
     private bool _sortFilterFlyoutOpen = false;
+    [ObservableProperty]
+    private bool _customFilterFlyoutOpen = false;
 
     public ItemsViewModel ViewModel { get; }
 
@@ -58,5 +60,10 @@ public partial class ItemsPage : INavigableView<ItemsViewModel> {
     public void ToggleSortFilterFlyout() {
         SortFilterFlyoutOpen = false;
         SortFilterFlyoutOpen = true;
+    }
+    [RelayCommand]
+    public void ToggleCustomFilterFlyout() {
+        CustomFilterFlyoutOpen = false;
+        CustomFilterFlyoutOpen = true;
     }
 }

@@ -6,6 +6,9 @@ using YanehCheck.EpicGamesUtils.BL.Models;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
@@ -21,6 +24,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private readonly IFortniteInventoryImageProcessor inventoryProcessor;
     private readonly IFortniteGgImageDownloader imageDownloader;
     private readonly IFileSaveDialogService fileSaveService;
+    private readonly ICustomFilterProvider filterProvider;
 
     private string _initializedForAccountId = "";
 
@@ -30,15 +34,21 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
     [ObservableProperty]
     private IEnumerable<ItemPresentationModel> _presentedItems = [];
-
     private IEnumerable<ItemPresentationModel> filteredItems = [];
     private IEnumerable<ItemPresentationModel> sortedItems = [];
+    private IEnumerable<ItemPresentationModel> customFilteredItems = [];
     private IEnumerable<ItemPresentationModel> items = [];
 
     public bool AnyFilterApplied => SourceFilter.Any() || RarityFilter.Any() || SeasonFilter.Any() || TagFilter.Any();
 
     [ObservableProperty] 
     private string _search = "";
+
+    [ObservableProperty] 
+    private ObservableCollection<IFilter> _customFilters = [];
+
+    [ObservableProperty] 
+    private IFilter? _customFilter;
 
     [ObservableProperty] 
     private ItemTypeFilter _typeFilter = ItemTypeFilter.All;
@@ -61,7 +71,8 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         ISnackbarService snackbarService,
         IFortniteGgImageDownloader imageDownloader,
         IFortniteInventoryImageProcessor inventoryProcessor,
-        IFileSaveDialogService fileSaveService) {
+        IFileSaveDialogService fileSaveService,
+        ICustomFilterProvider filterProvider) {
         this.epicGamesService = epicGamesService;
         this.itemFacade = itemFacade;
         this.sessionService = sessionService;
@@ -69,6 +80,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         this.imageDownloader = imageDownloader;
         this.inventoryProcessor = inventoryProcessor;
         this.fileSaveService = fileSaveService;
+        this.filterProvider = filterProvider;
     }
 
     [RelayCommand]
@@ -109,10 +121,19 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     }
 
     [RelayCommand]
+    public void OnCustomFilter(IFilter filter) {
+        CustomFilter = CustomFilter == filter ? null : filter;
+        CustomFilterUpdate();
+    }
+
+    [RelayCommand]
     public void OnSearch() => FilterUpdate();
 
     [RelayCommand]
-    public void OnSort(ItemSortFilter sort) => SortUpdate(sort);
+    public void OnSort(ItemSortFilter sort) {
+        SortFilter = sort;
+        SortUpdate();
+    }
 
     [RelayCommand]
     public void OnSource(ItemSource source) {
@@ -160,25 +181,43 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         FilterUpdate();
     }
 
-    private void SortUpdate(ItemSortFilter sort) {
-        // We want to sort the original collection here
-        // Otherwise we would have to resort everytime user applies filter/types character
-        SortFilter = sort;
-        sortedItems = sort switch {
-            ItemSortFilter.AtoZ => items.OrderBy(i => i.Name),
-            ItemSortFilter.ZtoA => items.OrderByDescending(i => i.Name),
-            ItemSortFilter.Newest => items.OrderByDescending(i => i.Release ?? DateTime.MaxValue)
+    private void CustomFilterUpdate() {
+        if (CustomFilter == null) {
+            customFilteredItems = items;
+        }
+        else {
+            try {
+                customFilteredItems = CustomFilter.Apply(items).OfType<ItemPresentationModel>();
+            }
+            catch (FilterException e) {
+                snackbarService.Show(
+                    "Failure",
+                    $"An unexpected error occured while applying filter \"{CustomFilter.Name}\" with message:\n{e.Message}.",
+                    ControlAppearance.Danger,
+                    null,
+                    TimeSpan.FromSeconds(5));
+            }
+        }
+
+        SortUpdate();
+    }
+
+    private void SortUpdate() {
+        sortedItems = SortFilter switch {
+            ItemSortFilter.AtoZ => customFilteredItems.OrderBy(i => i.Name),
+            ItemSortFilter.ZtoA => customFilteredItems.OrderByDescending(i => i.Name),
+            ItemSortFilter.Newest => customFilteredItems.OrderByDescending(i => i.Release ?? DateTime.MaxValue)
                 .ThenBy(i => i.Set)
                 .ThenBy(i => i.Type),
-            ItemSortFilter.Oldest => items.OrderBy(i => i.Release ?? DateTime.MaxValue)
+            ItemSortFilter.Oldest => customFilteredItems.OrderBy(i => i.Release ?? DateTime.MaxValue)
                 .ThenBy(i => i.Set)
                 .ThenBy(i => i.Type),
-            ItemSortFilter.ShopMostRecent => items.OrderByDescending(i => i.LastSeen ?? DateTime.MinValue),
-            ItemSortFilter.ShopLongestWait => items.OrderBy(i => i.LastSeen ?? DateTime.MaxValue),
-            ItemSortFilter.Rarity => items.OrderByDescending(i => i.Rarity)
+            ItemSortFilter.ShopMostRecent => customFilteredItems.OrderByDescending(i => i.LastSeen ?? DateTime.MinValue),
+            ItemSortFilter.ShopLongestWait => customFilteredItems.OrderBy(i => i.LastSeen ?? DateTime.MaxValue),
+            ItemSortFilter.Rarity => customFilteredItems.OrderByDescending(i => i.Rarity)
                 .ThenBy(i => i.Set) // This should somewhat group related items together
                 .ThenBy(i => i.Type), 
-            ItemSortFilter.Type => items.OrderBy(i => i.Type)
+            ItemSortFilter.Type => customFilteredItems.OrderBy(i => i.Type)
                 .ThenByDescending(i => i.Rarity)
         };
         FilterUpdate();
@@ -208,6 +247,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     #endregion
 
     public void OnNavigatedTo() {
+        InitializeViewModel().ConfigureAwait(false);
         if(!sessionService.IsAuthenticated) {
             snackbarService.Show(
                 "Failure",
@@ -230,13 +270,25 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
         if (_initializedForAccountId != sessionService.AccountId) {
             _initializedForAccountId = sessionService.AccountId!;
-            InitializeViewModel().ConfigureAwait(false);
+            InitializeViewModelForUser().ConfigureAwait(false);
         }
     }
 
     public void OnNavigatedFrom() { }
 
     private async Task InitializeViewModel() {
+        CustomFilters = new ObservableCollection<IFilter>(
+            await filterProvider.GetAllAsync((f, e) => {
+            snackbarService.Show(
+                "Failure",
+                $"An error occured while parsing filter \"{f}\":\n{e.Message}",
+                ControlAppearance.Danger,
+                null,
+                TimeSpan.FromSeconds(5));
+        }));
+    }
+
+    private async Task InitializeViewModelForUser() {
         var fetchedItems = (await FetchItems())?.ToList();
         if(fetchedItems == null) {
             return;
@@ -260,7 +312,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
                 TimeSpan.FromSeconds(5));
         }
         items = filteredItems;
-        SortUpdate(SortFilter);
+        CustomFilterUpdate();
 
 
         await Task.Run(() => LoadImages(filteredItems));

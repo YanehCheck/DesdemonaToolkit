@@ -42,7 +42,9 @@ public enum ItemTypeFilter
     AllLego,
     AllRocketRacing,
     AllFestival,
-    Instruments
+    Instruments,
+
+    None = 1000
 }
 
 public static class ItemTypeFilterExtensions

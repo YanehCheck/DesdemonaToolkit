@@ -11,11 +11,12 @@
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:items="clr-namespace:YanehCheck.EpicGamesUtils.Common.Enums.Items;assembly=YanehCheck.EpicGamesUtils.Common"
     xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage"
+    xmlns:filters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces"
     Title="ItemsPage"
     d:DataContext="{d:DesignInstance local:ItemsPage,
                                      IsDesignTimeCreatable=False}"
-    d:DesignHeight="675"
-    d:DesignWidth="1200"
+    d:DesignHeight="900"
+    d:DesignWidth="1600"
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -643,7 +644,8 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"    />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
@@ -1339,7 +1341,7 @@
                                 Command="{Binding ViewModel.SeasonCommand}"
                                 CommandParameter='c3s4'
                             />
-                     </StackPanel>
+                        </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <ui:Button 
                                 Content="C4:"
@@ -1551,6 +1553,61 @@
             <Grid
                 Grid.Column="7"
                 Margin="0,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="0" />
+                </Grid.ColumnDefinitions>
+                <ui:Button
+                     Grid.Column="0"
+                     Content="Custom filter"
+                     Command="{Binding ToggleCustomFilterFlyoutCommand}"
+                     Background="{Binding ViewModel.CustomFilter,
+                      Converter={StaticResource ObjectNullToColorConverter}}"/>
+                <ui:Flyout
+                     Grid.Column="1"
+                     Placement="Left"
+                     IsOpen="{Binding CustomFilterFlyoutOpen}">
+                    <ui:VirtualizingItemsControl
+                         ItemsSource="{Binding ViewModel.CustomFilters}">
+                        <ui:VirtualizingItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ui:VirtualizingItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type filters:IFilter}">
+                                <ui:Button 
+                                    Content="{Binding Name}"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding DataContext.ViewModel.CustomFilterCommand, RelativeSource={RelativeSource AncestorType={x:Type ui:VirtualizingItemsControl}}}"
+                                    CommandParameter="{Binding}">
+                                    <ui:Button.ToolTip>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="{}{0}&#x0d;&#x0a;By: {1}">
+                                                    <Binding Path="Description"></Binding>
+                                                    <Binding Path="Author" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </ui:Button.ToolTip>
+                                    <ui:Button.Background>
+                                        <MultiBinding Converter="{StaticResource EqualsToColorMultiConverter}">
+                                            <Binding Path="DataContext.ViewModel.CustomFilter" 
+                                                      RelativeSource="{RelativeSource AncestorType={x:Type ui:VirtualizingItemsControl}}"
+                                                      Mode="OneWay"/>
+                                            <Binding Mode="OneWay"/>
+                                        </MultiBinding>
+                                    </ui:Button.Background>
+                                </ui:Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ui:VirtualizingItemsControl>
+                </ui:Flyout>
+            </Grid>
+            <Grid
+                Grid.Column="8"
+                Margin="0,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0" />
                     <RowDefinition Height="Auto" />
@@ -1643,7 +1700,7 @@
                     Command="{Binding ToggleSortFilterFlyoutCommand}"/>
             </Grid>
             <Grid
-                Grid.Column="8"
+                Grid.Column="9"
                 Margin="0,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0" />

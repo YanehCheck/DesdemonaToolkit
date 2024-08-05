@@ -10,7 +10,6 @@ using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Api;
 using YanehCheck.EpicGamesUtils.BL;
 using YanehCheck.EpicGamesUtils.DAL;
-using YanehCheck.EpicGamesUtils.DAL.Migrators;
 using YanehCheck.EpicGamesUtils.FortniteGGScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
@@ -109,8 +108,6 @@ public partial class App {
     /// </summary>
     private void OnStartup(object sender, StartupEventArgs e) {
         _host.Start();
-        var migrator = GetService<IDatabaseMigrator>();
-        migrator.Migrate();
     }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Buffers;
+using System.IO;
 using Microsoft.Extensions.Options;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
@@ -7,6 +8,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Extensions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using Color = SixLabors.ImageSharp.Color;
 using Font = SixLabors.Fonts.Font;
@@ -21,9 +23,6 @@ using TextOptions = SixLabors.Fonts.TextOptions;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public interface IFortniteInventoryImageProcessor {
-    Image Create(List<ItemPresentationModel> items);
-}
 public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> options) : IFortniteInventoryImageProcessor {
     private readonly bool addLogo = true;
     private readonly int logoHeight = 250;
@@ -58,9 +57,10 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
                 row * (options.Value.ItemHeight + options.Value.ItemSpacing) + logoHeight : 
                 row * (options.Value.ItemHeight + options.Value.ItemSpacing);
 
-            using var itemImage = items[i].BitmapFrame!.ToImageSharpImage();
+            using var itemImage = items[i].BitmapFrame!.ToImageSharpImage(out var data);
             var itemName = items[i].Name;
             DrawItem(image, itemName?.ToUpper() ?? "", itemImage, x, y, fontColor);
+            ArrayPool<byte>.Shared.Return(data);
         }
         
         return image;

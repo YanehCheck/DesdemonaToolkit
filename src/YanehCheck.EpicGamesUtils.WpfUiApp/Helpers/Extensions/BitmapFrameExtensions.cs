@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Buffers;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -6,6 +7,36 @@ using SixLabors.ImageSharp.PixelFormats;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Extensions;
 
 public static class BitmapFrameExtensions {
+
+    /// <summary>
+    /// Supports color spaces Bgra32, Bgr32 and Gray8.
+    /// <param name="pixelData">Should be freed by ArrayPool{byte} after usage</param>
+    /// </summary>
+    public static Image ToImageSharpImage(this BitmapFrame bitmapFrame, out byte[] pixelData) {
+        if(bitmapFrame == null) {
+            throw new ArgumentNullException("BitmapFrame was null when converting to Image.");
+        }
+
+        var width = bitmapFrame.PixelWidth;
+        var height = bitmapFrame.PixelHeight;
+        var format = bitmapFrame.Format;
+        int bytesPerPixel = GetBytesPerPixel(format);
+        int stride = width * bytesPerPixel;
+
+        pixelData = ArrayPool<byte>.Shared.Rent(height * stride);
+        bitmapFrame.CopyPixels(pixelData, stride, 0);
+
+
+        Span<byte> pixelSpan = new Span<byte>(pixelData, 0, height * stride);
+        if(format == PixelFormats.Bgra32 || format == PixelFormats.Bgr32) {
+            return Image.LoadPixelData<Bgra32>(pixelSpan, width, height);
+        }
+        else // format == PixelFormats.Gray8
+        {
+            return Image.LoadPixelData<L8>(pixelSpan, width, height);
+        }
+
+    }
 
     /// <summary>
     /// Supports color spaces Bgra32, Bgr32 and Gray8. 

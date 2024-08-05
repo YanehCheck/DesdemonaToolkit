@@ -8,7 +8,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementati
 
 internal class FilterLexer {
     private string sourceString;
-    public int Line { get; private set; } = 0;
+    public int Line { get; private set; } = 1;
     public int Char { get; private set; } = 0;
     public int Pos { get; private set; } = 0;
 

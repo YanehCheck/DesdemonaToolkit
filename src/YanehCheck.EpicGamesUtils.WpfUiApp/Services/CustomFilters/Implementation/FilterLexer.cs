@@ -57,6 +57,11 @@ internal class FilterLexer {
                 }
             }
 
+            if (sourceString[Pos] is '#') {
+                var newlineIndex = sourceString[Pos..].IndexOf('\n');
+                UpdatePos(newlineIndex);
+            }
+
             if(sourceString[Pos] is ' ' or '\t' or '\r' or '\v') {
                 Pos++;
                 Char++;
@@ -91,7 +96,8 @@ internal class FilterLexer {
     private Token? LexProperty() {
         var properties = typeof(ItemModel).GetProperties()
             .Where(p => p.Name != "Id");
-        var property = properties.SingleOrDefault(n => sourceString[Pos..].StartsWith(n.Name));
+        var property = properties.Where(n => sourceString[Pos..].StartsWith(n.Name)).MaxBy(s => s.Name.Length);
+        ;
         if(property != null) {
             UpdatePos(property.Name.Length);
             return new Token(TokenType.Property, property.Name);

@@ -9,6 +9,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 
 /// <inheritdoc cref="ICustomFilterParser"/>
 public class CustomFilterParser : ICustomFilterParser {
+    private bool strict = true;
     public IFilter Parse(string filterString) {
         var lexer = new FilterLexer(filterString);
         var filter = new Filter();
@@ -22,7 +23,7 @@ public class CustomFilterParser : ICustomFilterParser {
             throw new FilterParserException(lexer.Line, lexer.Char, "Syntax error. Unknown or unexpected token.");
         }
         else if(token.Type == TokenType.Header) {
-            ProcessHeader(filter, token);
+            ProcessHeader(lexer, filter, token);
             ParseHeaderOrProperty(lexer, filter);
         }
         else if(token.Type == TokenType.Property) {
@@ -90,7 +91,10 @@ public class CustomFilterParser : ICustomFilterParser {
     }
 
     private void ParseLiteralList(FilterLexer lexer, Filter filter, IEnumerable<object?> listValues) {
-        var token = lexer.GetNextToken(TokenTypeExtensions.AnyLiteral());
+        var expecting = strict
+            ? TokenTypeExtensions.AnyLiteral()
+            : TokenTypeExtensions.AnyLiteral() | TokenType.ListClose;
+        var token = lexer.GetNextToken(expecting);
         if(token is null) {
             throw new FilterParserException(lexer.Line, lexer.Char, "Syntax error. Unknown or unexpected token.");
         }
@@ -98,6 +102,10 @@ public class CustomFilterParser : ICustomFilterParser {
             ProcessListLiteral(lexer, filter, token);
             listValues = listValues.Append(token.Value);
             ParseListCloseOrListNext(lexer, filter, listValues);
+        }
+        else if (!strict && token.Type == TokenType.ListClose) {
+            ProcessListClose(filter, listValues);
+            ParseAndOr(lexer, filter);
         }
         else {
             throw new FilterParserException(lexer.Line, lexer.Char, "Unexpected token. Expected a literal.");
@@ -196,7 +204,11 @@ public class CustomFilterParser : ICustomFilterParser {
     }
 
     private void ProcessListOpen(FilterLexer lexer, Filter filter) {
-        if(filter.LastClause!.ListOperation == ListOperation.NotAListOperation) {
+        var condition = filter.LastClause!;
+        if (!strict && condition.ListOperation == ListOperation.NotAListOperation) {
+            condition.ListOperation = ListOperation.Any;
+        }
+        else if(condition.ListOperation == ListOperation.NotAListOperation) {
             throw new FilterParserException(lexer.Line, lexer.Char,
                 "Invalid list usage. Tried to use a list without list operator.");
         }
@@ -255,7 +267,7 @@ public class CustomFilterParser : ICustomFilterParser {
     }
 
 
-    private void ProcessHeader(Filter filter, Token token) {
+    private void ProcessHeader(FilterLexer lexer, Filter filter, Token token) {
         var header = (HeaderInformation) token.Value!;
         switch(header.Type) {
             case HeaderType.Version when uint.TryParse(header.Value, out var intVersion):
@@ -277,6 +289,12 @@ public class CustomFilterParser : ICustomFilterParser {
                 break;
             case HeaderType.Optimization:
                 throw new FilterParserException("Invalid optimization level. Valid values are 0/1/2.");
+            case HeaderType.Strict when bool.TryParse(header.Value, out bool value):
+                strict = value;
+                lexer.Strict = value;
+                break;
+            case HeaderType.Strict:
+                throw new FilterParserException("Invalid strict header value. Valid values are true/false.");
         }
     }
 

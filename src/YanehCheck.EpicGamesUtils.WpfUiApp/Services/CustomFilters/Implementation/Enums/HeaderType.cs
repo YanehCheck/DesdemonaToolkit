@@ -6,5 +6,6 @@ public enum HeaderType
     Name,
     Description,
     Author,
-    Optimization
+    Optimization,
+    Strict
 }

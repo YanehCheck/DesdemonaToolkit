@@ -11,6 +11,7 @@ internal class FilterLexer {
     public int Line { get; private set; } = 1;
     public int Char { get; private set; } = 0;
     public int Pos { get; private set; } = 0;
+    public bool Strict { get; set; } = true;
 
     private Stack<Token> pushedBackTokens = new();
 
@@ -168,6 +169,13 @@ internal class FilterLexer {
         if(str.StartsWith('<')) {
             UpdatePos(1);
             return new Token(TokenType.Operator, Operation.LessThan);
+        }
+
+        if (!Strict) {
+            if(str.StartsWith("=")) {
+                UpdatePos(1);
+                return new Token(TokenType.Operator, Operation.Equals);
+            }
         }
 
         return null;

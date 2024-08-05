@@ -23,6 +23,7 @@
     <PackageTags>fortnite, client</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <ItemGroup>
@@ -205,5 +206,4 @@
   <Target Name="CopyFilters" AfterTargets="Build">
     <Copy SourceFiles="@(Filters)" DestinationFolder="$(OutputPath)data\filters" SkipUnchangedFiles="false" />
   </Target>
-
 </Project>

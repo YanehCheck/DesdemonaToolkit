@@ -124,6 +124,9 @@ public class ChainedCondition {
         else if(propertyType == typeof(ItemRarity)) {
             return HandleEnum((ItemRarity) propertyValue!, Operation, parameter);
         }
+        else if(propertyType == typeof(ItemType)) {
+            return HandleEnum((ItemType) propertyValue!, Operation, parameter);
+        }
         else if(propertyType == typeof(IEnumerable<string>)) {
             return HandleStringEnumerableValue((IEnumerable<string>) propertyValue!, Operation, parameter);
         }

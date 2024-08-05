@@ -232,7 +232,7 @@ public class CustomFilterParser : ICustomFilterParser {
                 or Operation.StrictEquals or Operation.StrictNotEquals;
         }
         else if(type == typeof(int) || type == typeof(DateTime) ||
-                type == typeof(ItemSource) || type == typeof(ItemRarity)) {
+                type == typeof(ItemSource) || type == typeof(ItemRarity) || type == typeof(ItemType)) {
             supported = op is Operation.Equals or Operation.NotEquals or Operation.GreaterThan
                 or Operation.GreaterThanOrEqual or Operation.LessThan or Operation.LessThanOrEqual;
         }

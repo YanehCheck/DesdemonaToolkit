@@ -1559,14 +1559,15 @@
                 </Grid.ColumnDefinitions>
                 <ui:Button
                      Grid.Column="0"
-                     Content="Custom filter"
+                     Content="Custom filters"
                      Command="{Binding ToggleCustomFilterFlyoutCommand}"
                      Background="{Binding ViewModel.CustomFilter,
                       Converter={StaticResource ObjectNullToColorConverter}}"/>
                 <ui:Flyout
                      Grid.Column="1"
                      Placement="Left"
-                     IsOpen="{Binding CustomFilterFlyoutOpen}">
+                     IsOpen="{Binding CustomFilterFlyoutOpen}"
+                     Visibility="{Binding ViewModel.CustomFilters, Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}">
                     <ui:VirtualizingItemsControl
                          ItemsSource="{Binding ViewModel.CustomFilters}">
                         <ui:VirtualizingItemsControl.ItemsPanel>

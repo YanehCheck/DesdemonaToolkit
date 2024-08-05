@@ -173,8 +173,13 @@ public class CustomFilterParser : ICustomFilterParser {
     }
 
     private void ProcessLiteral(FilterLexer lexer, Filter filter, Token token) {
+        var condition = filter.LastClause!;
+        if (condition.ListOperation != ListOperation.NotAListOperation) {
+            throw new FilterParserException(
+                "Incompatible multi-operator. Multi-operator can only be applied on list values.");
+        }
         TypeCheckProperty(lexer, filter, token);
-        filter.LastClause!.Parameter = token.Value;
+        condition.Parameter = token.Value;
     }
 
     private static void TypeCheckProperty(FilterLexer lexer, Filter filter, Token token) {

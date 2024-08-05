@@ -1,10 +1,14 @@
 ###Version=1
-###Name=Rare Items v1
-###Description=Rare, exclusive and unique items. Tries to not show accessories.
+###Name=Strict exclusive
+###Description=Rare, exclusive and unique items. Tries to not show accessories, recent and pretty commonly owned stuff, but may miss some things.
 ###Author=Desdemona Toolkit
+###Optimizations==0
 
 # Long wait in Shop
 LastSeen<2020-6-20 && Source==Shop
+
+||# Early crew
+Source==Crew && Release<=2021-9-1
 
 ||# STW test and creator banners
 SourceDescription*{["STW ALPHA TEST", "SURVIVORS AND SELECT A YOUTUBER"]
@@ -12,8 +16,20 @@ SourceDescription*{["STW ALPHA TEST", "SURVIVORS AND SELECT A YOUTUBER"]
 ||# STW Founder
 SourceDescription=="STW Founder's Pack" && Type@!=[Backpack, Pickaxe]
 
-||# Early crew
-Source==Crew && Release<=2021-9-1
+|| #100 levels
+Name{"SEASON LEVEL 100"
+
+|| # Winterfest outfits
+SourceDescription*{["Winterfest", "Daily gifts"] && Type==Outfit
+
+||# Refer a friend
+SourceDescription{"REFER A FRIEND" && Type*==[Outfit, Pickaxe, Glider]
+
+||# Older FNCS Set stuff
+Set=="FNCS" && Release<=2023-05-30 && Type@!=[LoadingScreen, Emoji, Spray]
+
+||# Vbuck cards
+SourceDescription{"REDEEM VBUCK"
 
 ||# Llama-rama
 SourceDescription{"llama-rama"
@@ -51,5 +67,28 @@ Season=="c1s2" && Rarity*==[Legendary, Epic] && Source==BattlePass
 ||# S3
 Name*==["THE REAPER", "ELITE AGENT", "DARK VOYAGER"] && Type==Outfit
 
-||# Merry mint pick
-Name=="MERRY MINT AXE"
+||# Specific items
+Name*==
+[
+# Outfits
+"TART TYCOON",
+
+# Gliders
+"BEAST BRELLA",
+"SNOWFLAKE",
+"PAPER PARASOL",
+"WET PAINT",
+
+# Pickaxes
+"MERRY MINT AXE",
+
+# Backpacks
+"POYZENN",
+"SIGIL OF THE ALLIANCE WAR",
+
+# Emoticons
+"SPINNER TAKES ALL",
+
+# Sprays
+"LLAMALAXY"
+]

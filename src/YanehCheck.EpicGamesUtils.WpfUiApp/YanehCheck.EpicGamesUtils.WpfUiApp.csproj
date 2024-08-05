@@ -195,7 +195,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Filters Include="Assets\Filters\*.dtkf"/>
+    <Filters Include="Assets\Filters\*.dtkf" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -203,11 +203,7 @@
   </PropertyGroup>
 
   <Target Name="CopyFilters" AfterTargets="Build">
-    <Message Text="Copying files to: $(OutputPath)data\filters" Importance="high" />
-    <Copy
-      SourceFiles="@(Filters)"
-      DestinationFolder="$(OutputPath)data\filters"
-      SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(Filters)" DestinationFolder="$(OutputPath)data\filters" SkipUnchangedFiles="false" />
   </Target>
 
 </Project>

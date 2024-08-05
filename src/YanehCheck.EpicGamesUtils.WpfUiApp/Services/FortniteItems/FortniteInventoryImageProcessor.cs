@@ -1,4 +1,5 @@
 ﻿using System.Buffers;
+using System.Collections.Concurrent;
 using System.IO;
 using Microsoft.Extensions.Options;
 using SixLabors.Fonts;
@@ -31,8 +32,13 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
     private readonly string logoTernaryText = "GITHUB.COM/YANEHCHECK/DESDEMONATOOLKIT";
     private readonly int logoSeparatorWidth = 10;
 
+    private readonly ConcurrentDictionary<float, Font> fontCache = new();
+
     public Image Create(List<ItemPresentationModel> items) {
         var itemsPerRow = options.Value.ItemsPerRow;
+        var fontFamily = GetFortniteFontFamily();
+
+
         if (items.Count < itemsPerRow) { 
             itemsPerRow = items.Count;
         }
@@ -46,7 +52,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         image.Mutate(ctx => ctx.BackgroundColor(Color.ParseHex(options.Value.BackgroundColor)));
 
         if (items.Count > 20 && addLogo) {
-            DrawLogo(image, fontColor);
+            DrawLogo(image, fontColor, fontFamily);
         }
 
         for (int i = 0; i < items.Count; i++) {
@@ -59,14 +65,14 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
 
             using var itemImage = items[i].BitmapFrame!.ToImageSharpImage(out var data);
             var itemName = items[i].Name;
-            DrawItem(image, itemName?.ToUpper() ?? "", itemImage, x, y, fontColor);
+            DrawItem(image, itemName, itemImage, x, y, fontColor, fontFamily);
             ArrayPool<byte>.Shared.Return(data);
         }
         
         return image;
     }
 
-    private void DrawLogo(Image image, Color fontColor) {
+    private void DrawLogo(Image image, Color fontColor, FontFamily fontFamily) {
         // Draw bg
         using var backgroundImage = GetLogoBackground();
         image.Mutate(ctx => 
@@ -76,8 +82,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         // Draw text
         // Let's not overcomplicate and hard code some of this
         // I can't ever see someone wanting to (especially partially) change this
-        var family = GetFortniteFontFamily();
-        var mainFont = family.CreateFont(80);
+        var mainFont = fontCache.GetOrAdd(80, fontFamily.CreateFont);
         var mainSize = MeasureTextSize(logoMainText, mainFont);
         var mainLeftShift = (image.Width - mainSize.Width) / 2;
         var mainTopShift = (logoHeight - mainSize.Height) / 2;
@@ -85,20 +90,20 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
 
         image.Mutate(ctx => ctx.DrawText(logoMainText, mainFont, fontColor, mainPosition));
 
-        var secondaryFont = family.CreateFont(50);
+        var secondaryFont = fontCache.GetOrAdd(50, fontFamily.CreateFont);
         var secondarySize = MeasureTextSize(logoSecondaryText, secondaryFont);
         var secondaryLeftShift = (image.Width - secondarySize.Width) / 2;
         var secondaryTopShift = (logoHeight - secondarySize.Height) / 2;
         var secondaryPosition = new PointF(secondaryLeftShift, secondaryTopShift + 50);
         image.Mutate(ctx => ctx.DrawText(logoSecondaryText, secondaryFont, fontColor, secondaryPosition));
 
-        var ternaryFont = family.CreateFont(30);
+        var ternaryFont = fontCache.GetOrAdd(30, fontFamily.CreateFont);
         var ternarySize = MeasureTextSize(logoTernaryText, ternaryFont);
         var ternaryPosition = new PointF(image.Width - 20 - ternarySize.Width, 0 + 20);
         image.Mutate(ctx => ctx.DrawText(logoTernaryText, ternaryFont, fontColor, ternaryPosition));
     }
 
-    private void DrawItem(Image inventoryImage, string itemName, Image itemImage, int x, int y, Color fontColor) {
+    private void DrawItem(Image inventoryImage, string itemName, Image itemImage, int x, int y, Color fontColor, FontFamily fontFamily) {
         var itemWidth = options.Value.ItemWidth;
         var itemHeight = options.Value.ItemHeight;
         var nameRectangleHeight = options.Value.NameRectangleHeight;
@@ -108,7 +113,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         itemImage.Mutate(ctx => ctx.Resize(itemWidth, itemHeight)); // Just to be sure
         inventoryImage.Mutate(ctx => ctx.DrawImage(itemImage, new Point(x, y), 1));
 
-        var font = GetFontWithRightSize(itemName, out var size);
+        var font = GetFontWithRightSize(itemName, fontFamily, out var size);
         var leftShift = (itemWidth - size.Width) / 2;
         var topShift = (nameRectangleHeight - size.Height) / 2;
         // Draw transparent rectangle for name
@@ -121,22 +126,20 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         inventoryImage.Mutate(ctx => ctx.DrawText(itemName, font, fontColor, namePosition));
     }
 
-    private Font GetFontWithRightSize(string text, out FontRectangle size) {
-        var fontFamily = GetFortniteFontFamily();
+    private Font GetFontWithRightSize(string text, FontFamily fontFamily, out FontRectangle size) {
         var currentFontSize = options.Value.NameFontSize;
 
         do {
-            var font = fontFamily.CreateFont(currentFontSize);
+            var font = fontCache.GetOrAdd(currentFontSize, fontFamily.CreateFont);
             size = MeasureTextSize(text, font);
-            if(size.Width <= options.Value.ItemWidth - options.Value.NameTextPaddingLr * 2 && 
-               size.Height <= options.Value.NameRectangleHeight - options.Value.NameTextPaddingTb * 2) {
-                break;
+            if (size.Width <= options.Value.ItemWidth - options.Value.NameTextPaddingLr * 2 &&
+                size.Height <= options.Value.NameRectangleHeight - options.Value.NameTextPaddingTb * 2) {
+                return font;
             }
 
             currentFontSize -= options.Value.NameFontDownsizeStep;
-        } while(true);
-
-        return fontFamily.CreateFont(currentFontSize);
+        }
+        while (true);
     }
 
     private FontRectangle MeasureTextSize(string text, Font font) {

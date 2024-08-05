@@ -1583,7 +1583,8 @@
                                     Command="{Binding DataContext.ViewModel.CustomFilterCommand, RelativeSource={RelativeSource AncestorType={x:Type ui:VirtualizingItemsControl}}}"
                                     CommandParameter="{Binding}">
                                     <ui:Button.ToolTip>
-                                        <TextBlock>
+                                        <TextBlock
+                                            TextWrapping='Wrap'>
                                             <TextBlock.Text>
                                                 <MultiBinding StringFormat="{}{0}&#x0d;&#x0a;By: {1}">
                                                     <Binding Path="Description"></Binding>

@@ -214,7 +214,16 @@
                     <ui:TextBlock 
                         Margin="0,5,0,0"
                         Foreground="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToColorConverter}}"
-                        Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToStringConverter}}"/>
+                        Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToStringConverter}}"
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"/>
+                    <ProgressBar
+                        Margin="0,8,0,0"
+                        Maximum="100"
+                        Minimum="0"
+                        Height="7"
+                        Value="{Binding ViewModel.FetchProgressPercentage}"
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                    </ProgressBar>
                 </StackPanel>
             </ui:Card>
         </Grid>

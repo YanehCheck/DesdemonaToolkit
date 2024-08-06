@@ -4,5 +4,6 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 
 public interface IFortniteItemProvider
 {
-    public Task<IEnumerable<ItemModel>?> GetItemsAsync();
+    Task<IEnumerable<ItemModel>?> GetItemsAsync();
+    Task<IEnumerable<ItemModel>?> GetItemsAsync(Action<double>? progressReport);
 }

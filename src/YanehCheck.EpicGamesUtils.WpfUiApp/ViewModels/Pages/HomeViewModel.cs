@@ -36,6 +36,12 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
     public ObservableCollection<ItemFetchSource> ItemFetchSources { get; set; } = new(Enum.GetValues<ItemFetchSource>());
 
+    [ObservableProperty]
+    private bool _fetchingData = false;
+
+    [ObservableProperty] 
+    private int _fetchProgressPercentage = 0;
+
 
     public void OnNavigatedTo() {
         if (!_isInitialized) {
@@ -101,9 +107,12 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             ItemFetchSource.Stable => uriItemProvider,
             _ => throw new ArgumentException("Invalid item source selected.")
         };
-
-        var items = await source.GetItemsAsync();
+        FetchingData = true;
+        var items = await source.GetItemsAsync(progress => {
+            FetchProgressPercentage = (int) (progress * 100);
+        });
         if (items == null) {
+            FetchingData = false;
             snackbarService.Show("Failure",
                 "An error occured while fetching item data. Please check your connection or use different source.",
                 ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
@@ -117,12 +126,14 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             persistenceProvider.LastItemFetch = LastItemFetch;
             persistenceProvider.Save();
             sessionService.IsItemDataFetched = true;
-
             snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success,
                 null, TimeSpan.FromSeconds(5));
         }
         catch (Exception ex) {
             snackbarService.Show("Failure", $"An error occured while saving item data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
         }
+
+        FetchingData = false;
+        FetchProgressPercentage = 0;
     }
 }

@@ -3,13 +3,17 @@ using System.Windows.Data;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 
-public class BoolToVisibilityCollapseConverter : IValueConverter {
+public class DateTimeToDateStringConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-        if(value is bool val) {
-            return val ? Visibility.Visible : Visibility.Collapsed;
+        if(value is null) {
+            return "";
         }
 
-        return Visibility.Hidden;
+        if(value is DateTime date) {
+            return date.ToString("yyyy-M-d");
+        }
+
+        return "";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

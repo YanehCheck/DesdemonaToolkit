@@ -20,6 +20,7 @@
 
             <generalConverters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <generalConverters:BoolToVisibilityCollapseConverter x:Key="BoolToVisibilityCollapseConverter" />
+            <generalConverters:BoolNotToVisibilityCollapseConverter x:Key="BoolNotToVisibilityCollapseConverter" /> 
 
             <generalConverters:ObjectNullToColorConverter x:Key="ObjectNullToColorConverter" />
             <generalConverters:ObjectNullToColorTintConverter x:Key="ObjectNullToColorTintConverter" />

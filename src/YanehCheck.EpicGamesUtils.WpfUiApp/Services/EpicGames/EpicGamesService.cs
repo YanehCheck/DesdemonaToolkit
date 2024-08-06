@@ -4,7 +4,6 @@ using YanehCheck.EpicGamesUtils.Api;
 using YanehCheck.EpicGamesUtils.Api.Auth;
 using YanehCheck.EpicGamesUtils.Api.Enums;
 using YanehCheck.EpicGamesUtils.Api.Results;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 
@@ -58,13 +57,17 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
         var removeFilter = EpicGamesServiceHelpers.GetQueryProfileRemoveFilter();
         var filteredItems = items.Where(i => !removeFilter.Any(i.StartsWith));
 
+        var builtinEmotesTokens = result.Content!.SelectTokens("$..access_item");
+        var filteredBuiltinEmotes = builtinEmotesTokens.Select(x => x.ToObject<string>());
+
+        // Now banners from common_core
         var bannerResult = await epicGamesClient.Fortnite_QueryProfile(accountId, accessToken, FortniteProfile.CommonCore);
         var bannerTokens = bannerResult.Content!.SelectTokens("$..templateId");
         var filteredBannerTokens = bannerTokens.Where(t => Regex.IsMatch(t.Path, @"profileChanges\[0]\.profile\.items\..{36}\.templateId"));
         var banners = filteredBannerTokens.Select(x => x.ToObject<string>());
         var filteredBanners = banners.Where(i => !removeFilter.Any(i.StartsWith));
 
-        var allItems = filteredBanners.Concat(filteredItems);
+        var allItems = filteredBanners.Concat(filteredItems).Concat(filteredBuiltinEmotes);
 
         return new EpicGamesItemsResult(
             result.StatusCode,

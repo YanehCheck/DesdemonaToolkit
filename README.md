@@ -25,6 +25,14 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 
 See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki).
 
+## Installation and set-up
+
+- [Download the latest release](github.com/YanehCheck/DesdemonaToolkit/releases/latest) (or compile the source code yourself using .NET8)
+    - Self-contained version includes .NET8 runtime (recommended)
+    - Framework-dependent version requires .NET8 runtime pre-installed
+- Extract the archive into a new directory
+- Run `DesdemonaToolkit.exe`
+
 ## Gallery
 <img width="750" src="https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/img-export.png"> </img>
 ![Home Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot1.png)

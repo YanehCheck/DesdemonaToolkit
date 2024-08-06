@@ -32,7 +32,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     public string _displayName;
 
     [ObservableProperty]
-    private ItemFetchSource selectedItemFetchSource = ItemFetchSource.FortniteGg;
+    private ItemFetchSource selectedItemFetchSource = ItemFetchSource.Stable;
 
     public ObservableCollection<ItemFetchSource> ItemFetchSources { get; set; } = new(Enum.GetValues<ItemFetchSource>());
 

@@ -10,7 +10,6 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 
@@ -270,7 +269,28 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
         if (_initializedForAccountId != sessionService.AccountId) {
             _initializedForAccountId = sessionService.AccountId!;
-            InitializeViewModelForUser().ConfigureAwait(false);
+            Task.Run(InitializeViewModelForUser).ContinueWith(task => {
+                if (task.Result == -1) {
+                    return;
+                }
+
+                if(task.Result == 0) {
+                    snackbarService.Show(
+                        "Success",
+                        "All inventory items loaded!",
+                        ControlAppearance.Success,
+                        null,
+                        TimeSpan.FromSeconds(5));
+                }
+                else {
+                    snackbarService.Show(
+                        "Warning",
+                        $"{task.Result} items could not be loaded. Consider fetching item data from up-to-date source.",
+                        ControlAppearance.Caution,
+                        null,
+                        TimeSpan.FromSeconds(5));
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 
@@ -288,34 +308,16 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }));
     }
 
-    private async Task InitializeViewModelForUser() {
+    private async Task<int> InitializeViewModelForUser() {
         var fetchedItems = (await FetchItems())?.ToList();
         if(fetchedItems == null) {
-            return;
+            return -1;
         }
-        var filteredItems = fetchedItems.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
-        var missingItems = fetchedItems.Count - filteredItems.Count;
-        if(missingItems == 0) {
-            snackbarService.Show(
-                "Success",
-                "All inventory items loaded!",
-                ControlAppearance.Success,
-                null,
-                TimeSpan.FromSeconds(5));
-        }
-        else {
-            snackbarService.Show(
-                "Warning",
-                $"{missingItems} items could not be loaded. Consider fetching item data from up-to-date source.",
-                ControlAppearance.Caution,
-                null,
-                TimeSpan.FromSeconds(5));
-        }
-        items = filteredItems;
+        items = fetchedItems.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
+        var missingItems = fetchedItems.Count - items.Count();
         CustomFilterUpdate();
-
-
         await Task.Run(() => LoadImages(filteredItems));
+        return missingItems;
     }
 
     private async Task LoadImages(IEnumerable<ItemPresentationModel> items) {

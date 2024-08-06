@@ -1734,7 +1734,14 @@
                     Command="{Binding ToggleExportFlyoutCommand}"/>
             </Grid>
         </Grid>
+        <ui:LoadingScreen 
+            Grid.Row="2"
+            Visibility="{Binding ViewModel.ItemsLoaded, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            />
         <ui:VirtualizingItemsControl
+            Visibility="{Binding ViewModel.ItemsLoaded, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
             Grid.Row="2"
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
             ItemsSource="{Binding ViewModel.PresentedItems, Mode=OneWay}"

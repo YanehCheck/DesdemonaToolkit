@@ -32,13 +32,14 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     // and even stability.
 
     [ObservableProperty]
+    private bool _itemsLoaded;
+
+    [ObservableProperty]
     private IEnumerable<ItemPresentationModel> _presentedItems = [];
     private IEnumerable<ItemPresentationModel> filteredItems = [];
     private IEnumerable<ItemPresentationModel> sortedItems = [];
     private IEnumerable<ItemPresentationModel> customFilteredItems = [];
     private IEnumerable<ItemPresentationModel> items = [];
-
-    public bool AnyFilterApplied => SourceFilter.Any() || RarityFilter.Any() || SeasonFilter.Any() || TagFilter.Any();
 
     [ObservableProperty] 
     private string _search = "";
@@ -81,6 +82,8 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         this.fileSaveService = fileSaveService;
         this.filterProvider = filterProvider;
     }
+
+    public bool AnyFilterApplied => SourceFilter.Any() || RarityFilter.Any() || SeasonFilter.Any() || TagFilter.Any();
 
     [RelayCommand]
     public async Task ExportInventory(InventoryExport to) {
@@ -268,13 +271,19 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }
 
         if (_initializedForAccountId != sessionService.AccountId) {
+            ItemsLoaded = false;
             _initializedForAccountId = sessionService.AccountId!;
             Task.Run(InitializeViewModelForUser).ContinueWith(task => {
-                if (task.Result == -1) {
-                    return;
+                if (task.Result.ErrorMessage != null) {
+                    snackbarService.Show(
+                        "Failure",
+                        task.Result.ErrorMessage,
+                        ControlAppearance.Danger,
+                        null,
+                        TimeSpan.FromSeconds(5));
                 }
 
-                if(task.Result == 0) {
+                if(task.Result.MissingItems == 0) {
                     snackbarService.Show(
                         "Success",
                         "All inventory items loaded!",
@@ -308,16 +317,18 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }));
     }
 
-    private async Task<int> InitializeViewModelForUser() {
-        var fetchedItems = (await FetchItems())?.ToList();
-        if(fetchedItems == null) {
-            return -1;
+    private async Task<(int MissingItems, string? ErrorMessage)> InitializeViewModelForUser() {
+        var fetchResult = await FetchItems();
+        if(fetchResult.ErrorMessage != null) {
+            return (0, fetchResult.ErrorMessage);
         }
+        var fetchedItems = fetchResult.Items!.ToList();
         items = fetchedItems.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
+        ItemsLoaded = true;
         var missingItems = fetchedItems.Count - items.Count();
         CustomFilterUpdate();
         await Task.Run(() => LoadImages(filteredItems));
-        return missingItems;
+        return (missingItems, null);
     }
 
     private async Task LoadImages(IEnumerable<ItemPresentationModel> items) {
@@ -326,23 +337,21 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         });
     }
 
-    private async Task<IEnumerable<ItemPresentationModel>?> FetchItems() {
+    private async Task<(IEnumerable<ItemPresentationModel>? Items, string? ErrorMessage)> FetchItems() {
         var ownedItemsResult = await epicGamesService.GetItems(sessionService.AccountId!, sessionService.AccessToken!);
         if (!ownedItemsResult.Success) {
-            snackbarService.Show("Failure", $"An error occured while fetching your inventory.\nError: {ownedItemsResult.ErrorMessage!}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
             _initializedForAccountId = "";
-            return null;
+            return ( null, $"An error occured while fetching your inventory.\nError: {ownedItemsResult.ErrorMessage!}");
         }
 
         var ownedItemModels = ownedItemsResult.Items!.Select(i => new ItemModel() {
             FortniteId = i.FortniteId.Split(':').Last()
         });
         try {
-            return (await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemPresentationModel(i));
+            return ((await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemPresentationModel(i)),null);
         }
         catch (Exception ex) {
-            snackbarService.Show("Failure", $"An error occured while fetching item data from database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
-            return null;
+            return (null, $"An error occured while fetching item data from database.\nError: {ex.Message}");
         }
     }
 }

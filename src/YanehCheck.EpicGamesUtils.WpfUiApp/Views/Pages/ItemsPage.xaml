@@ -1736,9 +1736,10 @@
         </Grid>
         <ui:LoadingScreen 
             Grid.Row="2"
-            Visibility="{Binding ViewModel.ItemsLoaded, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}"
+            Visibility="{Binding ViewModel.ItemsLoaded, Mode=OneWay, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            Background="#00000000"
             />
         <ui:VirtualizingItemsControl
             Visibility="{Binding ViewModel.ItemsLoaded, Mode=OneWay, Converter={StaticResource BoolToVisibilityCollapseConverter}}"

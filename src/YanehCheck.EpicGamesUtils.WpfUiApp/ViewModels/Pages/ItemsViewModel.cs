@@ -294,7 +294,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
                 else {
                     snackbarService.Show(
                         "Warning",
-                        $"{task.Result} items could not be loaded. Consider fetching item data from up-to-date source.",
+                        $"{task.Result.MissingItems} item{(task.Result.MissingItems == 1 ? string.Empty : "s")} could not be loaded. Consider fetching item data from up-to-date source.",
                         ControlAppearance.Caution,
                         null,
                         TimeSpan.FromSeconds(5));

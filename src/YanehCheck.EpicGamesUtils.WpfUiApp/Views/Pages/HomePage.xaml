@@ -234,6 +234,12 @@
             <ui:HyperlinkButton 
                 Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"
                 Icon="{ui:SymbolIcon Link24}"
+                Content="Wiki"
+                NavigateUri="https://github.com/YanehCheck/DesdemonaToolkit/wiki"
+                ToolTip="https://github.com/YanehCheck/DesdemonaToolkit/wiki"/>
+            <ui:HyperlinkButton 
+                Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"
+                Icon="{ui:SymbolIcon Link24}"
                 Content="Github"
                 NavigateUri="https://github.com/YanehCheck/DesdemonaToolkit"
                 ToolTip="https://github.com/YanehCheck/DesdemonaToolkit"/>

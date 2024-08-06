@@ -13,14 +13,19 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 /// <inheritdoc cref="IUriItemProvider"/>
 public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mapper, IOptions<ItemFetchOptions> options) : IUriItemProvider
 {
-    public async Task<IEnumerable<ItemModel>?> GetItemsAsync()
-    {
+    public async Task<IEnumerable<ItemModel>?> GetItemsAsync() {
+        return await GetItemsAsync(null);
+    }
+
+    public async Task<IEnumerable<ItemModel>?> GetItemsAsync(Action<double>? progressReport) {
         try {
             var request = new RestRequest(options.Value.StableSourceUri);
             var response = await restClient.GetAsync(request);
             if(!response.IsSuccessStatusCode) {
                 return null;
             }
+
+            progressReport?.Invoke(100);
 
             var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(response.Content!);
             return items.Select(i => {
@@ -32,7 +37,7 @@ public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mappe
                 return mapper.MapToModel(i);
             });
         }
-        catch (Exception e) {
+        catch(Exception e) {
             return null;
         }
     }

@@ -30,12 +30,21 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
     }
 
     public async Task<ConcurrentBag<FortniteGgItem>> ScrapIdRangeParallelAsync(int from, int to) {
+        return await ScrapIdRangeParallelAsync(from, to, null);
+    }
+
+    public async Task<ConcurrentBag<FortniteGgItem>> ScrapIdRangeParallelAsync(int from, int to, Action<double>? progressReport) {
         var items = new ConcurrentBag<FortniteGgItem>();
+        int progress = 0;
         await Parallel.ForEachAsync(Enumerable.Range(from, to), async (i, _) => {
             try {
                 var item = await ScrapItemAsync(i.ToString());
                 if(item != null) {
                     items.Add(item);
+                    progress++;
+                    if (progress % 10 == 0) {
+                        progressReport?.Invoke((double)progress/(to-from));
+                    }
                 }
             }
             catch(Exception ex) {

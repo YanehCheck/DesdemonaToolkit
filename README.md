@@ -8,26 +8,48 @@
 
 Desdemona Toolkit is free and open-source application for externally viewing and managing Fortnite accounts.  
 
-⭐ <b>Safe</b> - No credentials or data is and never will be sent to any third party.  
-⭐ <b>Open-source</b> - All code is licenced under GPL-3.0!  
-⭐ <b>Made to last</b> - Our goal is to avoid mandatory updates to restore basic functionality  .
+<b>Safe</b> - Credentials or data will never be sent to any third party.  
+<b>Open-source</b> - All code is licenced under GPL-3.0!  
+<b>Customization</b> - Make it yours with flexible settings and options.
 
 ### ⚠️Desdemona Toolkit is currently in early active development. You should expect bugs, major changes and lack of features early-on.⚠️
 
+## Features
+
+⭐ Browse your inventory with advanced filtering  
+⭐ Export your inventory as an image to show off your inventory  
+⭐ Create custom filter based on your needs  
+⭐ Fetch the newest item data at any time  
+
+## Usage
+
+See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki).
+
+## Installation and set-up
+
+- [Download the latest release](github.com/YanehCheck/DesdemonaToolkit/releases/latest) (or compile the source code yourself using .NET8)
+    - Self-contained version includes .NET8 runtime (recommended)
+    - Framework-dependent version requires .NET8 runtime pre-installed
+- Extract the archive into a new directory
+- Run `DesdemonaToolkit.exe`
+
+## Gallery
+<img width="750" src="https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/img-export.png"> </img>
+![Home Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot1.png)
+![Inventory Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot2.png)
+  
 ## Roadmap
 
-#### ✅ 0.1.0-prerelease  
-- Fetch newest item data on-demand 
-- Authenticate and view your fortnite inventory with advanced sorting 
-#### 🛠️ 0.1.0 (Planned to release before 8.8.2024) 
+#### ✅ 0.1.0
 - Polish UX of search and filtering
 - Custom filters
-- Inventory statistics like total price, number of items and so on
 - Item name on hover + Detailed view of items on click (videos?)
 - Export your inventory selection as a list or an image
 - Handling for DB, data format and connection issues
 #### 🛠️ 0.2.0
 - General account information page
+- Inventory statistics like total price, number of items, ...
+- Image export improvements and customization
 - STW: Claim daily quest
 - STW: Check founder codes
 ####  🛠️ 1.0.0
@@ -35,12 +57,3 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 - UI and UX polish, Full light mode support
 - Custom filter section
 - ????
-
-## Gallery
-
-![Home Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot1.png)
-![Inventory Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot2.png)
-  
-  
-  
-  

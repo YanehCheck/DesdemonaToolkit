@@ -251,6 +251,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     public void OnNavigatedTo() {
         InitializeViewModel().ConfigureAwait(false);
         if(!sessionService.IsAuthenticated) {
+            ItemsLoaded = true;
             snackbarService.Show(
                 "Failure",
                 "No account authenticated. Please authenticate on the Home page.",
@@ -261,6 +262,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }
 
         if(!sessionService.IsItemDataFetched) {
+            ItemsLoaded = true;
             snackbarService.Show(
                 "Failure",
                 "No item data found. Please fetch item data on the Home page.",

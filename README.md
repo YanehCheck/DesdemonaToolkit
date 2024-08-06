@@ -21,7 +21,7 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 ⭐ Create custom filter based on your needs  
 ⭐ Fetch the newest item data at any time  
 
-# Usage
+## Usage
 
 See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki).
 

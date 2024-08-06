@@ -23,7 +23,8 @@ public partial class SettingsViewModel : ObservableObject, IViewModel, INavigati
 
     private void InitializeViewModel() {
         CurrentTheme = ApplicationThemeManager.GetAppTheme();
-        AppVersion = $"Development version: {GetAssemblyVersion()}";
+        var fullVersion = GetAssemblyVersion();
+        AppVersion = $"Development version: {fullVersion[..^2]}";
 
         _isInitialized = true;
     }

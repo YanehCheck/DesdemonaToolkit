@@ -15,6 +15,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Cache;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
@@ -54,9 +55,18 @@ public partial class App {
 
             services.AddTransient<IRestClient, RestClient>();
 
-            // Fortnite related
+            // EGS API
             services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
-            services.AddSingleton<IEpicGamesService, EpicGamesService>();
+            services.AddSingleton<EpicGamesService>();
+            services.AddTransient<ICache, InMemoryCache>();
+            services.AddSingleton<IEpicGamesService>(sp =>
+                new CachedEpicGamesService(
+                    sp.GetRequiredService<EpicGamesService>(),
+                    sp.GetRequiredService<ICache>()
+                )
+            );
+
+            // Other fortnite
             services.AddTransient<IFortniteGgImageDownloader, FortniteGgImageDownloader>();
             services.AddTransient<IFortniteGgItemMapper, FortniteGgItemMapper>();
             services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();

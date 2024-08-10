@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using YanehCheck.EpicGamesUtils.BL.Models;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper;
+using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;

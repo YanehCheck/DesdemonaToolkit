@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
-using YanehCheck.EpicGamesUtils.BL.Models;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
+using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper.Model;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;

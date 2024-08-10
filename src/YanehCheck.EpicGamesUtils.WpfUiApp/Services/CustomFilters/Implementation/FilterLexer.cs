@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using YanehCheck.EpicGamesUtils.BL.Models;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
+using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;

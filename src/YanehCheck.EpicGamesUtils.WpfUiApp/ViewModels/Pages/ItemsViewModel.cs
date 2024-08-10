@@ -1,9 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
-using YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
-using YanehCheck.EpicGamesUtils.BL.Models;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
+using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
+using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;

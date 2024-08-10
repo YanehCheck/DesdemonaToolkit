@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Common\YanehCheck.EpicGamesUtils.Common.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Db.Dal\YanehCheck.EpicGamesUtils.Db.Dal.csproj" />
+  </ItemGroup>
+
+</Project>

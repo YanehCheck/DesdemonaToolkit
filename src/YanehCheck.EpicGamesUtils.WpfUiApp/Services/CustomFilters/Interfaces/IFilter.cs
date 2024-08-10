@@ -1,4 +1,4 @@
-﻿using YanehCheck.EpicGamesUtils.BL.Models;
+﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;

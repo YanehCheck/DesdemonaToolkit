@@ -117,10 +117,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Api\YanehCheck.EpicGamesUtils.Api.csproj" />
-    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.BL\YanehCheck.EpicGamesUtils.BL.csproj" />
-    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.DAL\YanehCheck.EpicGamesUtils.DAL.csproj" />
-    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.FortniteGGScraper\YanehCheck.EpicGamesUtils.FortniteGGScraper.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Utils.EgApiWrapper\YanehCheck.EpicGamesUtils.Utils.EgApiWrapper.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Db.Bl\YanehCheck.EpicGamesUtils.Db.Bl.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Db.Dal\YanehCheck.EpicGamesUtils.Db.Dal.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper\YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper.csproj" />
   </ItemGroup>
 
   <ItemGroup>

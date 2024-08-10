@@ -1,5 +1,5 @@
-﻿using YanehCheck.EpicGamesUtils.BL.Models;
-using YanehCheck.EpicGamesUtils.FortniteGGScraper.Model;
+﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper.Model;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 

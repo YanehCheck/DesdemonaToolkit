@@ -1,9 +1,9 @@
 ﻿using System.Net;
 using System.Text.RegularExpressions;
-using YanehCheck.EpicGamesUtils.Api;
-using YanehCheck.EpicGamesUtils.Api.Auth;
-using YanehCheck.EpicGamesUtils.Api.Enums;
-using YanehCheck.EpicGamesUtils.Api.Results;
+using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper;
+using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper.Auth;
+using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper.Enums;
+using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper.Results;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 

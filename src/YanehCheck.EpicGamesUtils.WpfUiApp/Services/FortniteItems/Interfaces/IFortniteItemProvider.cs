@@ -1,4 +1,4 @@
-﻿using YanehCheck.EpicGamesUtils.BL.Models;
+﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 

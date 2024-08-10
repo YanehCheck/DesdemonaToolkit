@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media.Imaging;
-using YanehCheck.EpicGamesUtils.BL.Models;
+using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 

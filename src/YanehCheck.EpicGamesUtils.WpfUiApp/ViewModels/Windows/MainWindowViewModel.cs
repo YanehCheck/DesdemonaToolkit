@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Wpf.Ui.Controls;
-using YanehCheck.EpicGamesUtils.BL.Facades.Interfaces;
-using YanehCheck.EpicGamesUtils.DAL.Migrators;
+using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
+using YanehCheck.EpicGamesUtils.Db.Dal.Migrators;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages;
 

@@ -1,7 +1,6 @@
 ﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 
 public interface ICustomFilterProvider {
     string FilterDirectory { get; }

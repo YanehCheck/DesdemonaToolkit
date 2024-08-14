@@ -27,7 +27,7 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
                 );
     }
 
-    public async Task<EpicGamesDisplayNameResult> GetDisplayName(string accountId, string accessToken) {
+    public async Task<EpicGamesDisplayNameResult> GetAccountInformation(string accountId, string accessToken) {
         var result = await epicGamesClient.Accounts_LookupAccountId(accountId, accessToken);
         if(!result.Success) {
             var errorParams = HandleError(result);
@@ -40,7 +40,7 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
         );
     }
 
-    public async Task<EpicGamesItemsResult> GetItems(string accountId, string accessToken) {
+    public async Task<EpicGamesItemsResult> GetFortniteBrProfile(string accountId, string accessToken) {
         var result = await epicGamesClient.Fortnite_QueryProfile(accountId, accessToken, FortniteProfile.Athena);
         if (!result.Success) {
             var errorParams = HandleError(result);

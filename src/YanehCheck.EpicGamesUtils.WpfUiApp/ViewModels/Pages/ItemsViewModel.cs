@@ -6,7 +6,6 @@ using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
@@ -340,7 +339,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     }
 
     private async Task<(IEnumerable<ItemPresentationModel>? Items, string? ErrorMessage)> FetchItems() {
-        var ownedItemsResult = await epicGamesService.GetItems(sessionService.AccountId!, sessionService.AccessToken!);
+        var ownedItemsResult = await epicGamesService.GetFortniteBrProfile(sessionService.AccountId!, sessionService.AccessToken!);
         if (!ownedItemsResult.Success) {
             _initializedForAccountId = "";
             return ( null, $"An error occured while fetching your inventory.\nError: {ownedItemsResult.ErrorMessage!}");

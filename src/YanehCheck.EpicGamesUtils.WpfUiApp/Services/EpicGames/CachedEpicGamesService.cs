@@ -10,14 +10,14 @@ public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache ca
             () => epicGamesService.AuthenticateAccount(authCode));
     }
 
-    public Task<EpicGamesDisplayNameResult> GetDisplayName(string accountId, string accessToken) {
-        return cache.GetOrAdd(nameof(GetDisplayName), 
-            () => epicGamesService.GetDisplayName(accountId, accessToken));
+    public Task<EpicGamesDisplayNameResult> GetAccountInformation(string accountId, string accessToken) {
+        return cache.GetOrAdd(nameof(GetAccountInformation), 
+            () => epicGamesService.GetAccountInformation(accountId, accessToken));
     }
 
-    public Task<EpicGamesItemsResult> GetItems(string accountId, string accessToken) {
-        return cache.GetOrAdd(nameof(GetItems), 
-            () => epicGamesService.GetItems(accountId, accessToken));
+    public Task<EpicGamesItemsResult> GetFortniteBrProfile(string accountId, string accessToken) {
+        return cache.GetOrAdd(nameof(GetFortniteBrProfile), 
+            () => epicGamesService.GetFortniteBrProfile(accountId, accessToken));
     }
 
     public void InvalidateCache() => cache.Clear();

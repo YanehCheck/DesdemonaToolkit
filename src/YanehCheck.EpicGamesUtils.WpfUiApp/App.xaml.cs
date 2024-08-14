@@ -58,11 +58,10 @@ public partial class App {
             // EGS API
             services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
             services.AddSingleton<EpicGamesService>();
-            services.AddTransient<ICache, InMemoryCache>();
-            services.AddSingleton<IEpicGamesService>(sp =>
+            services.AddSingleton<ICachedEpicGamesService>(sp =>
                 new CachedEpicGamesService(
                     sp.GetRequiredService<EpicGamesService>(),
-                    sp.GetRequiredService<ICache>()
+                    new InMemoryCache()
                 )
             );
 

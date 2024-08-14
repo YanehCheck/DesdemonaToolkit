@@ -4,7 +4,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 
-public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache cache) : IEpicGamesService, ICached {
+public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache cache) : ICached, ICachedEpicGamesService {
     public Task<EpicGamesAuthResult> AuthenticateAccount(string authCode) {
         return cache.GetOrAdd(nameof(AuthenticateAccount), 
             () => epicGamesService.AuthenticateAccount(authCode));
@@ -20,7 +20,11 @@ public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache ca
             () => epicGamesService.GetFortniteBrProfile(accountId, accessToken));
     }
 
-    public void InvalidateCache() => cache.Clear();
+    public void InvalidateAll() => cache.Clear();
 
-    public void Invalidate(string methodName) => cache.Remove(methodName);
+    public void Invalidate(string method) => cache.Remove(method);
+
+    public async Task PreCacheAll(string accountId, string accessToken) {
+        await GetFortniteBrProfile(accountId, accessToken);
+    }
 }

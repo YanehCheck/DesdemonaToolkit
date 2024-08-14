@@ -1,6 +1,6 @@
 ﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Cache;
 
 public interface ICached {
-    public void InvalidateCache();
+    public void InvalidateAll();
     public void Invalidate(string method);
 }

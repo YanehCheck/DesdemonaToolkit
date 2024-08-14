@@ -15,7 +15,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
 public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationAware {
-    private readonly IEpicGamesService epicGamesService;
+    private readonly ICachedEpicGamesService epicGamesService;
     private readonly IItemFacade itemFacade;
     private readonly ISessionService sessionService;
     private readonly ISnackbarService snackbarService;
@@ -64,7 +64,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
 
     /// <inheritdoc/>
-    public ItemsViewModel(IEpicGamesService epicGamesService,
+    public ItemsViewModel(ICachedEpicGamesService epicGamesService,
         IItemFacade itemFacade,
         ISessionService sessionService,
         ISnackbarService snackbarService,

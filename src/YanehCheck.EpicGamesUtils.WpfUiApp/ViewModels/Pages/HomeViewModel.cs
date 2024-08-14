@@ -13,7 +13,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     IBrowserService browserService,
     IPersistenceProvider persistenceProvider, 
     ISessionService sessionService, 
-    IEpicGamesService epicGamesService,
+    ICachedEpicGamesService epicGamesService,
     IFortniteGgItemProvider fortniteGgItemProvider,
     IUriItemProvider uriItemProvider,
     IItemFacade itemFacade) : ObservableObject, IViewModel, INavigationAware {
@@ -52,6 +52,10 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
     private void InitializeViewModel() {
         AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
+        if (AccessTokenExpiry > DateTime.Now) {
+            Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId, sessionService.AccessToken));
+        }
+
         LastItemFetch = sessionService.IsItemDataFetched ? 
             persistenceProvider.LastItemFetch :
             DateTime.MinValue;
@@ -90,6 +94,9 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         }
 
         persistenceProvider.Save();
+
+        // Precache information for other pages
+        await Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId, sessionService.AccessToken));
     }
 
     [RelayCommand]

@@ -27,12 +27,12 @@ public partial class MainWindowViewModel : ObservableObject, IViewModel {
             Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
             TargetPageType = typeof(HomePage)
         },
-        new NavigationViewItem()
+        /*new NavigationViewItem()
         {
             Content = "Account",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Person24},
             TargetPageType = typeof(AccountPage)
-        },
+        },*/
         new NavigationViewItem()
         {
             Content = "Items",

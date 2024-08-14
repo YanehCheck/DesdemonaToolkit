@@ -23,3 +23,10 @@ public class ItemExportImageOptions {
     public int NameFontSize { get; set; } = 35;
     public int NameFontDownsizeStep { get; set; } = 1;
 }
+
+public class ItemExportImageSaveOptions {
+    public const string Key = "Item:Export:Image";
+
+    public string ImageFormat { get; set; } = "JPEG";
+    public int ImageJpegQuality { get; set; } = 100;
+}

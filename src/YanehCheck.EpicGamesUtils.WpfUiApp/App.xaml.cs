@@ -46,8 +46,8 @@ public partial class App {
             services.AddOptions<UserOptions>().Bind(context.Configuration.GetSection(UserOptions.Key));
             services.AddOptions<DalOptions>().Bind(context.Configuration.GetSection(DalOptions.Key));
             services.AddOptions<ItemFetchOptions>().Bind(context.Configuration.GetSection(ItemFetchOptions.Key));
-            services.AddOptions<ItemExportImageOptions>().Bind(context.Configuration.GetSection(ItemExportImageOptions.Key));
-            services.AddOptions<ItemExportImageSaveOptions>().Bind(context.Configuration.GetSection(ItemExportImageSaveOptions.Key));
+            services.AddOptions<ItemExportImageAppearanceOptions>().Bind(context.Configuration.GetSection(ItemExportImageAppearanceOptions.Key));
+            services.AddOptions<ItemExportImageFormatOptions>().Bind(context.Configuration.GetSection(ItemExportImageFormatOptions.Key));
 
             services.RegisterDalServices();
             services.RegisterBlServices();

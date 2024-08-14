@@ -17,7 +17,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services;
 
-public class FileSaveDialogService(IOptions<ItemExportImageSaveOptions> imageSaveOptions) : IFileSaveDialogService {
+public class FileSaveDialogService(IOptions<ItemExportImageFormatOptions> imageSaveOptions) : IFileSaveDialogService {
     public async Task SaveTextFile(string content, string fileName, string defaultExt = ".txt", string filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*") {
         var dialog = new SaveFileDialog {
             FileName = fileName,

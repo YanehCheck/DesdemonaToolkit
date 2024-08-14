@@ -1,8 +1,8 @@
-﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+﻿ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 
-public class ItemExportImageOptions {
-    public const string Key = "Item:Export:Image";
-
+public class ItemExportImageAppearanceOptions {
+    public const string Key = "Item:Export:Image:Appearance";
+    public bool IncludeHeader { get; set; } = true;
     public bool StampIncludePlayerName { get; set; } = true;
     public bool StampCensorPlayerName { get; set; } = false;
     public bool StampIncludeItemCount { get; set; } = true;
@@ -22,11 +22,4 @@ public class ItemExportImageOptions {
     public string NameFontColor { get; set; } = "#FFFFFF00";
     public int NameFontSize { get; set; } = 35;
     public int NameFontDownsizeStep { get; set; } = 1;
-}
-
-public class ItemExportImageSaveOptions {
-    public const string Key = "Item:Export:Image";
-
-    public string ImageFormat { get; set; } = "JPEG";
-    public int ImageJpegQuality { get; set; } = 100;
 }

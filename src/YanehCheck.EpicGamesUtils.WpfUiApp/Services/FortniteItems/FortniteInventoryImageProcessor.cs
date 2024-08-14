@@ -24,10 +24,9 @@ using TextOptions = SixLabors.Fonts.TextOptions;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> options)
+public class FortniteInventoryImageProcessor(IOptions<ItemExportImageAppearanceOptions> options)
     : IFortniteInventoryImageProcessor {
-    private readonly bool addLogo = true;
-    private readonly int logoHeight = 250;
+    private readonly int headerHeight = 250;
     private readonly string logoMainText = "DESDEMONA TOOLKIT";
     private readonly string logoSecondaryText = "FREE AND OPEN-SOURCE";
     private readonly string logoTernaryText = "GITHUB.COM/YANEHCHECK/DESDEMONATOOLKIT";
@@ -49,22 +48,22 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         var height =
             (int) Math.Ceiling((double) items.Count / itemsPerRow) *
             (options.Value.ItemHeight + options.Value.ItemSpacing) - options.Value.ItemSpacing;
-        height += addLogo ? logoHeight : 0;
+        height += options.Value.IncludeHeader ? headerHeight : 0;
         Image image = new Image<Bgra32>(width, height);
 
         image.Mutate(ctx => ctx.BackgroundColor(Color.ParseHex(options.Value.BackgroundColor)));
 
-        if (items.Count > 20 && addLogo) {
-            DrawLogo(image, fontColor, fontFamily);
-            DrawStamp(image, fontColor, fontFamily, items.Count, displayName);
+        if (items.Count > 20 && options.Value.IncludeHeader) {
+            DrawHeaderBase(image, fontColor, fontFamily);
+            DrawHeaderStamp(image, fontColor, fontFamily, items.Count, displayName);
         }
 
         for (int i = 0; i < items.Count; i++) {
             var row = i / itemsPerRow;
             var col = i % itemsPerRow;
             var x = col * (options.Value.ItemWidth + options.Value.ItemSpacing);
-            var y = addLogo
-                ? row * (options.Value.ItemHeight + options.Value.ItemSpacing) + logoHeight
+            var y = options.Value.IncludeHeader
+                ? row * (options.Value.ItemHeight + options.Value.ItemSpacing) + headerHeight
                 : row * (options.Value.ItemHeight + options.Value.ItemSpacing);
 
             using var itemImage = items[i].BitmapFrame!.ToImageSharpImage(out var data);
@@ -76,7 +75,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         return image;
     }
 
-    private void DrawStamp(Image image, Color fontColor, FontFamily fontFamily, int numberOfItems, string displayName) {
+    private void DrawHeaderStamp(Image image, Color fontColor, FontFamily fontFamily, int numberOfItems, string displayName) {
         var spacing = 10;
         var font = fontCache.GetOrAdd(50, fontFamily.CreateFont);
         var textHeight = MeasureTextSize(displayName, font).Height;
@@ -103,13 +102,13 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         }
     }
 
-    private void DrawLogo(Image image, Color fontColor, FontFamily fontFamily) {
+    private void DrawHeaderBase(Image image, Color fontColor, FontFamily fontFamily) {
         // Draw bg
         using var backgroundImage = GetLogoBackground();
         backgroundImage.Mutate(ctx => ctx.Brightness(0.45f));
         image.Mutate(ctx => 
             ctx.DrawImage(backgroundImage, new Point(0, 0), 1)
-                .DrawLine(Color.Black, logoSeparatorWidth, [new PointF(0, logoHeight), new PointF(image.Width, logoHeight)]));
+                .DrawLine(Color.Black, logoSeparatorWidth, [new PointF(0, headerHeight), new PointF(image.Width, headerHeight)]));
 
         // Draw text
         // Let's not overcomplicate and hard code some of this
@@ -117,7 +116,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         var mainFont = fontCache.GetOrAdd(80, fontFamily.CreateFont);
         var mainSize = MeasureTextSize(logoMainText, mainFont);
         var mainLeftShift = (image.Width - mainSize.Width) / 2;
-        var mainTopShift = (logoHeight - mainSize.Height) / 2;
+        var mainTopShift = (headerHeight - mainSize.Height) / 2;
         var mainPosition = new PointF(mainLeftShift, mainTopShift - 30);
 
         image.Mutate(ctx => ctx.DrawText(logoMainText, mainFont, fontColor, mainPosition));
@@ -125,7 +124,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         var secondaryFont = fontCache.GetOrAdd(50, fontFamily.CreateFont);
         var secondarySize = MeasureTextSize(logoSecondaryText, secondaryFont);
         var secondaryLeftShift = (image.Width - secondarySize.Width) / 2;
-        var secondaryTopShift = (logoHeight - secondarySize.Height) / 2;
+        var secondaryTopShift = (headerHeight - secondarySize.Height) / 2;
         var secondaryPosition = new PointF(secondaryLeftShift, secondaryTopShift + 50);
         image.Mutate(ctx => ctx.DrawText(logoSecondaryText, secondaryFont, fontColor, secondaryPosition));
 
@@ -204,7 +203,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         var newWidth = options.Value.ItemsPerRow * (options.Value.ItemWidth + options.Value.ItemSpacing);
         image.Mutate(ctx => ctx.Resize(new Size(newWidth, 0)));
         var cropY = (int) ((double) image.Width / oldWidth * 350);
-        image.Mutate(ctx => ctx.Crop(new Rectangle(0, cropY, newWidth, logoHeight)));
+        image.Mutate(ctx => ctx.Crop(new Rectangle(0, cropY, newWidth, headerHeight)));
         return image;
     }
 

@@ -95,7 +95,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }
         else if (to == InventoryExport.Image) {
             try {
-                using var image = inventoryProcessor.Create(PresentedItems.ToList());
+                using var image = inventoryProcessor.Create(PresentedItems.ToList(), sessionService.DisplayName!);
                 await fileSaveService.SaveImageFile(image, fileName);
             }
             catch (ArgumentException e) {

@@ -2,6 +2,14 @@
 
 public class ItemExportImageOptions {
     public const string Key = "Item:Export:Image";
+
+    public bool StampIncludePlayerName { get; set; } = true;
+    public bool StampCensorPlayerName { get; set; } = false;
+    public bool StampIncludeItemCount { get; set; } = true;
+    public bool StampIncludeDate { get; set; } = true;
+    public bool StampIncludeCustomText { get; set; } = false;
+    public string StampCustomText { get; set; } = "";
+
     public string BackgroundColor { get; set; } = "#00000000";
     public int ItemHeight { get; set; } = 260;
     public int ItemWidth { get; set; } = 210;

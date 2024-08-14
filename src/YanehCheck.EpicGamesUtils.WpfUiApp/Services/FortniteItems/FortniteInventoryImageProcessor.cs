@@ -24,7 +24,8 @@ using TextOptions = SixLabors.Fonts.TextOptions;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> options) : IFortniteInventoryImageProcessor {
+public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> options)
+    : IFortniteInventoryImageProcessor {
     private readonly bool addLogo = true;
     private readonly int logoHeight = 250;
     private readonly string logoMainText = "DESDEMONA TOOLKIT";
@@ -34,18 +35,20 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
 
     private readonly ConcurrentDictionary<float, Font> fontCache = new();
 
-    public Image Create(List<ItemPresentationModel> items) {
+    public Image Create(List<ItemPresentationModel> items, string displayName) {
         var itemsPerRow = options.Value.ItemsPerRow;
         var fontFamily = GetFortniteFontFamily();
 
 
-        if (items.Count < itemsPerRow) { 
+        if (items.Count < itemsPerRow) {
             itemsPerRow = items.Count;
         }
 
         var fontColor = Color.ParseHex(options.Value.NameFontColor);
         var width = itemsPerRow * (options.Value.ItemWidth + options.Value.ItemSpacing) - options.Value.ItemSpacing;
-        var height = (int) Math.Ceiling((double) items.Count / itemsPerRow) * (options.Value.ItemHeight + options.Value.ItemSpacing) - options.Value.ItemSpacing;
+        var height =
+            (int) Math.Ceiling((double) items.Count / itemsPerRow) *
+            (options.Value.ItemHeight + options.Value.ItemSpacing) - options.Value.ItemSpacing;
         height += addLogo ? logoHeight : 0;
         Image image = new Image<Bgra32>(width, height);
 
@@ -53,35 +56,64 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
 
         if (items.Count > 20 && addLogo) {
             DrawLogo(image, fontColor, fontFamily);
+            DrawStamp(image, fontColor, fontFamily, items.Count, displayName);
         }
 
         for (int i = 0; i < items.Count; i++) {
             var row = i / itemsPerRow;
             var col = i % itemsPerRow;
             var x = col * (options.Value.ItemWidth + options.Value.ItemSpacing);
-            var y = addLogo ? 
-                row * (options.Value.ItemHeight + options.Value.ItemSpacing) + logoHeight : 
-                row * (options.Value.ItemHeight + options.Value.ItemSpacing);
+            var y = addLogo
+                ? row * (options.Value.ItemHeight + options.Value.ItemSpacing) + logoHeight
+                : row * (options.Value.ItemHeight + options.Value.ItemSpacing);
 
             using var itemImage = items[i].BitmapFrame!.ToImageSharpImage(out var data);
             var itemName = items[i].Name;
             DrawItem(image, itemName, itemImage, x, y, fontColor, fontFamily);
             ArrayPool<byte>.Shared.Return(data);
         }
-        
+
         return image;
+    }
+
+    private void DrawStamp(Image image, Color fontColor, FontFamily fontFamily, int numberOfItems, string displayName) {
+        var spacing = 10;
+        var font = fontCache.GetOrAdd(50, fontFamily.CreateFont);
+        var textHeight = MeasureTextSize(displayName, font).Height;
+        var position = new PointF(20, 20);
+        if (options.Value.StampIncludePlayerName) {
+            var name = options.Value.StampCensorPlayerName ? CensorDisplayName(displayName.ToUpper()) : displayName.ToUpper();
+            image.Mutate(ctx => ctx.DrawText(name, font, fontColor, position));
+            position.Y += spacing + textHeight;
+        }
+
+        if (options.Value.StampIncludeItemCount) {
+            image.Mutate(ctx => ctx.DrawText($"{numberOfItems} ITEMS", font, fontColor, position));
+            position.Y += spacing + textHeight;
+        }
+
+        if (options.Value.StampIncludeDate) {
+            image.Mutate(ctx => ctx.DrawText(DateTime.Now.ToString("dd. MM. yyyy. HH:mm"), font, fontColor, position));
+            position.Y += spacing + textHeight;
+        }
+
+        if (options.Value.StampIncludeCustomText) {
+            image.Mutate(ctx => ctx.DrawText(options.Value.StampCustomText, font, fontColor, position));
+            position.Y += spacing + textHeight;
+        }
     }
 
     private void DrawLogo(Image image, Color fontColor, FontFamily fontFamily) {
         // Draw bg
         using var backgroundImage = GetLogoBackground();
+        backgroundImage.Mutate(ctx => ctx.Brightness(0.45f));
         image.Mutate(ctx => 
             ctx.DrawImage(backgroundImage, new Point(0, 0), 1)
                 .DrawLine(Color.Black, logoSeparatorWidth, [new PointF(0, logoHeight), new PointF(image.Width, logoHeight)]));
 
         // Draw text
         // Let's not overcomplicate and hard code some of this
-        // I can't ever see someone wanting to (especially partially) change this
+        // I could see wanting different logo, but can't ever see someone wanting to specifically change this
         var mainFont = fontCache.GetOrAdd(80, fontFamily.CreateFont);
         var mainSize = MeasureTextSize(logoMainText, mainFont);
         var mainLeftShift = (image.Width - mainSize.Width) / 2;
@@ -174,5 +206,16 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageOptions> op
         var cropY = (int) ((double) image.Width / oldWidth * 350);
         image.Mutate(ctx => ctx.Crop(new Rectangle(0, cropY, newWidth, logoHeight)));
         return image;
+    }
+
+    /// <summary>
+    /// The censoring is dynamic to character length
+    /// </summary>
+    private string CensorDisplayName(string name) {
+        return name.Length switch {
+            <= 4 => name[0] + new string('*', name.Length - 1),
+            <= 6 => name[..2] + new string('*', name.Length - 2),
+            _ => name[..2] + new string('*', name.Length - 4) + name[^2..]
+        };
     }
 }

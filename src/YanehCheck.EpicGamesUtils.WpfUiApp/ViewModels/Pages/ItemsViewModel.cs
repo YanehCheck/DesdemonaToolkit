@@ -19,7 +19,8 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private readonly IItemFacade itemFacade;
     private readonly ISessionService sessionService;
     private readonly ISnackbarService snackbarService;
-    private readonly IFortniteInventoryImageProcessor inventoryProcessor;
+    private readonly IFortniteInventoryImageProcessor imageInventoryProcessor;
+    private readonly IFortniteInventoryFortniteGgFetchProcessor fetchInventoryProcessor;
     private readonly IFortniteGgImageDownloader imageDownloader;
     private readonly IFileSaveDialogService fileSaveService;
     private readonly ICustomFilterProvider filterProvider;
@@ -69,7 +70,8 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         ISessionService sessionService,
         ISnackbarService snackbarService,
         IFortniteGgImageDownloader imageDownloader,
-        IFortniteInventoryImageProcessor inventoryProcessor,
+        IFortniteInventoryImageProcessor imageInventoryProcessor,
+        IFortniteInventoryFortniteGgFetchProcessor fetchInventoryProcessor,
         IFileSaveDialogService fileSaveService,
         ICustomFilterProvider filterProvider) {
         this.epicGamesService = epicGamesService;
@@ -77,9 +79,10 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         this.sessionService = sessionService;
         this.snackbarService = snackbarService;
         this.imageDownloader = imageDownloader;
-        this.inventoryProcessor = inventoryProcessor;
+        this.imageInventoryProcessor = imageInventoryProcessor;
         this.fileSaveService = fileSaveService;
         this.filterProvider = filterProvider;
+        this.fetchInventoryProcessor = fetchInventoryProcessor;
     }
 
     public bool AnyFilterApplied => SourceFilter.Any() || RarityFilter.Any() || SeasonFilter.Any() || TagFilter.Any();
@@ -95,7 +98,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }
         else if (to == InventoryExport.Image) {
             try {
-                using var image = inventoryProcessor.Create(PresentedItems.ToList(), sessionService.DisplayName!);
+                using var image = imageInventoryProcessor.Create(PresentedItems.ToList(), sessionService.DisplayName!);
                 await fileSaveService.SaveImageFile(image, fileName);
             }
             catch (ArgumentException e) {
@@ -107,6 +110,17 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
                     TimeSpan.FromSeconds(5));
             }
         }
+        else if (to == InventoryExport.FortniteGgScript) {
+            var fetchString = fetchInventoryProcessor.Create(PresentedItems.ToList());
+            Clipboard.SetText(fetchString);
+            snackbarService.Show(
+                "Success",
+                $"The script was copied to clipboard. Please paste it into your browser's console where you are logged into Fortnite.gg",
+                ControlAppearance.Success,
+                null,
+                TimeSpan.FromSeconds(10));
+        }
+
     }
 
     #region FilteringSortingSearchingMethods

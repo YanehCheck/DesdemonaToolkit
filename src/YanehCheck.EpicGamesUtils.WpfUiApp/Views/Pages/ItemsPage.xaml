@@ -1743,6 +1743,11 @@
                             HorizontalAlignment="Stretch"
                             Command="{Binding ViewModel.ExportInventoryCommand}"
                             CommandParameter="{x:Static helperEnums:InventoryExport.Image}"/>
+                        <ui:Button 
+                            Content="Fortnite.gg script"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding ViewModel.ExportInventoryCommand}"
+                            CommandParameter="{x:Static helperEnums:InventoryExport.FortniteGgScript}"/>
                     </StackPanel>
                 </ui:Flyout>
                 <ui:Button

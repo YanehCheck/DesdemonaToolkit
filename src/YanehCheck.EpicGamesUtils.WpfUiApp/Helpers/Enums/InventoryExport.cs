@@ -2,5 +2,6 @@
 
 public enum InventoryExport {
     Text,
-    Image
+    Image,
+    FortniteGgScript
 }

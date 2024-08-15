@@ -71,6 +71,7 @@ public partial class App {
             services.AddTransient<IFortniteGgItemMapper, FortniteGgItemMapper>();
             services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();
             services.AddSingleton<IFortniteGgItemProvider, FortniteGgItemProvider>();
+            services.AddSingleton<IFortniteInventoryFortniteGgFetchProcessor, FortniteInventoryFortniteGgFetchProcessor>();
             services.AddSingleton<IFortniteInventoryImageProcessor, FortniteInventoryImageProcessor>();
             services.AddSingleton<IUriItemProvider, UriItemProvider>();
             services.AddSingleton<ICustomFilterParser, CustomFilterParser>();

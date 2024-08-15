@@ -1,4 +1,4 @@
-﻿using System.Web;
+﻿using System.Net;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
@@ -29,11 +29,11 @@ public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mappe
 
             var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(response.Content!);
             return items.Select(i => {
-                i.Name = HttpUtility.HtmlDecode(i.Name);
-                i.Description = HttpUtility.HtmlDecode(i.Description);
-                i.SourceDescription = HttpUtility.HtmlDecode(i.SourceDescription);
-                i.Set = HttpUtility.HtmlDecode(i.Set);
-                i.Styles = i.Styles.Select(HttpUtility.HtmlDecode)!;
+                i.Name = WebUtility.HtmlDecode(i.Name);
+                i.Description = WebUtility.HtmlDecode(i.Description);
+                i.SourceDescription = WebUtility.HtmlDecode(i.SourceDescription);
+                i.Set = WebUtility.HtmlDecode(i.Set);
+                i.Styles = i.Styles.Select(WebUtility.HtmlDecode)!;
                 return mapper.MapToModel(i);
             });
         }

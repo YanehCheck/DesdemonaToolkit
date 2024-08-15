@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Net;
+using Microsoft.Extensions.Options;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
@@ -17,6 +18,13 @@ public class FortniteGgItemProvider(IFortniteGgScrapper fortniteGgScrapper, IFor
         var items = await fortniteGgScrapper.ScrapIdRangeParallelAsync(0, itemOptions.Value.FortniteGgIdRange, progressReport);
         return items is null or { IsEmpty: true } ?
             null :
-            items.Select(mapper.MapToModel);
+            items.Select(i => {
+            i.Name = WebUtility.HtmlDecode(i.Name);
+            i.Description = WebUtility.HtmlDecode(i.Description);
+            i.SourceDescription = WebUtility.HtmlDecode(i.SourceDescription);
+            i.Set = WebUtility.HtmlDecode(i.Set);
+            i.Styles = (i.Styles?.Select(WebUtility.HtmlDecode) ?? [])!;
+            return mapper.MapToModel(i);
+        });
     }
 }

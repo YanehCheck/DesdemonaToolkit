@@ -21,7 +21,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private readonly ISnackbarService snackbarService;
     private readonly IFortniteInventoryImageProcessor imageInventoryProcessor;
     private readonly IFortniteInventoryFortniteGgFetchProcessor fetchInventoryProcessor;
-    private readonly IFortniteGgImageDownloader imageDownloader;
+    private readonly IFortniteImageProvider imageProvider;
     private readonly IFileSaveDialogService fileSaveService;
     private readonly ICustomFilterProvider filterProvider;
 
@@ -69,7 +69,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         IItemFacade itemFacade,
         ISessionService sessionService,
         ISnackbarService snackbarService,
-        IFortniteGgImageDownloader imageDownloader,
+        IFortniteImageProvider imageProvider,
         IFortniteInventoryImageProcessor imageInventoryProcessor,
         IFortniteInventoryFortniteGgFetchProcessor fetchInventoryProcessor,
         IFileSaveDialogService fileSaveService,
@@ -78,7 +78,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         this.itemFacade = itemFacade;
         this.sessionService = sessionService;
         this.snackbarService = snackbarService;
-        this.imageDownloader = imageDownloader;
+        this.imageProvider = imageProvider;
         this.imageInventoryProcessor = imageInventoryProcessor;
         this.fileSaveService = fileSaveService;
         this.filterProvider = filterProvider;
@@ -347,7 +347,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
     private async Task LoadImages(IEnumerable<ItemPresentationModel> items) {
         await Parallel.ForEachAsync(items, async (item, _) => {
-            item.BitmapFrame = await imageDownloader.GetImageAsync(item.FortniteGgId);
+            item.BitmapFrame = await imageProvider.GetImageAsync(item.FortniteGgId);
         });
     }
 

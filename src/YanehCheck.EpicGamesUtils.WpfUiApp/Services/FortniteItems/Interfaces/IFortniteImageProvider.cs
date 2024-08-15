@@ -2,8 +2,8 @@
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 
-public interface IFortniteGgImageDownloader
+public interface IFortniteImageProvider
 {
     Task<BitmapFrame> GetImageAsync(string fortniteGgId);
-    Task<BitmapFrame> GetImageAsync(string fortniteGgId, int width, int height);
+    Task<BitmapFrame> FetchImageFromFortniteGgAsync(string fortniteGgId, int width, int height);
 }

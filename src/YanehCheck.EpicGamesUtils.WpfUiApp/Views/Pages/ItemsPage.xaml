@@ -648,6 +648,7 @@
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <ui:TextBox 
                 Margin="10,0,0,0"
@@ -1754,8 +1755,18 @@
                     Margin="0,2,0,0"
                     Grid.Row="1"
                     Content="Export"
-                    IsEnabled="{Binding ViewModel.PresentedItems, Converter={StaticResource EnumerableAnyToBoolConverter}}"
+                    IsEnabled="{Binding ViewModel.PresentedItems, Converter={StaticResource EnumerableAnyToBoolConverter}, Mode=OneWay}"
                     Command="{Binding ToggleExportFlyoutCommand}"/>
+            </Grid>
+            <Grid
+                Grid.Column="10"
+                Margin="0,0,10,0">
+                <ui:Button
+                    Margin="0,2,0,0"
+                    Height="31.62"
+                    Icon="{ui:SymbolIcon ArrowCounterClockwise12}"
+                    Command="{Binding ViewModel.ReloadItemsCommand}"
+                    IsEnabled="{Binding ViewModel.ItemsLoaded, Mode=OneWay}"/>
             </Grid>
         </Grid>
         <ui:LoadingScreen 

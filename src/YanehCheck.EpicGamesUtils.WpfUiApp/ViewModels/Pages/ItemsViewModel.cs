@@ -27,12 +27,12 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
     private string _initializedForAccountId = "";
 
+    [ObservableProperty]
+    private bool _itemsLoaded;
+
     // Having custom filter and the search bar responsive to typing
     // can be expensive. Multiple "backing" fields provide performance
     // and even stability.
-
-    [ObservableProperty]
-    private bool _itemsLoaded;
 
     [ObservableProperty]
     private IEnumerable<ItemPresentationModel> _presentedItems = [];
@@ -121,6 +121,16 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
                 TimeSpan.FromSeconds(10));
         }
 
+    }
+
+    [RelayCommand]
+    public void ReloadItems() {
+        ItemsLoaded = false;
+        items = [];
+        CustomFilterUpdate();
+        InitializeViewModelForUserAndShowResult(() => {
+            ItemsLoaded = true;
+        });
     }
 
     #region FilteringSortingSearchingMethods
@@ -288,36 +298,40 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         if (_initializedForAccountId != sessionService.AccountId) {
             ItemsLoaded = false;
             _initializedForAccountId = sessionService.AccountId!;
-            Task.Run(InitializeViewModelForUser).ContinueWith(task => {
-                if (task.Result.ErrorMessage != null) {
-                    snackbarService.Show(
-                        "Failure",
-                        task.Result.ErrorMessage,
-                        ControlAppearance.Danger,
-                        null,
-                        TimeSpan.FromSeconds(5));
-                }
-                else if(task.Result.MissingItems == 0) {
-                    snackbarService.Show(
-                        "Success",
-                        "All inventory items loaded!",
-                        ControlAppearance.Success,
-                        null,
-                        TimeSpan.FromSeconds(5));
-                }
-                else {
-                    snackbarService.Show(
-                        "Warning",
-                        $"{task.Result.MissingItems} item{(task.Result.MissingItems == 1 ? string.Empty : "s")} could not be loaded. Consider fetching item data from up-to-date source.",
-                        ControlAppearance.Caution,
-                        null,
-                        TimeSpan.FromSeconds(5));
-                }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
+            InitializeViewModelForUserAndShowResult();
         }
     }
-
     public void OnNavigatedFrom() { }
+
+    private void InitializeViewModelForUserAndShowResult(Action? actionOnComplete = null) {
+        Task.Run(InitializeViewModelForUser).ContinueWith(task => {
+            if (task.Result.ErrorMessage != null) {
+                snackbarService.Show(
+                    "Failure",
+                    task.Result.ErrorMessage,
+                    ControlAppearance.Danger,
+                    null,
+                    TimeSpan.FromSeconds(5));
+            }
+            else if(task.Result.MissingItems == 0) {
+                snackbarService.Show(
+                    "Success",
+                    "All inventory items loaded!",
+                    ControlAppearance.Success,
+                    null,
+                    TimeSpan.FromSeconds(5));
+            }
+            else {
+                snackbarService.Show(
+                    "Warning",
+                    $"{task.Result.MissingItems} item{(task.Result.MissingItems == 1 ? string.Empty : "s")} could not be loaded. Consider fetching item data from up-to-date source.",
+                    ControlAppearance.Caution,
+                    null,
+                    TimeSpan.FromSeconds(5));
+            }
+            actionOnComplete?.Invoke();
+        }, TaskScheduler.FromCurrentSynchronizationContext());
+    }
 
     private async Task InitializeViewModel() {
         CustomFilters = new ObservableCollection<IFilter>(

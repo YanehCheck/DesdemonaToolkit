@@ -245,7 +245,8 @@
                 Icon="{ui:SymbolIcon Link24}"
                 Content="Wiki"
                 NavigateUri="https://github.com/YanehCheck/DesdemonaToolkit/wiki"
-                ToolTip="https://github.com/YanehCheck/DesdemonaToolkit/wiki"/>
+                ToolTip="https://github.com/YanehCheck/DesdemonaToolkit/wiki"
+                Margin="0,0,10,0"/>
             <ui:HyperlinkButton 
                 Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"
                 Icon="{ui:SymbolIcon Link24}"

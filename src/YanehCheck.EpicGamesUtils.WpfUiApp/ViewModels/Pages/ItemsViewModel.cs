@@ -283,8 +283,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
                         null,
                         TimeSpan.FromSeconds(5));
                 }
-
-                if(task.Result.MissingItems == 0) {
+                else if(task.Result.MissingItems == 0) {
                     snackbarService.Show(
                         "Success",
                         "All inventory items loaded!",

@@ -27,7 +27,7 @@ See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki).
 
 ## Installation and set-up
 
-- [Download the latest release](github.com/YanehCheck/DesdemonaToolkit/releases/latest) (or compile the source code yourself using .NET8)
+- [Download the latest release](https://github.com/YanehCheck/DesdemonaToolkit/releases/latest) (or compile the source code yourself using .NET8)
     - Self-contained version includes .NET8 runtime (recommended)
     - Framework-dependent version requires .NET8 runtime pre-installed
 - Extract the archive into a new directory

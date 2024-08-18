@@ -33,7 +33,7 @@ public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mappe
                 i.Description = WebUtility.HtmlDecode(i.Description);
                 i.SourceDescription = WebUtility.HtmlDecode(i.SourceDescription);
                 i.Set = WebUtility.HtmlDecode(i.Set);
-                i.Styles = i.Styles.Select(WebUtility.HtmlDecode)!;
+                i.Styles = (i.Styles?.Select(WebUtility.HtmlDecode) ?? [])!;
                 return mapper.MapToModel(i);
             });
         }

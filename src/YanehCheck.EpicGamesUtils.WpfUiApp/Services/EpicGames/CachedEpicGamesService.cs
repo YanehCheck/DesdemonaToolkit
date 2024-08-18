@@ -4,19 +4,23 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 
-public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache cache) : ICached, ICachedEpicGamesService {
-    public Task<EpicGamesAuthResult> AuthenticateAccount(string authCode) {
-        return cache.GetOrAdd(nameof(AuthenticateAccount), 
+public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache cache) : ICached, ICachedEpicGamesService
+{
+    public Task<EpicGamesAuthResult> AuthenticateAccount(string authCode)
+    {
+        return cache.GetOrAdd(nameof(AuthenticateAccount),
             () => epicGamesService.AuthenticateAccount(authCode));
     }
 
-    public Task<EpicGamesDisplayNameResult> GetAccountInformation(string accountId, string accessToken) {
-        return cache.GetOrAdd(nameof(GetAccountInformation), 
+    public Task<EpicGamesDisplayNameResult> GetAccountInformation(string accountId, string accessToken)
+    {
+        return cache.GetOrAdd(nameof(GetAccountInformation),
             () => epicGamesService.GetAccountInformation(accountId, accessToken));
     }
 
-    public Task<EpicGamesItemsResult> GetFortniteBrProfile(string accountId, string accessToken) {
-        return cache.GetOrAdd(nameof(GetFortniteBrProfile), 
+    public Task<EpicGamesItemsResult> GetFortniteBrProfile(string accountId, string accessToken)
+    {
+        return cache.GetOrAdd(nameof(GetFortniteBrProfile),
             () => epicGamesService.GetFortniteBrProfile(accountId, accessToken));
     }
 
@@ -24,7 +28,8 @@ public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache ca
 
     public void Invalidate(string method) => cache.Remove(method);
 
-    public async Task PreCacheAll(string accountId, string accessToken) {
+    public async Task PreCacheAll(string accountId, string accessToken)
+    {
         await GetFortniteBrProfile(accountId, accessToken);
     }
 }

@@ -5,7 +5,8 @@ using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 

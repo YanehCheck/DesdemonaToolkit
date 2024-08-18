@@ -2,7 +2,7 @@
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.Db.Dal.Migrators;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Windows;

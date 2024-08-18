@@ -1,4 +1,4 @@
-﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 
 public interface IBrowserService {
     void StartAndNavigate(string url);

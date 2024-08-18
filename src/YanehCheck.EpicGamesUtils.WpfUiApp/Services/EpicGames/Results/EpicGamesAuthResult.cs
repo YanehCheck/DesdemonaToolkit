@@ -8,7 +8,8 @@ public class EpicGamesAuthResult(
     string? accessToken = null,
     DateTime? accessTokenExpiry = null,
     string? displayName = null,
-    string? errorMessage = null) : EpicGamesResult(statusCode, errorMessage) {
+    string? errorMessage = null) : EpicGamesResult(statusCode, errorMessage)
+{
     public string? AccountId { get; init; } = accountId;
     public string? AccessToken { get; init; } = accessToken;
     public DateTime? AccessTokenExpiry { get; init; } = accessTokenExpiry;

@@ -12,47 +12,58 @@ using SixLabors.ImageSharp.Formats.Qoi;
 using SixLabors.ImageSharp.Formats.Tga;
 using SixLabors.ImageSharp.Formats.Tiff;
 using SixLabors.ImageSharp.Formats.Webp;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI;
 
-public class FileSaveDialogService(IOptions<ItemExportImageFormatOptions> imageSaveOptions) : IFileSaveDialogService {
-    public async Task SaveTextFile(string content, string fileName, string defaultExt = ".txt", string filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*") {
-        var dialog = new SaveFileDialog {
+public class FileSaveDialogService(IOptions<ItemExportImageFormatOptions> imageSaveOptions) : IFileSaveDialogService
+{
+    public async Task SaveTextFile(string content, string fileName, string defaultExt = ".txt", string filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*")
+    {
+        var dialog = new SaveFileDialog
+        {
             FileName = fileName,
             DefaultExt = defaultExt,
             Filter = filter
         };
 
-        if(dialog.ShowDialog() == true) {
+        if (dialog.ShowDialog() == true)
+        {
             string filePath = dialog.FileName;
             await File.WriteAllTextAsync(filePath, content);
         }
     }
 
-    public async Task SaveImageFile(Image image, string fileName, string defaultExt = null!, string filter = null!) {
-        if(defaultExt is null) {
+    public async Task SaveImageFile(Image image, string fileName, string defaultExt = null!, string filter = null!)
+    {
+        if (defaultExt is null)
+        {
             defaultExt = $".{imageSaveOptions.Value.ImageFormat.ToLower()}";
             filter = $"Image files (*{defaultExt})|*{defaultExt}|All files (*.*)|*.*";
         }
 
-        var dialog = new SaveFileDialog {
+        var dialog = new SaveFileDialog
+        {
             FileName = fileName,
             DefaultExt = defaultExt,
             Filter = filter
         };
 
-        if(dialog.ShowDialog() == true) {
+        if (dialog.ShowDialog() == true)
+        {
             var filePath = dialog.FileName;
             await using var stream = new FileStream(filePath, FileMode.Create);
             await image.SaveAsync(stream, GetEncoder());
         }
     }
 
-    public ImageEncoder GetEncoder() {
-        return imageSaveOptions.Value.ImageFormat.ToUpper() switch {
-            "JPG" or "JPEG" => new JpegEncoder {
+    public ImageEncoder GetEncoder()
+    {
+        return imageSaveOptions.Value.ImageFormat.ToUpper() switch
+        {
+            "JPG" or "JPEG" => new JpegEncoder
+            {
                 Quality = imageSaveOptions.Value.ImageJpegQuality
             },
             "PNG" => new PngEncoder(),

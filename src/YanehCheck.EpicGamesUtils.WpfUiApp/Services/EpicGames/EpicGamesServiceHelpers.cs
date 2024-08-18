@@ -1,12 +1,14 @@
 ﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 
-public static class EpicGamesServiceHelpers {
+public static class EpicGamesServiceHelpers
+{
 
     /// <summary>
     /// Returns a list of fortnite item ID prefixes, which represent things other than items. Mostly used with QueryProfile Endpoint.
     /// </summary>
     /// <returns></returns>
-    public static IEnumerable<string> GetQueryProfileRemoveFilter() {
+    public static IEnumerable<string> GetQueryProfileRemoveFilter()
+    {
         // The list of ID prefixes may be incomplete, but it doesn't really matter as weird item IDS
         // are removed only for lookup performance reasons. 
         return [

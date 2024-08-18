@@ -1,8 +1,9 @@
-﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence;
 
-public class SessionService(IPersistenceProvider persistenceProvider) : ISessionService {
+public class SessionService(IPersistenceProvider persistenceProvider) : ISessionService
+{
     public bool IsAuthenticated =>
         AccountId is not null &&
         AccessToken is not null &&

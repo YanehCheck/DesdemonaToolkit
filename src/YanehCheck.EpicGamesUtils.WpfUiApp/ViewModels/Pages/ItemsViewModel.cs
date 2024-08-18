@@ -10,7 +10,8 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 

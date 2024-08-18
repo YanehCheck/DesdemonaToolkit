@@ -1,6 +1,7 @@
-﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 
-public interface ISessionService {
+public interface ISessionService
+{
     public bool IsAuthenticated { get; }
     public string? AccountId { get; set; }
     public string? AccessToken { get; set; }

@@ -1,6 +1,7 @@
-﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Interfaces;
+﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 
-public interface IPersistenceProvider {
+public interface IPersistenceProvider
+{
     public string AccountId { get; set; }
     public string AccessToken { get; set; }
     public DateTime AccessTokenExpiry { get; set; }

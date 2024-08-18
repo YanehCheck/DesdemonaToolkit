@@ -1139,6 +1139,25 @@
                                                 Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.AlanWalker}}"/>
                             </Border>
+                            <Border
+                                CornerRadius="4"
+                                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                                BorderThickness="1">
+                                <Border.Background>
+                                    <ImageBrush
+                                        ImageSource="pack://application:,,,/Assets/Images/Rarities/rarity-bmw.png"
+                                        RenderOptions.BitmapScalingMode="LowQuality"
+                                        Stretch="UniformToFill" />
+                                </Border.Background>
+                                <ui:Button
+                                    Content="BMW"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding ViewModel.RarityCommand}"
+                                    CommandParameter="{x:Static items:ItemRarity.Bmw}"
+                                    Background="{Binding ViewModel.RarityFilter,
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
+                                                ConverterParameter={x:Static items:ItemRarity.Bmw}}"/>
+                            </Border>
                         </UniformGrid>
                     </StackPanel>
                 </ui:Flyout>

@@ -22,5 +22,6 @@ public enum ItemRarity {
     Nissan,
     Tesla,
     Lamborghini,
-    AlanWalker
+    AlanWalker,
+    Bmw
 }

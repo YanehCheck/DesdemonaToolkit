@@ -25,6 +25,7 @@ public static class ItemEnumExtensions {
             "dcseries" => ItemRarity.DcSeries,
             "darkseries" => ItemRarity.DarkSeries,
             "alanwalker" => ItemRarity.AlanWalker,
+            "bmw" => ItemRarity.Bmw,
             _ => ItemRarity.Unknown
         };
     }
@@ -51,6 +52,7 @@ public static class ItemEnumExtensions {
             ItemRarity.DcSeries => "DC Series",
             ItemRarity.DarkSeries => "Dark Series",
             ItemRarity.AlanWalker => "Alan Walker",
+            ItemRarity.Bmw => "BMW",
             _ => "Unknown"
         };
     }

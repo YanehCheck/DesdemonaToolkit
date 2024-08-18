@@ -82,6 +82,7 @@
     <None Remove="Assets\Images\ItemTypeIcons\icon-wheels.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-wrap.png" />
     <None Remove="Assets\Images\Rarities\rarity-alanwalker.png" />
+    <None Remove="Assets\Images\Rarities\rarity-bmw.png" />
     <None Remove="Assets\Images\Rarities\rarity-common.png" />
     <None Remove="Assets\Images\Rarities\rarity-dark.png" />
     <None Remove="Assets\Images\Rarities\rarity-dc.png" />
@@ -199,6 +200,10 @@
 
   <ItemGroup>
     <Filters Include="Assets\Filters\*.dtkf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Images\Rarities\rarity-bmw.png" />
   </ItemGroup>
 
   <PropertyGroup>

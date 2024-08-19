@@ -1,4 +1,4 @@
-﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
@@ -13,6 +13,6 @@ public interface IFilter
     string Description { get; set; }
     string Author { get; set; }
     public IEnumerable<ChainedCondition> DnfExpression { get; set; }
-    IEnumerable<ItemModel> Apply(IEnumerable<ItemModel> items);
-    bool Apply(ItemModel item);
+    IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items);
+    bool Apply(ItemOwnedModel item);
 }

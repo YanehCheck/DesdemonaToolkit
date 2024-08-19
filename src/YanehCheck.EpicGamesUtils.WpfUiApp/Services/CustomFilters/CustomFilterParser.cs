@@ -1,5 +1,5 @@
 ﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
-using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
@@ -192,7 +192,7 @@ public class CustomFilterParser : ICustomFilterParser {
         }
 
         var propertyName = clause.Property;
-        var property = typeof(ItemModel).GetProperty(propertyName)!;
+        var property = typeof(ItemOwnedModel).GetProperty(propertyName)!;
         var type = property.PropertyType;
 
         if(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>)) {
@@ -229,7 +229,7 @@ public class CustomFilterParser : ICustomFilterParser {
 
 
         var propertyName = filter.LastClause!.Property;
-        var property = typeof(ItemModel).GetProperty(propertyName)!;
+        var property = typeof(ItemOwnedModel).GetProperty(propertyName)!;
         var type = property.PropertyType;
 
         if(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) {

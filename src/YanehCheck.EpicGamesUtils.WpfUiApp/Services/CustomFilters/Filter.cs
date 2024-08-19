@@ -1,4 +1,4 @@
-﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
@@ -21,7 +21,7 @@ public class Filter : IFilter {
             return;
         }
 
-        if (conjunction == true) {
+        if (conjunction) {
             LastClause!.FollowingTerm = new ChainedCondition();
         }
         else {
@@ -29,13 +29,13 @@ public class Filter : IFilter {
         }
     }
 
-    public virtual IEnumerable<ItemModel> Apply(IEnumerable<ItemModel> items) {
+    public virtual IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items) {
         return !DnfExpression.Any() ? 
             items : 
             items.Where(i => DnfExpression.Any(r => r.Satisfied(i)));
     }
 
-    public virtual bool Apply(ItemModel item) {
+    public virtual bool Apply(ItemOwnedModel item) {
         return !DnfExpression.Any() || DnfExpression.Any(r => r.Satisfied(item));
     }
 }

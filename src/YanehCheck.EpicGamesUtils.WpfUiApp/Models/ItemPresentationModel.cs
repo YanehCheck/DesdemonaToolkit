@@ -4,10 +4,10 @@ using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 
 /// <summary>
-/// Version of <see cref="ItemModel"/> with added presentation-related properties and commands.
+/// Version of <see cref="ItemOwnedModel"/> with added presentation-related properties and commands.
 /// </summary>
 [INotifyPropertyChanged]
-public partial class ItemPresentationModel : ItemModel {
+public partial class ItemPresentationModel : ItemOwnedModel {
     [ObservableProperty] 
     private BitmapFrame? _bitmapFrame;
 

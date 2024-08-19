@@ -1,5 +1,5 @@
 ﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
-using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 
@@ -41,7 +41,7 @@ public class ChainedCondition {
     /// <summary>
     /// Is term (or whole clause if chained together) satisfied?
     /// </summary>
-    public bool Satisfied(ItemModel item) => Matches(item) && (FollowingTerm?.Satisfied(item) ?? true);
+    public bool Satisfied(ItemOwnedModel item) => Matches(item) && (FollowingTerm?.Satisfied(item) ?? true);
 
     public int Count() {
         var condition = this;
@@ -67,7 +67,7 @@ public class ChainedCondition {
         throw new FilterSpecialException("Reached max number of terms in a clause");
     }
 
-    private bool Matches(ItemModel item) {
+    private bool Matches(ItemOwnedModel item) {
         if (ListOperation == ListOperation.NotAListOperation) {
             return MatchesSingle(item, Parameter);
         }
@@ -85,7 +85,7 @@ public class ChainedCondition {
         throw new FilterUnsupportedOperationException("Unknown list operation.");
     }
 
-    private bool MatchesSingle(ItemModel item, object? parameter) {
+    private bool MatchesSingle(ItemOwnedModel item, object? parameter) {
         var property = item.GetType().GetProperty(Property);
         if (property == null) {
             return false;

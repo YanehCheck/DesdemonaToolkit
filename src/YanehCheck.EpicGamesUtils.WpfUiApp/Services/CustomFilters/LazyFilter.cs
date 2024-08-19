@@ -1,4 +1,4 @@
-﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
@@ -10,7 +10,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 /// <param name="sourceCode"></param>
 public class LazyFilter(ICustomFilterParser parser, string sourceCode) : Filter {
     private bool parsed = false;
-    public override IEnumerable<ItemModel> Apply(IEnumerable<ItemModel> items) {
+    public override IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items) {
         if (!parsed) {
             var parsedFilter = parser.Parse(sourceCode);
             MapFrom(parsedFilter);
@@ -18,7 +18,7 @@ public class LazyFilter(ICustomFilterParser parser, string sourceCode) : Filter 
         return base.Apply(items);
     }
 
-    public override bool Apply(ItemModel item) {
+    public override bool Apply(ItemOwnedModel item) {
         if(!parsed) {
             var parsedFilter = parser.Parse(sourceCode);
             MapFrom(parsedFilter);

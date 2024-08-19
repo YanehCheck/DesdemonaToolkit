@@ -7,5 +7,6 @@ public enum HeaderType
     Description,
     Author,
     Optimization,
-    Strict
+    Strict,
+    AllPass
 }

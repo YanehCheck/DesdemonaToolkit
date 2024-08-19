@@ -13,6 +13,8 @@ public class Filter : IFilter {
     public string Author { get; set; } = "Unknown";
     // Will be used later
     public OptimizationLevel OptimizationLevel { get; set; } = OptimizationLevel.L0;
+    // Makes every single item satisfy this filter, mainly used for filters that just add remarks
+    public bool AllPass { get; set; } = false;
     public IEnumerable<ChainedCondition> DnfExpression { get; set; } = [];
     public ChainedCondition? LastClause => DnfExpression.LastOrDefault()?.Last();
     public void AddClause(bool conjunction = false) {
@@ -30,24 +32,32 @@ public class Filter : IFilter {
     }
 
     public virtual IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items) {
-        return !DnfExpression.Any() ? 
-            items : 
-            items.Where(i => DnfExpression.Any(r => {
+        if (!DnfExpression.Any()) {
+            return items;
+        }
+
+        var filteredItems = items.Where(i => DnfExpression.Any(r => {
                 var sat = r.Satisfied(i);
                 if (sat) {
                     i.Remark = r.Remark;
                 }
                 return sat;
             }));
+        return AllPass ? items : filteredItems;
     }
 
     public virtual bool Apply(ItemOwnedModel item) {
-        return !DnfExpression.Any() || DnfExpression.Any(r => {
+        if(!DnfExpression.Any()) {
+            return true;
+        }
+
+        var filterResult = DnfExpression.Any(r => {
             var sat = r.Satisfied(item);
             if(sat) {
                 item.Remark = r.Remark;
             }
             return sat;
         });
+        return AllPass || filterResult;
     }
 }

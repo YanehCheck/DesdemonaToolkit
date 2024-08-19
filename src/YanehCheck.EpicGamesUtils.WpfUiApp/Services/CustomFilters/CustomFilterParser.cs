@@ -322,6 +322,11 @@ public class CustomFilterParser : ICustomFilterParser {
                 break;
             case HeaderType.Strict:
                 throw new FilterParserException("Invalid strict header value. Valid values are true/false.");
+            case HeaderType.AllPass when bool.TryParse(header.Value, out bool value):
+                filter.AllPass = value;
+                break;
+            case HeaderType.AllPass:
+                throw new FilterParserException("Invalid all pass header value. Valid values are true/false.");
         }
     }
 

@@ -43,7 +43,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageAppearanceO
             itemsPerRow = items.Count;
         }
 
-        var fontColor = Color.ParseHex(options.Value.NameFontColor);
+        var fontColor = Color.ParseHex(options.Value.FontColor);
         var width = itemsPerRow * (options.Value.ItemWidth + options.Value.ItemSpacing) - options.Value.ItemSpacing;
         var height =
             (int) Math.Ceiling((double) items.Count / itemsPerRow) *
@@ -68,7 +68,8 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageAppearanceO
 
             using var itemImage = items[i].BitmapFrame!.ToImageSharpImage(out var data);
             var itemName = items[i].Name;
-            DrawItem(image, itemName, itemImage, x, y, fontColor, fontFamily);
+            var itemRemark = items[i].Remark;
+            DrawItem(image, itemName, itemRemark, itemImage, x, y, fontColor, fontFamily);
             ArrayPool<byte>.Shared.Return(data);
         }
 
@@ -134,41 +135,71 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageAppearanceO
         image.Mutate(ctx => ctx.DrawText(logoTernaryText, ternaryFont, fontColor, ternaryPosition));
     }
 
-    private void DrawItem(Image inventoryImage, string itemName, Image itemImage, int x, int y, Color fontColor, FontFamily fontFamily) {
+    private void DrawItem(Image inventoryImage, string itemName, string? itemRemark, Image itemImage, int x, int y, Color fontColor, FontFamily fontFamily) {
         var itemWidth = options.Value.ItemWidth;
         var itemHeight = options.Value.ItemHeight;
         var nameRectangleHeight = options.Value.NameRectangleHeight;
-        var nameRectangleTransparency = options.Value.NameRectangleTransparency;
 
         // Draw item
         itemImage.Mutate(ctx => ctx.Resize(itemWidth, itemHeight)); // Just to be sure
         inventoryImage.Mutate(ctx => ctx.DrawImage(itemImage, new Point(x, y), 1));
 
-        var font = GetFontWithRightSize(itemName, fontFamily, out var size);
+        var font = GetFontWithRightSize(itemName, fontFamily, 
+            options.Value.NameFontSize, 
+            options.Value.NameFontDownsizeStep, 
+            options.Value.NameTextPaddingLr, 
+            options.Value.NameTextPaddingTb,  
+            out var size);
         var leftShift = (itemWidth - size.Width) / 2;
         var topShift = (nameRectangleHeight - size.Height) / 2;
+
         // Draw transparent rectangle for name
-        var rectangle = new RectangleF(x, y + itemHeight - nameRectangleHeight, itemWidth, nameRectangleHeight);
-        var fillColor = new Rgba32(0, 0, 0, nameRectangleTransparency);
-        inventoryImage.Mutate(ctx => ctx.Fill(fillColor, rectangle));
+        var nameRect = new RectangleF(x, y + itemHeight - nameRectangleHeight, itemWidth, nameRectangleHeight);
+        var nameRectCol = Color.ParseHex(options.Value.NameRectangleColor);
+        inventoryImage.Mutate(ctx => ctx.Fill(nameRectCol, nameRect));
 
         // Draw name
         var namePosition = new PointF(x + leftShift, y + itemHeight - nameRectangleHeight + topShift);
         inventoryImage.Mutate(ctx => ctx.DrawText(itemName, font, fontColor, namePosition));
+
+        if (itemRemark is not null && options.Value.ItemIncludeRemark) {
+            var fontRemark = GetFontWithRightSize(itemRemark, fontFamily, 
+                options.Value.RemarkFontSize, 
+                options.Value.RemarkFontDownsizeStep, 
+                options.Value.RemarkTextPaddingLr,
+                options.Value.RemarkTextPaddingTb,
+                out var remarkSize);
+
+            var leftShiftRemark = options.Value.RemarkTextAlign switch { // TODO: Move this away!
+                'L' or 'l' => options.Value.RemarkTextPaddingLr,
+                'C' or 'c' => (itemWidth - remarkSize.Width) / 2,
+                'R' or 'r' => itemWidth - remarkSize.Width - options.Value.RemarkTextPaddingLr,
+                _ => options.Value.RemarkTextPaddingLr
+            };
+
+            var topShiftRemark = (options.Value.RemarkRectangleHeight - remarkSize.Height) / 2;
+
+            var remarkRect = new RectangleF(x, y, itemWidth, options.Value.RemarkRectangleHeight);
+            var remarkRectColor = Color.ParseHex(options.Value.RemarkRectangleColor);
+            inventoryImage.Mutate(ctx => ctx.Fill(remarkRectColor, remarkRect));
+
+            var remarkPosition = new PointF(x + leftShiftRemark, y + topShiftRemark);
+            inventoryImage.Mutate(ctx => ctx.DrawText(itemRemark, fontRemark, fontColor, remarkPosition));
+        }
     }
 
-    private Font GetFontWithRightSize(string text, FontFamily fontFamily, out FontRectangle size) {
-        var currentFontSize = options.Value.NameFontSize;
+    private Font GetFontWithRightSize(string text, FontFamily fontFamily, float initialSize, float sizeDownStep, float paddingLr, float paddingTb, out FontRectangle size) {
+        var currentFontSize = initialSize;
 
         do {
             var font = fontCache.GetOrAdd(currentFontSize, fontFamily.CreateFont);
             size = MeasureTextSize(text, font);
-            if (size.Width <= options.Value.ItemWidth - options.Value.NameTextPaddingLr * 2 &&
-                size.Height <= options.Value.NameRectangleHeight - options.Value.NameTextPaddingTb * 2) {
+            if (size.Width <= options.Value.ItemWidth - paddingLr * 2 &&
+                size.Height <= options.Value.NameRectangleHeight - paddingTb * 2) {
                 return font;
             }
 
-            currentFontSize -= options.Value.NameFontDownsizeStep;
+            currentFontSize -= sizeDownStep;
         }
         while (true);
     }

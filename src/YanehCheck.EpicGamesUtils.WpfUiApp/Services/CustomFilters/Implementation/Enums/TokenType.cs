@@ -19,7 +19,7 @@ public enum TokenType
     ListClose = 8192,
     ListNextItem = 16384,
     Header = 32768,
-    // FREE = 65536,
+    PropertyHeader = 65536,
     // FREE = 131072,
     Property = 262144,
     And = 524288,

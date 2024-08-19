@@ -37,6 +37,7 @@ internal class FilterLexer {
             { TokenType.ListClose, LexListClose },
             { TokenType.ListNextItem, LexListNextItem },
             { TokenType.Header, LexHeader },
+            { TokenType.PropertyHeader, LexPropertyHeader },
             { TokenType.Property, LexProperty },
             { TokenType.And, LexAnd },
             { TokenType.Or, LexOr }
@@ -277,6 +278,21 @@ internal class FilterLexer {
                 var value = match.Groups["value"].Value.Trim();
                 UpdatePos(match.Length);
                 return new Token(TokenType.Header, new HeaderInformation(headerEnum, value));
+            }
+
+            return null;
+        }
+        return null;
+    }
+
+    private Token? LexPropertyHeader() {
+        var match = Regex.Match(sourceString[Pos..], @"^###(?<header>.+)=(?<value>.+)");
+        if(match.Success) {
+            var header = match.Groups["header"].Value.Trim();
+            if(Enum.TryParse(header, true, out PropertyHeaderType headerEnum)) {
+                var value = match.Groups["value"].Value.Trim();
+                UpdatePos(match.Length);
+                return new Token(TokenType.PropertyHeader, new PropertyHeaderInformation(headerEnum, value));
             }
 
             return null;

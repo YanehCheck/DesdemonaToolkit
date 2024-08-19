@@ -32,10 +32,22 @@ public class Filter : IFilter {
     public virtual IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items) {
         return !DnfExpression.Any() ? 
             items : 
-            items.Where(i => DnfExpression.Any(r => r.Satisfied(i)));
+            items.Where(i => DnfExpression.Any(r => {
+                var sat = r.Satisfied(i);
+                if (sat) {
+                    i.Remark = r.Remark;
+                }
+                return sat;
+            }));
     }
 
     public virtual bool Apply(ItemOwnedModel item) {
-        return !DnfExpression.Any() || DnfExpression.Any(r => r.Satisfied(item));
+        return !DnfExpression.Any() || DnfExpression.Any(r => {
+            var sat = r.Satisfied(item);
+            if(sat) {
+                item.Remark = r.Remark;
+            }
+            return sat;
+        });
     }
 }

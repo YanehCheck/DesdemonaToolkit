@@ -15,6 +15,7 @@ public class ChainedCondition {
     public ListOperation ListOperation { get; set; } = ListOperation.NotAListOperation;
     public object? Parameter { get; set; }
     public ChainedCondition? FollowingTerm { get; set; }
+    public string? Remark { get; set; } 
 
     private const double Epsilon = 0.000001;
     private const int MaxClauses = 100000;

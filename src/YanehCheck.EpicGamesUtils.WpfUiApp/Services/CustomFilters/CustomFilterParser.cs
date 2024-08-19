@@ -18,13 +18,18 @@ public class CustomFilterParser : ICustomFilterParser {
     }
 
     private void ParseHeaderOrProperty(FilterLexer lexer, Filter filter) {
-        var token = lexer.GetNextToken(TokenType.Header | TokenType.Property | TokenType.EndOfFile);
+        var token = lexer.GetNextToken(TokenType.Header | TokenType.Property | TokenType.PropertyHeader | TokenType.EndOfFile);
         if(token is null) {
             throw new FilterParserException(lexer.Line, lexer.Char, "Syntax error. Unknown or unexpected token.");
         }
         else if(token.Type == TokenType.Header) {
             ProcessHeader(lexer, filter, token);
             ParseHeaderOrProperty(lexer, filter);
+        }
+        else if (token.Type == TokenType.PropertyHeader) {
+            filter.AddClause();
+            ProcessPropertyHeader(lexer, filter, token);
+            ParsePropertyOrPropertyHeader(lexer, filter);
         }
         else if(token.Type == TokenType.Property) {
             filter.AddClause();
@@ -136,7 +141,7 @@ public class CustomFilterParser : ICustomFilterParser {
         }
         else if(token.Type == TokenType.Or) {
             filter.AddClause(false);
-            ParseProperty(lexer, filter);
+            ParsePropertyOrPropertyHeader(lexer, filter);
         }
         else if(token.Type == TokenType.And) {
             filter.AddClause(true);
@@ -147,6 +152,24 @@ public class CustomFilterParser : ICustomFilterParser {
         }
         else {
             throw new FilterParserException(lexer.Line, lexer.Char, "Unexpected token. Expected &&, || or end of file.");
+        }
+    }
+
+    private void ParsePropertyOrPropertyHeader(FilterLexer lexer, Filter filter) {
+        var token = lexer.GetNextToken(TokenType.Property | TokenType.PropertyHeader);
+        if(token is null) {
+            throw new FilterParserException(lexer.Line, lexer.Char, "Syntax error. Unknown or unexpected token.");
+        }
+        else if(token.Type == TokenType.PropertyHeader) {
+            ProcessPropertyHeader(lexer, filter, token);
+            ParsePropertyOrPropertyHeader(lexer, filter);
+        }
+        else if(token!.Type == TokenType.Property) {
+            ProcessProperty(filter, token);
+            ParseOperatorOrListOperator(lexer, filter);
+        }
+        else {
+            throw new FilterParserException(lexer.Line, lexer.Char, "Internal error. Bad token returned.");
         }
     }
 
@@ -271,7 +294,6 @@ public class CustomFilterParser : ICustomFilterParser {
         filter.LastClause!.Property = (string) token.Value!;
     }
 
-
     private void ProcessHeader(FilterLexer lexer, Filter filter, Token token) {
         var header = (HeaderInformation) token.Value!;
         switch(header.Type) {
@@ -303,4 +325,12 @@ public class CustomFilterParser : ICustomFilterParser {
         }
     }
 
+    private void ProcessPropertyHeader(FilterLexer lexer, Filter filter, Token token) {
+        var header = (PropertyHeaderInformation) token.Value!;
+        switch(header.Type) {
+            case PropertyHeaderType.Remark:
+                filter.LastClause!.Remark = (string) header.Value;
+                break;
+        }
+    }
 }

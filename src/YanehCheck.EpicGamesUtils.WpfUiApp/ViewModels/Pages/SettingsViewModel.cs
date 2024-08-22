@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
-public partial class SettingsViewModel : ObservableObject, IViewModel, INavigationAware {
+public partial class SettingsViewModel(IBrowserService browserService) : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
     [ObservableProperty]
@@ -32,6 +33,11 @@ public partial class SettingsViewModel : ObservableObject, IViewModel, INavigati
     private string GetAssemblyVersion() {
         return Assembly.GetExecutingAssembly().GetName().Version?.ToString()
                ?? string.Empty;
+    }
+
+    [RelayCommand]
+    private void OpenAppSettingsFile() {
+        browserService.StartAndNavigateToAppSettings();
     }
 
     [RelayCommand]

@@ -20,4 +20,8 @@ public class BrowserService : IBrowserService
     {
         Process.Start("explorer", Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data"));
     }
+
+    public void StartAndNavigateToAppSettings() {
+        Process.Start("explorer", Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "appsettings.json"));
+    }
 }

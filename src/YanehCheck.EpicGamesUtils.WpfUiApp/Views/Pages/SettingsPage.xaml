@@ -19,33 +19,84 @@
     <Page.Resources>
         <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
+    <DockPanel>
+        <StackPanel
+            DockPanel.Dock="Left">
+            <ui:Card
+             Height="auto"
+             Width="500">
+                <StackPanel
+                     Width="500"
+                     Height="auto">
+                    <ui:TextBlock
+                         FontSize="20"
+                         FontWeight="Bold"
+                         Text="Personalization"
+                         Margin="0, 0, 0, 10"/>
+                    <ui:TextBlock
+                         Width="500"
+                         Height="auto"
+                         TextWrapping="Wrap"
+                         Padding="0,0,40,0">
+                        App settings are currently only available through editing appsettings.json file.
+                        <LineBreak />   
+                        Restarting the application applies changes.
+                    </ui:TextBlock>
+                    <ui:Button 
+                 Margin="0,10 ,0,0"
+                 Content="Open appsettings.json"
+                 Command="{Binding ViewModel.OpenAppSettingsFileCommand}"/>
+                </StackPanel>
+            </ui:Card>
 
-    <StackPanel>
-        <TextBlock
-            FontSize="20"
-            FontWeight="Medium"
-            Text="Personalization" />
-        <TextBlock Margin="0,12,0,0" Text="Theme" />
-        <RadioButton
-            Margin="0,12,0,0"
-            Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
-            CommandParameter="theme_light"
-            Content="Light (Experimental)"
-            GroupName="themeSelect"
-            IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
-        <RadioButton
-            Margin="0,8,0,0"
-            Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
-            CommandParameter="theme_dark"
-            Content="Dark"
-            GroupName="themeSelect"
-            IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
-
-        <TextBlock
-            Margin="0,24,0,0"
-            FontSize="20"
-            FontWeight="Medium"
-            Text="About" />
-        <TextBlock Margin="0,12,0,0" Text="{Binding ViewModel.AppVersion, Mode=OneWay}" />
-    </StackPanel>
+            <!--
+     <TextBlock Margin="0,12,0,0" Text="Theme" />
+     <RadioButton
+         Margin="0,12,0,0"
+         Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
+         CommandParameter="theme_light"
+         Content="Light (Experimental)"
+         GroupName="themeSelect"
+         IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
+     <RadioButton
+         Margin="0,8,0,0"
+         Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
+         CommandParameter="theme_dark"
+         Content="Dark"
+         GroupName="themeSelect"
+         IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />-->
+            <ui:Card
+                Margin="0,30,0,0"
+                Height="auto"
+                Width="500">
+                <StackPanel
+                     Width="500"
+                     Height="auto">
+                    <TextBlock
+                         FontSize="20"
+                         FontWeight="Bold"
+                         Text="About"
+                         Margin="0, 0, 0, 10"/>
+                    <ui:TextBlock
+                         Width="500"
+                         Height="auto"
+                         TextWrapping="Wrap">
+                        If you like what I made, consider using my SAC code!
+                        <LineBreak />
+                    </ui:TextBlock>
+                    <ui:TextBlock
+                        FontSize="20"
+                        FontWeight="Bold"
+                        TextAlignment="Left"
+                        Margin="0,0,0,10"
+                        Text="DESDEMONATOOLKIT"/>
+                </StackPanel>
+            </ui:Card>
+        </StackPanel>
+        <TextBlock 
+            Margin="0,20"
+            Text="{Binding ViewModel.AppVersion, Mode=OneWay}" 
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"/>
+    </DockPanel>
 </Page>

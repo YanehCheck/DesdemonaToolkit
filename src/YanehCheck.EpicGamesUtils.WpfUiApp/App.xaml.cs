@@ -42,7 +42,7 @@ public partial class App {
         .CreateDefaultBuilder()
         .ConfigureAppConfiguration((context, builder) => {
             builder.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location));
-            builder.AddJsonFile("appsettings.json", false, false);
+            builder.AddJsonFile("appsettings.json", false, true);
         })
         .ConfigureServices((context, services) => {
             services.AddOptions<UserOptions>().Bind(context.Configuration.GetSection(UserOptions.Key));

@@ -40,20 +40,15 @@ See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki).
   
 ## Roadmap
 
-#### ✅ 0.1.0
-- Polish UX of search and filtering
-- Custom filters
-- Item name on hover + Detailed view of items on click (videos?)
-- Export your inventory selection as a list or an image
-- Handling for DB, data format and connection issues
+#### 🛠️ 0.1.4
+- Adding text above specific items in image export through DTKF
+- Bug fixes
 #### 🛠️ 0.2.0
 - General account information page
 - Inventory statistics like total price, number of items, ...
-- Image export improvements and customization
 - STW: Claim daily quest
 - STW: Check founder codes
 ####  🛠️ 1.0.0
 - More auth options
 - UI and UX polish, Full light mode support
-- Custom filter section
 - ????

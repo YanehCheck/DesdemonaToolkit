@@ -367,17 +367,26 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     }
 
     private async Task<(IEnumerable<ItemPresentationModel>? Items, string? ErrorMessage)> FetchItems() {
-        var ownedItemsResult = await epicGamesService.GetFortniteBrProfile(sessionService.AccountId!, sessionService.AccessToken!);
-        if (!ownedItemsResult.Success) {
+        // Get owned item IDs and styles
+        var profileItemsResult = await epicGamesService.GetFortniteProfile(sessionService.AccountId!, sessionService.AccessToken!);
+        if (!profileItemsResult.Success) {
             _initializedForAccountId = "";
-            return ( null, $"An error occured while fetching your inventory.\nError: {ownedItemsResult.ErrorMessage!}");
+            return ( null, $"An error occured while fetching your inventory.\nError: {profileItemsResult.ErrorMessage!}");
         }
+        var profileItems = profileItemsResult.Items!.ToList();
 
-        var ownedItemModels = ownedItemsResult.Items!.Select(i => new ItemModel() {
+        // Create models with set ID
+        var emptyProfileItems = profileItemsResult.Items!.Select(i => new ItemModel {
             FortniteId = i.FortniteId.Split(':').Last()
         });
         try {
-            return ((await itemFacade.GetByFortniteIdAsync(ownedItemModels)).Select(i => new ItemPresentationModel(i)),null);
+            // Pull item data from DB
+            var items = await itemFacade.GetByFortniteIdAsync(emptyProfileItems);
+            // Add styles and map to ItemPresentationModel
+            var itemsWithStyles = items.Select((item, index) => new ItemPresentationModel(item) {
+                OwnedStylesRaw = profileItems.ElementAt(index).OwnedStylesRaw
+            });
+            return (itemsWithStyles,null);
         }
         catch (Exception ex) {
             return (null, $"An error occured while fetching item data from database.\nError: {ex.Message}");

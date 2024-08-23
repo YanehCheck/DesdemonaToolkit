@@ -18,10 +18,10 @@ public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache ca
             () => epicGamesService.GetAccountInformation(accountId, accessToken));
     }
 
-    public Task<EpicGamesItemsResult> GetFortniteBrProfile(string accountId, string accessToken)
+    public Task<EpicGamesItemsResult> GetFortniteProfile(string accountId, string accessToken)
     {
-        return cache.GetOrAdd(nameof(GetFortniteBrProfile),
-            () => epicGamesService.GetFortniteBrProfile(accountId, accessToken));
+        return cache.GetOrAdd(nameof(GetFortniteProfile),
+            () => epicGamesService.GetFortniteProfile(accountId, accessToken));
     }
 
     public void InvalidateAll() => cache.Clear();
@@ -30,6 +30,6 @@ public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache ca
 
     public async Task PreCacheAll(string accountId, string accessToken)
     {
-        await GetFortniteBrProfile(accountId, accessToken);
+        await GetFortniteProfile(accountId, accessToken);
     }
 }

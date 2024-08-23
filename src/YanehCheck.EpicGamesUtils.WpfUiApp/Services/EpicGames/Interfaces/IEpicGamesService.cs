@@ -6,5 +6,5 @@ public interface IEpicGamesService
 {
     public Task<EpicGamesAuthResult> AuthenticateAccount(string authCode);
     public Task<EpicGamesDisplayNameResult> GetAccountInformation(string accountId, string accessToken);
-    public Task<EpicGamesItemsResult> GetFortniteBrProfile(string accountId, string accessToken);
+    public Task<EpicGamesItemsResult> GetFortniteProfile(string accountId, string accessToken);
 }

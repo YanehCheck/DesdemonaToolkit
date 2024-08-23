@@ -23,7 +23,7 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 
 ## Usage
 
-See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki).
+See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage and on how to create your own filter.
 
 ## Installation and set-up
 
@@ -41,7 +41,8 @@ See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki).
 ## Roadmap
 
 #### 🛠️ 0.1.4
-- Adding text above specific items in image export through DTKF
+- Support for checking unlockable styles through DTKF
+- Adding text above items in image export through DTKF (good for adding info about said styles)
 - Bug fixes
 #### 🛠️ 0.2.0
 - General account information page

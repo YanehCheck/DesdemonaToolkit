@@ -219,10 +219,23 @@ public class CustomFilterParser : ICustomFilterParser {
         var type = property.PropertyType;
 
         if(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(IEnumerable<>)) {
+            // Special case for Count in List properties
+            if (token.Type is TokenType.IntLiteral && clause.Operation is Operation.CountEquals
+                    or Operation.CountNotEquals or Operation.CountLessThan
+                    or Operation.CountLessThanOrEqual or Operation.CountGreaterThan
+                    or Operation.CountGreaterThanOrEqual) {
+                return;
+            }
+
             type = type.GetGenericArguments()[0];
         }
         if(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>)) {
             type = type.GetGenericArguments()[0];
+        }
+
+        // Special case for ItemStyleRaw
+        if (token.Type == TokenType.StringLiteral && type == typeof(ItemStyleRaw)) {
+            return;
         }
 
         if(token.Value != null && token.Value.GetType() != type) {
@@ -276,8 +289,9 @@ public class CustomFilterParser : ICustomFilterParser {
             supported = op is Operation.Equals or Operation.NotEquals or Operation.GreaterThan
                 or Operation.GreaterThanOrEqual or Operation.LessThan or Operation.LessThanOrEqual;
         }
-        else if(type == typeof(IEnumerable<string>) || type == typeof(IEnumerable<ItemTag>)) {
-            supported = op is Operation.Contains or Operation.NotContains;
+        else if(type == typeof(IEnumerable<string>) || type == typeof(IEnumerable<ItemTag>) || type == typeof(IEnumerable<ItemStyleRaw>)) {
+            supported = op is Operation.Contains or Operation.NotContains or Operation.CountEquals or Operation.CountNotEquals or Operation.CountGreaterThan
+                or Operation.CountGreaterThanOrEqual or Operation.CountLessThan or Operation.CountLessThanOrEqual;
         }
         else {
             throw new FilterParserException(lexer.Line, lexer.Char,

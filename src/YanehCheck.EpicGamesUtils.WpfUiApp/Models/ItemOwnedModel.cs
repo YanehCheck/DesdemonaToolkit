@@ -6,7 +6,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 /// Represents item, extended with user and app specific information.
 /// </summary>
 public class ItemOwnedModel : ItemModel {
-    public List<ItemStyleRaw> OwnedStylesRaw { get; set; } = [];
+    public IEnumerable<ItemStyleRaw> OwnedStylesRaw { get; set; } = [];
     public string? Remark { get; set; } = null;
 
     public ItemOwnedModel() { }

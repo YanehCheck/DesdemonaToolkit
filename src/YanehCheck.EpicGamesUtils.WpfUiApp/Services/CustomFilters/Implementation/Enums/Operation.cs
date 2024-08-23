@@ -11,5 +11,11 @@ public enum Operation
     GreaterThan,
     GreaterThanOrEqual,
     LessThan,
-    LessThanOrEqual
+    LessThanOrEqual,
+    CountEquals,
+    CountNotEquals,
+    CountGreaterThan,
+    CountGreaterThanOrEqual,
+    CountLessThan,
+    CountLessThanOrEqual
 }

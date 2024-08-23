@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
-using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
@@ -96,7 +96,7 @@ internal class FilterLexer {
     }
 
     private Token? LexProperty() {
-        var properties = typeof(ItemModel).GetProperties()
+        var properties = typeof(ItemOwnedModel).GetProperties()
             .Where(p => p.Name != "Id");
         var property = properties.Where(n => sourceString[Pos..].StartsWith(n.Name)).MaxBy(s => s.Name.Length);
         ;
@@ -131,6 +131,30 @@ internal class FilterLexer {
     private Token? LexOperator() {
         var str = sourceString[Pos..];
 
+        if(str.StartsWith("?==")) {
+            UpdatePos(3);
+            return new Token(TokenType.Operator, Operation.CountEquals);
+        }
+        if(str.StartsWith("?!=")) {
+            UpdatePos(3);
+            return new Token(TokenType.Operator, Operation.CountNotEquals);
+        }
+        if(str.StartsWith("?>")) {
+            UpdatePos(2);
+            return new Token(TokenType.Operator, Operation.CountGreaterThan);
+        }
+        if(str.StartsWith("?<")) {
+            UpdatePos(2);
+            return new Token(TokenType.Operator, Operation.CountLessThan);
+        }
+        if(str.StartsWith("?>=")) {
+            UpdatePos(3);
+            return new Token(TokenType.Operator, Operation.CountGreaterThanOrEqual);
+        }
+        if(str.StartsWith("?<=")) {
+            UpdatePos(3);
+            return new Token(TokenType.Operator, Operation.CountLessThanOrEqual);
+        }
         if(str.StartsWith("{")) {
             UpdatePos(1);
             return new Token(TokenType.Operator, Operation.Contains);
@@ -184,7 +208,7 @@ internal class FilterLexer {
     private Token? LexIntLiteral() {
         var match = Regex.Match(sourceString[Pos..], @"^(?<int>[0-9]+)");
         if(match.Success) {
-            if(sourceString[Pos + match.Length] is '-' or '.') {
+            if(Pos + match.Length != sourceString.Length && sourceString[Pos + match.Length] is '-' or '.') {
                 return null;
             }
 

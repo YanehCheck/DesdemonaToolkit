@@ -15,7 +15,7 @@ public class ChainedCondition {
     public ListOperation ListOperation { get; set; } = ListOperation.NotAListOperation;
     public object? Parameter { get; set; }
     public ChainedCondition? FollowingTerm { get; set; }
-    public string? Remark { get; set; } 
+    public string? Remark { get; set; }
 
     private const double Epsilon = 0.000001;
     private const int MaxClauses = 100000;
@@ -44,22 +44,10 @@ public class ChainedCondition {
     /// </summary>
     public bool Satisfied(ItemOwnedModel item) => Matches(item) && (FollowingTerm?.Satisfied(item) ?? true);
 
-    public int Count() {
-        var condition = this;
-        for (int i = 1; i < MaxClauses; i++) {
-            if(condition!.FollowingTerm == null) {
-                return i;
-            }
-            condition = condition.FollowingTerm;
-        }
-
-        throw new FilterSpecialException("Reached max number of terms in a clause");
-    }
-
     public ChainedCondition Last() {
         var condition = this;
-        for (int i = 0; i < MaxClauses; i++) {
-            if (condition!.FollowingTerm is null) {
+        for(int i = 0; i < MaxClauses; i++) {
+            if(condition!.FollowingTerm is null) {
                 return condition;
             }
             condition = condition.FollowingTerm;
@@ -69,11 +57,11 @@ public class ChainedCondition {
     }
 
     private bool Matches(ItemOwnedModel item) {
-        if (ListOperation == ListOperation.NotAListOperation) {
+        if(ListOperation == ListOperation.NotAListOperation) {
             return MatchesSingle(item, Parameter);
         }
 
-        if (Parameter is IEnumerable<object?> enumerableParameter) {
+        if(Parameter is IEnumerable<object?> enumerableParameter) {
             return ListOperation switch {
                 ListOperation.Any => enumerableParameter.Any(p => MatchesSingle(item, p)),
                 ListOperation.NotAny => !enumerableParameter.Any(p => MatchesSingle(item, p)),
@@ -88,7 +76,7 @@ public class ChainedCondition {
 
     private bool MatchesSingle(ItemOwnedModel item, object? parameter) {
         var property = item.GetType().GetProperty(Property);
-        if (property == null) {
+        if(property == null) {
             return false;
         }
 
@@ -100,14 +88,14 @@ public class ChainedCondition {
         }
 
 
-        if (parameter == null) {
+        if(parameter == null) {
             return HandleNull(propertyValue, Operation, parameter);
         }
-        else if (propertyValue == null) {
+        else if(propertyValue == null) {
             return false;
         }
 
-        if (propertyType == typeof(string)) {
+        if(propertyType == typeof(string)) {
             return HandleString((string) propertyValue!, Operation, parameter);
         }
         else if(propertyType == typeof(int)) {
@@ -134,11 +122,36 @@ public class ChainedCondition {
         else if(propertyType == typeof(IEnumerable<ItemTag>)) {
             return HandleItemTagEnumerableValue((IEnumerable<ItemTag>) propertyValue!, Operation, parameter);
         }
+        else if(propertyType == typeof(IEnumerable<ItemStyleRaw>)) {
+            return HandleItemStyleRawEnumerableValue((IEnumerable<ItemStyleRaw>) propertyValue!, Operation, parameter);
+        }
         else {
             throw new FilterUnsupportedDataTypeException(
                 $"Type {property.PropertyType} of property {property.Name} is unsupported.");
         }
     }
+
+    private bool HandleItemStyleRawEnumerableValue(IEnumerable<ItemStyleRaw> itemStyleRawValue, Operation operation, object parameter) {
+        var stylesInStringForm = itemStyleRawValue
+            .SelectMany(item =>
+                item.Owned.Select(owned => $"{item.Channel}:{owned}")
+            );
+
+        if(parameter is string itemStyleParameter) {
+            return operation switch {
+                Operation.Contains => stylesInStringForm.Contains(itemStyleParameter),
+                Operation.NotContains => !stylesInStringForm.Contains(itemStyleParameter),
+                _ => throw new FilterUnsupportedOperationException(
+                    $"Operation {Enum.GetName(operation)!} is not valid for IEnumerable<ItemStyleRaw> type.")
+            };
+        }
+        if(parameter is int countParameter) {
+            return HandleEnumerableIntValue(stylesInStringForm, operation, countParameter);
+        }
+
+        throw new FilterUnsupportedDataTypeException("Parameter is not type of string or int.");
+    }
+
 
     private bool HandleItemTagEnumerableValue(IEnumerable<ItemTag> enumTagEnumerableValue, Operation operation, object? parameter) {
         if(parameter is ItemTag itemTagParameter) {
@@ -149,7 +162,11 @@ public class ChainedCondition {
                     $"Operation {Enum.GetName(operation)!} is not valid for IEnumerable<ItemTag> type.")
             };
         }
-        throw new FilterUnsupportedDataTypeException("Parameter is not type of ItemTag.");
+        if(parameter is int countParameter) {
+            return HandleEnumerableIntValue(enumTagEnumerableValue, operation, countParameter);
+        }
+
+        throw new FilterUnsupportedDataTypeException("Parameter is not type of ItemTag or int.");
     }
 
     private bool HandleStringEnumerableValue(IEnumerable<string> stringEnumerableValue, Operation operation, object? parameter) {
@@ -161,7 +178,23 @@ public class ChainedCondition {
                     $"Operation {Enum.GetName(operation)!} is not valid for IEnumerable<string> type.")
             };
         }
-        throw new FilterUnsupportedDataTypeException("Parameter is not type of string.");
+        if(parameter is int countParameter) {
+            return HandleEnumerableIntValue(stringEnumerableValue, operation, countParameter);
+        }
+        throw new FilterUnsupportedDataTypeException("Parameter is not type of string or int.");
+    }
+
+    private bool HandleEnumerableIntValue<T>(IEnumerable<T> enumerableValue, Operation operation, int parameter) {
+        return operation switch {
+            Operation.CountEquals => enumerableValue.Count() == parameter,
+            Operation.CountNotEquals => enumerableValue.Count() != parameter,
+            Operation.CountGreaterThan => enumerableValue.Count() > parameter,
+            Operation.CountGreaterThanOrEqual => enumerableValue.Count() >= parameter,
+            Operation.CountLessThan => enumerableValue.Count() < parameter,
+            Operation.CountLessThanOrEqual => enumerableValue.Count() <= parameter,
+            _ => throw new FilterUnsupportedOperationException(
+                $"Operation {Enum.GetName(operation)!} is not valid for Enumerable<T> type with int parameter.")
+        };
     }
 
     private bool HandleEnum<T>(T value, Operation operation, object? parameter) where T : Enum, IConvertible {

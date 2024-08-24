@@ -1801,7 +1801,7 @@
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
             ItemsSource="{Binding ViewModel.PresentedItems, Mode=OneWay}"
             VirtualizingPanel.CacheLengthUnit="Item"
-            VirtualizingPanel.CacheLength="8"
+            VirtualizingPanel.CacheLength="75,75"
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemTemplate>

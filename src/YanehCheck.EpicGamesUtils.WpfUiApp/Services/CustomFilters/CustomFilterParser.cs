@@ -1,12 +1,14 @@
 ﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 
+/// <inheritdoc cref="ICustomFilterParser"/>ilters;
 /// <inheritdoc cref="ICustomFilterParser"/>
 public class CustomFilterParser : ICustomFilterParser {
     private bool strict = true;

@@ -14,7 +14,6 @@ using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Cache;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
@@ -24,6 +23,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Cache;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Windows;
 

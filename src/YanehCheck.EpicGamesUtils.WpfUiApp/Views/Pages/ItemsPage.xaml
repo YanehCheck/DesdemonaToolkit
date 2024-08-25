@@ -12,6 +12,7 @@
     xmlns:items="clr-namespace:YanehCheck.EpicGamesUtils.Common.Enums.Items;assembly=YanehCheck.EpicGamesUtils.Common"
     xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage"
     xmlns:filters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces"
+    xmlns:models1="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models"
     Title="ItemsPage"
     d:DataContext="{d:DesignInstance local:ItemsPage,
                                      IsDesignTimeCreatable=False}"
@@ -1806,7 +1807,7 @@
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:ItemPresentationModel}">
+                <DataTemplate DataType="{x:Type models1:ItemPresentationModel}">
                     <Border
                         Width="105"
                         Height="130"

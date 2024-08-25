@@ -206,6 +206,10 @@
     <Resource Include="Assets\Images\Rarities\rarity-bmw.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utilities\Options\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
   </PropertyGroup>

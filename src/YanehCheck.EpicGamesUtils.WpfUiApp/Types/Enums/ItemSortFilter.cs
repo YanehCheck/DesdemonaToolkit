@@ -1,4 +1,4 @@
-﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
+﻿namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 
 public enum ItemSortFilter
 {

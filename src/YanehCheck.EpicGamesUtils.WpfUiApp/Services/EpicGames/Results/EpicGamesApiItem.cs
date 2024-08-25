@@ -1,4 +1,4 @@
-﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
 

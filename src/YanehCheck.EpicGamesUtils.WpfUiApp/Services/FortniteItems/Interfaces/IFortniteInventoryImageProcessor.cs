@@ -1,5 +1,5 @@
 ﻿using SixLabors.ImageSharp;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
+using ItemPresentationModel = YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models.ItemPresentationModel;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 

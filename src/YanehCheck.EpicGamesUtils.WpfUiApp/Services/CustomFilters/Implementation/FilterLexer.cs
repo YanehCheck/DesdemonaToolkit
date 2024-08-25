@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 

@@ -1,6 +1,6 @@
 ﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 
 public enum ItemTypeFilter
 {

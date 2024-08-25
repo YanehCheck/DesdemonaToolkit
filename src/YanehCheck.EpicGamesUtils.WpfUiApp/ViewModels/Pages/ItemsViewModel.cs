@@ -4,14 +4,14 @@ using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
+using ItemPresentationModel = YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models.ItemPresentationModel;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 

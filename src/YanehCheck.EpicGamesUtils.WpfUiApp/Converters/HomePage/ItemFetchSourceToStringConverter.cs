@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.HomePage;
 

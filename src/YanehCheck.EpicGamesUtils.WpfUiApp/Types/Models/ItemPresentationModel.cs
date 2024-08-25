@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media.Imaging;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Models;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
 
 /// <summary>
 /// Version of <see cref="ItemOwnedModel"/> with added presentation-related properties and commands.

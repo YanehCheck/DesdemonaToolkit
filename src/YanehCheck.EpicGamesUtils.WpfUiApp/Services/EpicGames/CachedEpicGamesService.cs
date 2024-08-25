@@ -1,6 +1,6 @@
-﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Cache;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
+﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Cache;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 

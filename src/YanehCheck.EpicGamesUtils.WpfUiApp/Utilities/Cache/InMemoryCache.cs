@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Cache;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Cache;
 
 public class InMemoryCache : ICache
 {

@@ -7,14 +7,14 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Extensions;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities;
 using Color = SixLabors.ImageSharp.Color;
 using Font = SixLabors.Fonts.Font;
 using FontFamily = SixLabors.Fonts.FontFamily;
 using Image = SixLabors.ImageSharp.Image;
+using ItemPresentationModel = YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models.ItemPresentationModel;
 using Point = SixLabors.ImageSharp.Point;
 using PointF = SixLabors.ImageSharp.PointF;
 using Rectangle = SixLabors.ImageSharp.Rectangle;
@@ -66,7 +66,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageAppearanceO
                 ? row * (options.Value.ItemHeight + options.Value.ItemSpacing) + headerHeight
                 : row * (options.Value.ItemHeight + options.Value.ItemSpacing);
 
-            using var itemImage = items[i].BitmapFrame!.ToImageSharpImage(out var data);
+            using var itemImage = BitmapFrameExtensions.ToImageSharpImage(items[i].BitmapFrame!, out var data);
             var itemName = items[i].Name;
             var itemRemark = items[i].Remark;
             DrawItem(image, itemName, itemRemark, itemImage, x, y, fontColor, fontFamily);

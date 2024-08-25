@@ -119,6 +119,8 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         var items = await source.GetItemsAsync(progress => {
             FetchProgressPercentage = (int) (progress * 100);
         });
+
+        // TODO: Proper exceptions
         if (items == null) {
             FetchingData = false;
             snackbarService.Show("Failure",
@@ -128,7 +130,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         }
 
         try {
-            await itemFacade.SaveByFortniteIdAsync(items);
+            await itemFacade.SaveByFortniteIdAsync(items.Where(i => i.FortniteId != null));
 
             LastItemFetch = DateTime.Now;
             persistenceProvider.LastItemFetch = LastItemFetch;

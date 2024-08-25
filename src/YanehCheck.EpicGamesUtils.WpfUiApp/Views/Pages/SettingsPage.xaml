@@ -65,8 +65,9 @@
                     </Grid>
                 </ui:CardControl.Header>
                 <ui:TextBox
-                    Text="{Binding ViewModel.StableSourceUri, Mode=TwoWay}"
-                    Width="560"/>
+                    Text="{Binding ViewModel.StableSourceUri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Width="560"
+                    FocusManager.IsFocusScope="False"/>
             </ui:CardControl>
             <ui:CardControl 
                 Margin="0,0,0,12" 
@@ -92,7 +93,7 @@
                     MaxDecimalPlaces="0"
                     SpinButtonPlacementMode="Compact"
                     Width="100"
-                    Value="{Binding ViewModel.FortniteGgIdRange, Mode=TwoWay}"/>
+                    Value="{Binding ViewModel.FortniteGgIdRange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </ui:CardControl>
             <ui:TextBlock
                 Margin="0,0,0,8"
@@ -140,7 +141,7 @@
                 </ui:CardControl.Header>
                 <Slider 
                     Width="150"
-                    Minimum="0"
+                    Minimum="1"
                     Maximum="100"
                     TickFrequency="10"
                     TickPlacement="TopLeft"

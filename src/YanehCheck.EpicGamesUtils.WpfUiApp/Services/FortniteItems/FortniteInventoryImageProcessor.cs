@@ -53,7 +53,7 @@ public class FortniteInventoryImageProcessor(IOptions<ItemExportImageAppearanceO
 
         image.Mutate(ctx => ctx.BackgroundColor(Color.ParseHex(options.Value.BackgroundColor)));
 
-        if (items.Count > 20 && options.Value.IncludeHeader) {
+        if (options.Value.IncludeHeader) {
             DrawHeaderBase(image, fontColor, fontFamily);
             DrawHeaderStamp(image, fontColor, fontFamily, items.Count, displayName);
         }

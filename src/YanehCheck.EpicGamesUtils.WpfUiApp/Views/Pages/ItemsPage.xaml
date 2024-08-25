@@ -1800,8 +1800,9 @@
             Grid.Row="2"
             Foreground="{DynamicResource TextFillColorSecondaryBrush}"
             ItemsSource="{Binding ViewModel.PresentedItems, Mode=OneWay}"
+            VirtualizingPanel.ScrollUnit="Pixel"
             VirtualizingPanel.CacheLengthUnit="Item"
-            VirtualizingPanel.CacheLength="75,75"
+            VirtualizingPanel.CacheLength="15,15"
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemTemplate>
@@ -1814,12 +1815,12 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         CornerRadius="4">
-                        <!-- <Border.CacheMode>
-                            <BitmapCache />
-                        </Border.CacheMode> -->
+                        <Border.CacheMode>
+                            <BitmapCache EnableClearType="False" SnapsToDevicePixels="True" />
+                        </Border.CacheMode>
                         <Border.Background>
                             <ImageBrush 
-                                ImageSource="{Binding BitmapFrame, Mode=OneWay}"
+                                ImageSource="{Binding BitmapFrame, Mode=OneTime}"
                                 RenderOptions.BitmapScalingMode="LowQuality"/>
                         </Border.Background>
                         <Grid
@@ -1834,27 +1835,28 @@
                                 IsOpen="{Binding DetailFlyoutOpened, Mode=OneWay}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="LostMouseCapture">
-                                        <i:InvokeCommandAction Command="{Binding ToggleItemDetailFlyoutCommand}"/>
+                                        <i:InvokeCommandAction Command="{Binding ToggleItemDetailFlyoutCommand, Mode=OneTime}"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
-                                <StackPanel>
+                                <VirtualizingStackPanel
+                                    IsVirtualizing="True">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         FontSize="26"
-                                        Text="{Binding Name, Mode=OneWay}"
+                                        Text="{Binding Name, Mode=OneTime}"
                                         />
                                     <StackPanel 
                                         HorizontalAlignment="Center"
                                         Orientation="Horizontal"
                                         Margin="0,2">
-                                        <ui:TextBlock
+                                        <TextBlock
                                             FontSize="18"
-                                            Text="{Binding Rarity, 
+                                            Text="{Binding Rarity, Mode=OneTime, 
                                             Converter={StaticResource ItemRarityToStringConverter}}" />
-                                        <ui:TextBlock FontSize="18" Text=" " />
-                                        <ui:TextBlock
+                                        <TextBlock FontSize="18" Text=" " />
+                                        <TextBlock
                                             FontSize="18"
-                                            Text="{Binding Type, 
+                                            Text="{Binding Type, Mode=OneTime,
                                             Converter={StaticResource ItemTypeToStringConverter}}" />
                                     </StackPanel>
                                     <StackPanel
@@ -1863,7 +1865,8 @@
                                         <StackPanel
                                             HorizontalAlignment="Center" 
                                             Orientation="Horizontal"
-                                            Visibility="{Binding PriceVbucks, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                            Visibility="{Binding PriceVbucks, Mode=OneTime, 
+                                            Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
                                             <ui:Image
                                                 Background="Transparent"
                                                 Width="20"
@@ -1871,19 +1874,21 @@
                                                 Margin="0,2,1,0"
                                                 Source="pack://application:,,,/Assets/Images/vbucks.png"
                                             />
-                                            <ui:TextBlock
+                                            <TextBlock
                                                 FontSize="18"
-                                                Text="{Binding PriceVbucks}" />
+                                                Text="{Binding PriceVbucks, Mode=OneTime}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
-                                                Visibility="{Binding SourceDescription, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
-                                                <ui:TextBlock
+                                                Visibility="{Binding SourceDescription, Mode=OneTime,
+                                                Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                                <TextBlock
                                                     FontSize="18"
                                                     Text=" (" />
-                                                <ui:TextBlock
+                                                <TextBlock
                                                     FontSize="18"
-                                                    Text="{Binding SourceDescription, Converter={StaticResource StringToStringTitleCaseConverter}}" />
-                                                <ui:TextBlock
+                                                    Text="{Binding SourceDescription, Mode=OneTime,
+                                                    Converter={StaticResource StringToStringTitleCaseConverter}}" />
+                                                <TextBlock
                                                     FontSize="18"
                                                     Text=")" />
                                             </StackPanel>
@@ -1891,23 +1896,26 @@
                                         <StackPanel
                                             HorizontalAlignment="Center" 
                                             Orientation="Horizontal"
-                                            Visibility="{Binding PriceUsd, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
-                                            <ui:TextBlock
+                                            Visibility="{Binding PriceUsd, Mode=OneTime,
+                                            Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                            <TextBlock
                                                 FontSize="18"
                                                 Text="$"/>
-                                            <ui:TextBlock
+                                            <TextBlock
                                                 FontSize="18"
-                                                Text="{Binding PriceUsd}" />
+                                                Text="{Binding PriceUsd, Mode=OneTime}" />
                                             <StackPanel
                                                 Orientation="Horizontal"
-                                                Visibility="{Binding SourceDescription, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
-                                                <ui:TextBlock
+                                                Visibility="{Binding SourceDescription, Mode=OneTime,
+                                                Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                                <TextBlock
                                                     FontSize="18"
                                                     Text=" (" />
-                                                <ui:TextBlock
+                                                <TextBlock
                                                     FontSize="18"
-                                                    Text="{Binding SourceDescription, Converter={StaticResource StringToStringTitleCaseConverter}}" />
-                                                <ui:TextBlock
+                                                    Text="{Binding SourceDescription, Mode=OneTime,
+                                                    Converter={StaticResource StringToStringTitleCaseConverter}}" />
+                                                <TextBlock
                                                     FontSize="18"
                                                     Text=")" />
                                             </StackPanel>
@@ -1916,7 +1924,8 @@
                                         <StackPanel
                                             HorizontalAlignment="Center" 
                                             Orientation="Horizontal"
-                                            Visibility="{Binding FromChallenge, Converter={StaticResource BoolToVisibilityCollapseConverter}}">
+                                            Visibility="{Binding FromChallenge, Mode=OneTime,
+                                            Converter={StaticResource BoolToVisibilityCollapseConverter}}">
                                             <ui:Image
                                                 Background="Transparent"
                                                 Width="20"
@@ -1924,71 +1933,79 @@
                                                 Margin="0,2,2,0"
                                                 Source="pack://application:,,,/Assets/Images/challenges.png"
                                             />
-                                            <ui:TextBlock
+                                            <TextBlock
                                                 FontSize="18"
-                                                Text="{Binding SourceDescription, Converter={StaticResource StringToStringTitleCaseConverter}}" />
+                                                Text="{Binding SourceDescription, Mode=OneTime,
+                                                Converter={StaticResource StringToStringTitleCaseConverter}}" />
                                         </StackPanel>
                                     </StackPanel>
                                     <TextBlock
                                         Margin="0,5,0,0"
-                                        Visibility="{Binding Description, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}"
-                                        Text="{Binding Description}"
+                                        Visibility="{Binding Description, Mode=OneTime,
+                                        Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}"
+                                        Text="{Binding Description, Mode=OneTime}"
                                         FontStyle="Italic"
                                         HorizontalAlignment="Center"
                                         />
                                     <TextBlock
                                         Margin="0,5,0,0"
-                                        Visibility="{Binding Tags, Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}"
-                                        Text="{Binding Tags, 
+                                        Visibility="{Binding Tags, Mode=OneTime, 
+                                        Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}"
+                                        Text="{Binding Tags, Mode=OneTime, 
                                              Converter={StaticResource ItemTagEnumerableToStringConverter}}"
                                         HorizontalAlignment="Center"/>
                                     <StackPanel 
                                         Margin="0,5,0,0"
                                         Orientation="Horizontal"
-                                        Visibility="{Binding Source, Converter={StaticResource EqualsToVisibilityCollapseConverter},
+                                        Visibility="{Binding Source, Mode=OneTime,
+                                                    Converter={StaticResource EqualsToVisibilityCollapseConverter},
                                                     ConverterParameter={x:Static items:ItemSource.Unknown}}">
-                                        <ui:TextBlock
+                                        <TextBlock
                                             Text="Source: " />
-                                        <ui:TextBlock
-                                            Text="{Binding Source, 
+                                        <TextBlock
+                                            Text="{Binding Source, Mode=OneTime, 
                                             Converter={StaticResource ItemSourceToStringConverter}}" />
                                     </StackPanel>
                                     <StackPanel
                                          Orientation="Horizontal"
-                                         Visibility="{Binding Season, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
-                                        <ui:TextBlock
+                                         Visibility="{Binding Season, Mode=OneTime,
+                                         Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                        <TextBlock
                                             Text="Season: " />
-                                        <ui:TextBlock
-                                            Text="{Binding Season, 
+                                        <TextBlock
+                                            Text="{Binding Season, Mode=OneTime, 
                                             Converter={StaticResource SeasonStringToReadableStringConverter}}" />
                                     </StackPanel>
                                     <StackPanel
                                         Orientation="Horizontal"
-                                        Visibility="{Binding Release, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
-                                        <ui:TextBlock
+                                        Visibility="{Binding Release, Mode=OneTime,
+                                        Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                        <TextBlock
                                             Text="Released: " />
-                                        <ui:TextBlock
-                                            Text="{Binding Release, 
+                                        <TextBlock
+                                            Text="{Binding Release, Mode=OneTime, 
                                             Converter={StaticResource DateTimeToDateStringConverter}}" />
                                     </StackPanel>
                                     <StackPanel
                                         Orientation="Horizontal"
-                                        Visibility="{Binding LastSeen, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
-                                        <ui:TextBlock
+                                        Visibility="{Binding LastSeen, Mode=OneTime,
+                                        Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                        <TextBlock
                                             Text="Last seen: " />
-                                        <ui:TextBlock
-                                            Text="{Binding LastSeen, 
+                                        <TextBlock
+                                            Text="{Binding LastSeen, Mode=OneTime, 
                                             Converter={StaticResource DateTimeToDateStringConverter}}" />
                                     </StackPanel>
                                     <StackPanel
                                         Orientation="Horizontal"
-                                        Visibility="{Binding Set, Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
-                                        <ui:TextBlock
+                                        Visibility="{Binding Set, Mode=OneTime,
+                                        Converter={StaticResource ObjectNullToVisibilityCollapseConverter}}">
+                                        <TextBlock
                                             Text="Set: " />
-                                        <ui:TextBlock
-                                            Text="{Binding Set}" />
+                                        <TextBlock
+                                            Text="{Binding Set, Mode=OneTime}" />
                                     </StackPanel>
-                                </StackPanel>
+                                </VirtualizingStackPanel>
                             </ui:Flyout>
                             <ui:Button
                                 Grid.Row="1"
@@ -1997,7 +2014,7 @@
                                 CornerRadius="4"
                                 Background="#00000000"
                                 MouseOverBackground="#30FFFFFF"
-                                ToolTip="{Binding Name, Mode=OneWay}"
+                                ToolTip="{Binding Name, Mode=OneTime}"
                                 Command="{Binding ToggleItemDetailFlyoutCommand}"
                             />
                         </Grid>

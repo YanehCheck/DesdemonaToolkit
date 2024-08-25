@@ -49,6 +49,7 @@ public partial class App {
             services.ConfigureWritableOptions<UserOptions>(context.Configuration, context.Configuration.GetSection(UserOptions.Key));
             services.ConfigureWritableOptions<DalOptions>(context.Configuration, context.Configuration.GetSection(DalOptions.Key));
             services.ConfigureWritableOptions<ItemFetchOptions>(context.Configuration, context.Configuration.GetSection(ItemFetchOptions.Key));
+            services.ConfigureWritableOptions<ItemImageCachingOptions>(context.Configuration, context.Configuration.GetSection(ItemImageCachingOptions.Key));
             services.ConfigureWritableOptions<ItemExportImageAppearanceOptions>(context.Configuration, context.Configuration.GetSection(ItemExportImageAppearanceOptions.Key));
             services.ConfigureWritableOptions<ItemExportImageFormatOptions>(context.Configuration, context.Configuration.GetSection(ItemExportImageFormatOptions.Key));
 

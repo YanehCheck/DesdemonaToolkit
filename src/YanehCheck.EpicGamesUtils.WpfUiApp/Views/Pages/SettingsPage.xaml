@@ -3,10 +3,10 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters"
     xmlns:local="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General"
     Title="SettingsPage"
     d:DataContext="{d:DesignInstance local:SettingsPage,
                                      IsDesignTimeCreatable=False}"
@@ -16,80 +16,140 @@
     ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
-    <Page.Resources>
-        <converters:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
-    </Page.Resources>
     <DockPanel>
         <StackPanel
-            DockPanel.Dock="Left">
-            <ui:Card
-             Height="auto"
-             Width="500">
-                <StackPanel
-                     Width="500"
-                     Height="auto">
-                    <ui:TextBlock
-                         FontSize="20"
-                         FontWeight="Bold"
-                         Text="Personalization"
-                         Margin="0, 0, 0, 10"/>
-                    <ui:TextBlock
-                         Width="500"
-                         Height="auto"
-                         TextWrapping="Wrap"
-                         Padding="0,0,40,0">
-                        App settings are currently only available through editing appsettings.json file.
-                    </ui:TextBlock>
-                    <ui:Button 
-                 Margin="0,10 ,0,0"
-                 Content="Open appsettings.json"
-                 Command="{Binding ViewModel.OpenAppSettingsFileCommand}"/>
-                </StackPanel>
-            </ui:Card>
-
-            <!--
-     <TextBlock Margin="0,12,0,0" Text="Theme" />
-     <RadioButton
-         Margin="0,12,0,0"
-         Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
-         CommandParameter="theme_light"
-         Content="Light (Experimental)"
-         GroupName="themeSelect"
-         IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
-     <RadioButton
-         Margin="0,8,0,0"
-         Command="{Binding ViewModel.ChangeThemeCommand, Mode=OneWay}"
-         CommandParameter="theme_dark"
-         Content="Dark"
-         GroupName="themeSelect"
-         IsChecked="{Binding ViewModel.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />-->
-            <ui:Card
-                Margin="0,30,0,0"
-                Height="auto"
-                Width="500">
-                <StackPanel
-                     Width="500"
-                     Height="auto">
-                    <TextBlock
-                         FontSize="20"
-                         FontWeight="Bold"
-                         Text="About"
-                         Margin="0, 0, 0, 10"/>
-                    <ui:TextBlock
-                         Width="500"
-                         Height="auto"
-                         TextWrapping="Wrap">
-                        If you like what I made, consider using my SAC code!
-                        <LineBreak />
-                    </ui:TextBlock>
-                    <ui:TextBlock
-                        FontSize="20"
-                        FontWeight="Bold"
-                        TextAlignment="Left"
-                        Margin="0,0,0,10"
-                        Text="DESDEMONATOOLKIT"/>
-                </StackPanel>
-            </ui:Card>
+            DockPanel.Dock="Top">
+            <ui:TextBlock
+                Margin="0,0,0,8"
+                Text="General"
+                FontTypography="BodyStrong"/>
+            <ui:CardControl 
+                Margin="0,0,0,12" 
+                Icon="{ui:SymbolIcon ArrowDownload24}">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="Item image caching" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                            Text="Caching item images can greatly speed up item browsing, but it uses additional disk space." />
+                    </Grid>
+                </ui:CardControl.Header>
+                <CheckBox 
+                    IsChecked="{Binding ViewModel.CacheDownloadedImages, Mode=TwoWay}"/>
+            </ui:CardControl>
+            <ui:CardControl 
+                Margin="0,0,0,12" 
+                Icon="{ui:SymbolIcon ArrowDownload24}">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="Stable item source URL" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                            Text="Determines from which URL will the data be downloaded." />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:TextBox
+                    Text="{Binding ViewModel.StableSourceUri, Mode=TwoWay}"
+                    Width="560"/>
+            </ui:CardControl>
+            <ui:CardControl 
+                Margin="0,0,0,12" 
+                Icon="{ui:SymbolIcon ArrowDownload24}">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="Fortnite.GG item source ID range" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                            Text="Increase this by 1000-5000 if you are still missing some item data even after fetching." />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:NumberBox
+                    Minimum="0"
+                    MaxDecimalPlaces="0"
+                    SpinButtonPlacementMode="Compact"
+                    Width="100"
+                    Value="{Binding ViewModel.FortniteGgIdRange, Mode=TwoWay}"/>
+            </ui:CardControl>
+            <ui:TextBlock
+                Margin="0,0,0,8"
+                Text="Export"
+                FontTypography="BodyStrong"/>
+            <ui:CardControl 
+                Margin="0,0,0,12" 
+                Icon="{ui:SymbolIcon PaintBrush24}">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="Output Image Format" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <ComboBox 
+                    ItemsSource="{Binding ViewModel.ImageFormatValues, Mode=OneTime}"
+                    SelectedItem="{Binding ViewModel.ImageFormat, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumToUppercaseStringConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </ui:CardControl>
+            <ui:CardControl 
+                Margin="0,0,0,12" 
+                Icon="{ui:SymbolIcon ArrowDownload24}">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="Output Image JPEG Quality" />
+                    </Grid>
+                </ui:CardControl.Header>
+                <Slider 
+                    Width="150"
+                    Minimum="0"
+                    Maximum="100"
+                    TickFrequency="10"
+                    TickPlacement="TopLeft"
+                    IsMoveToPointEnabled="True"
+                    AutoToolTipPlacement="BottomRight"
+                    IsSnapToTickEnabled="False"
+                    Value="{Binding ViewModel.ImageJpegQuality}"
+                    />
+            </ui:CardControl>
         </StackPanel>
         <TextBlock 
             Margin="0,20"

@@ -1,11 +1,18 @@
 ﻿using System.Reflection;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
-public partial class SettingsViewModel(IBrowserService browserService) : ObservableObject, IViewModel, INavigationAware {
+public partial class SettingsViewModel(IBrowserService browserService, 
+    IWritableOptions<ItemImageCachingOptions> itemImageCacheOptions,
+    IWritableOptions<ItemFetchOptions> itemFetchOptions,
+    IWritableOptions<ItemExportImageFormatOptions> itemExportFormatOptions,
+    IWritableOptions<ItemExportImageAppearanceOptions> itemExportAppearanceOptions) : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
     [ObservableProperty]
@@ -13,6 +20,33 @@ public partial class SettingsViewModel(IBrowserService browserService) : Observa
 
     [ObservableProperty]
     private ApplicationTheme _currentTheme = ApplicationTheme.Unknown;
+
+    public bool CacheDownloadedImages {
+        get => itemImageCacheOptions.Value.CacheDownloadedImages;
+        set => itemImageCacheOptions.Update(o => o.CacheDownloadedImages = value);
+    }
+
+    public string StableSourceUri {
+        get => itemFetchOptions.Value.StableSourceUri;
+        set => itemFetchOptions.Update(o => o.StableSourceUri = value);
+    }
+
+    public int FortniteGgIdRange {
+        get => itemFetchOptions.Value.FortniteGgIdRange;
+        set => itemFetchOptions.Update(o => o.FortniteGgIdRange = value);
+    }
+
+    public ImageFormat ImageFormat {
+        get => itemExportFormatOptions.Value.ImageFormat;
+        set => itemExportFormatOptions.Update(o => o.ImageFormat = value);
+    }
+
+    public IList<ImageFormat> ImageFormatValues => (ImageFormat[]) Enum.GetValues(typeof(ImageFormat));
+
+    public int ImageJpegQuality {
+        get => itemExportFormatOptions.Value.ImageJpegQuality;
+        set => itemExportFormatOptions.Update(o => o.ImageJpegQuality = value);
+    }
 
     public void OnNavigatedTo() {
         if(!_isInitialized) {

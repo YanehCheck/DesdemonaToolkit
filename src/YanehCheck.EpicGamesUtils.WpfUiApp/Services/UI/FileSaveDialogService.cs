@@ -14,6 +14,7 @@ using SixLabors.ImageSharp.Formats.Tiff;
 using SixLabors.ImageSharp.Formats.Webp;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI;
 
@@ -39,7 +40,7 @@ public class FileSaveDialogService(IOptions<ItemExportImageFormatOptions> imageS
     {
         if (defaultExt is null)
         {
-            defaultExt = $".{imageSaveOptions.Value.ImageFormat.ToLower()}";
+            defaultExt = $".{Enum.GetName(imageSaveOptions.Value.ImageFormat)!.ToLower()}";
             filter = $"Image files (*{defaultExt})|*{defaultExt}|All files (*.*)|*.*";
         }
 
@@ -60,20 +61,20 @@ public class FileSaveDialogService(IOptions<ItemExportImageFormatOptions> imageS
 
     public ImageEncoder GetEncoder()
     {
-        return imageSaveOptions.Value.ImageFormat.ToUpper() switch
+        return imageSaveOptions.Value.ImageFormat switch
         {
-            "JPG" or "JPEG" => new JpegEncoder
+            ImageFormat.Jpg => new JpegEncoder
             {
                 Quality = imageSaveOptions.Value.ImageJpegQuality
             },
-            "PNG" => new PngEncoder(),
-            "BMP" => new BmpEncoder(),
-            "GIF" => new GifEncoder(),
-            "PBM" => new PbmEncoder(),
-            "QOI" => new QoiEncoder(),
-            "WEBP" => new WebpEncoder(),
-            "TGA" => new TgaEncoder(),
-            "TIFF" => new TiffEncoder(),
+            ImageFormat.Png => new PngEncoder(),
+            ImageFormat.Bmp => new BmpEncoder(),
+            ImageFormat.Gif => new GifEncoder(),
+            ImageFormat.Pbm => new PbmEncoder(),
+            ImageFormat.Qoi => new QoiEncoder(),
+            ImageFormat.Webp => new WebpEncoder(),
+            ImageFormat.Tga => new TgaEncoder(),
+            ImageFormat.Tiff => new TiffEncoder(),
             _ => new JpegEncoder()
         };
     }

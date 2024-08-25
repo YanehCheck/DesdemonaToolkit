@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:generalConverters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General"
-    xmlns:homePageConverters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.HomePage"
     DispatcherUnhandledException="OnDispatcherUnhandledException"
     Exit="OnExit"
     Startup="OnStartup">
@@ -15,6 +14,7 @@
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
 
+            <generalConverters:EnumToUppercaseStringConverter x:Key="EnumToUppercaseStringConverter"/>
             <generalConverters:DateTimeToDateStringConverter x:Key="DateTimeToDateStringConverter"/>
             <generalConverters:EnumToStringConverter x:Key="EnumToStringConverter" />
 

@@ -6,13 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Models"
-    xmlns:helperEnums="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Helpers.Enums"
+    xmlns:helperEnums="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:items="clr-namespace:YanehCheck.EpicGamesUtils.Common.Enums.Items;assembly=YanehCheck.EpicGamesUtils.Common"
     xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage"
     xmlns:filters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces"
-    xmlns:models1="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models"
+    xmlns:models="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models"
     Title="ItemsPage"
     d:DataContext="{d:DesignInstance local:ItemsPage,
                                      IsDesignTimeCreatable=False}"
@@ -1807,7 +1806,7 @@
             VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models1:ItemPresentationModel}">
+                <DataTemplate DataType="{x:Type models:ItemPresentationModel}">
                     <Border
                         Width="105"
                         Height="130"

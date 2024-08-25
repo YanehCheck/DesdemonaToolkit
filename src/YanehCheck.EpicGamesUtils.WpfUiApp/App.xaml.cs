@@ -24,6 +24,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Cache;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Windows;
 
@@ -42,14 +43,14 @@ public partial class App {
         .CreateDefaultBuilder()
         .ConfigureAppConfiguration((context, builder) => {
             builder.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location));
-            builder.AddJsonFile("appsettings.json", false, true);
+            builder.AddJsonFile("appsettings.json", true, true);
         })
         .ConfigureServices((context, services) => {
-            services.AddOptions<UserOptions>().Bind(context.Configuration.GetSection(UserOptions.Key));
-            services.AddOptions<DalOptions>().Bind(context.Configuration.GetSection(DalOptions.Key));
-            services.AddOptions<ItemFetchOptions>().Bind(context.Configuration.GetSection(ItemFetchOptions.Key));
-            services.AddOptions<ItemExportImageAppearanceOptions>().Bind(context.Configuration.GetSection(ItemExportImageAppearanceOptions.Key));
-            services.AddOptions<ItemExportImageFormatOptions>().Bind(context.Configuration.GetSection(ItemExportImageFormatOptions.Key));
+            services.ConfigureWritableOptions<UserOptions>(context.Configuration, context.Configuration.GetSection(UserOptions.Key));
+            services.ConfigureWritableOptions<DalOptions>(context.Configuration, context.Configuration.GetSection(DalOptions.Key));
+            services.ConfigureWritableOptions<ItemFetchOptions>(context.Configuration, context.Configuration.GetSection(ItemFetchOptions.Key));
+            services.ConfigureWritableOptions<ItemExportImageAppearanceOptions>(context.Configuration, context.Configuration.GetSection(ItemExportImageAppearanceOptions.Key));
+            services.ConfigureWritableOptions<ItemExportImageFormatOptions>(context.Configuration, context.Configuration.GetSection(ItemExportImageFormatOptions.Key));
 
             services.RegisterDalServices();
             services.RegisterBlServices();

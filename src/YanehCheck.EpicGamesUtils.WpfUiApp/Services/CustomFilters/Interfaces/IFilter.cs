@@ -1,6 +1,5 @@
 ﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
-
-s;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 

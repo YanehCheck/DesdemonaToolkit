@@ -1,64 +1,63 @@
 ﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
 
-s;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters {
-    ///<inheritdoc cref="IFilter"/>ter"/>
-    public class Filter : IFilter {
-        public int Version { get; set; } = 1;
-        public string Name { get; set; } = "Untitled filter";
-        public string Description { get; set; } = string.Empty;
-        public string Author { get; set; } = "Unknown";
-        // Will be used later
-        public OptimizationLevel OptimizationLevel { get; set; } = OptimizationLevel.L0;
-        // Makes every single item satisfy this filter, mainly used for filters that just add remarks
-        public bool AllPass { get; set; } = false;
-        public IEnumerable<ChainedCondition> DnfExpression { get; set; } = [];
-        public ChainedCondition? LastClause => DnfExpression.LastOrDefault()?.Last();
-        public void AddClause(bool conjunction = false) {
-            if (!DnfExpression.Any()) {
-                DnfExpression = DnfExpression.Append(new ChainedCondition());
-                return;
-            }
-
-            if (conjunction) {
-                LastClause!.FollowingTerm = new ChainedCondition();
-            }
-            else {
-                DnfExpression = DnfExpression.Append(new ChainedCondition());
-            }
+///<inheritdoc cref="IFilter"/>ter"/>
+public class Filter : IFilter {
+    public int Version { get; set; } = 1;
+    public string Name { get; set; } = "Untitled filter";
+    public string Description { get; set; } = string.Empty;
+    public string Author { get; set; } = "Unknown";
+    // Will be used later
+    public OptimizationLevel OptimizationLevel { get; set; } = OptimizationLevel.L0;
+    // Makes every single item satisfy this filter, mainly used for filters that just add remarks
+    public bool AllPass { get; set; } = false;
+    public IEnumerable<ChainedCondition> DnfExpression { get; set; } = [];
+    public ChainedCondition? LastClause => DnfExpression.LastOrDefault()?.Last();
+    public void AddClause(bool conjunction = false) {
+        if (!DnfExpression.Any()) {
+            DnfExpression = DnfExpression.Append(new ChainedCondition());
+            return;
         }
 
-        public virtual IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items) {
-            if (!DnfExpression.Any()) {
-                return items;
-            }
+        if (conjunction) {
+            LastClause!.FollowingTerm = new ChainedCondition();
+        }
+        else {
+            DnfExpression = DnfExpression.Append(new ChainedCondition());
+        }
+    }
 
-            var filteredItems = items.Where(i => DnfExpression.Any(r => {
-                var sat = r.Satisfied(i);
-                if (sat) {
-                    i.Remark = r.Remark;
-                }
-                return sat;
-            }));
-            return AllPass ? items : filteredItems;
+    public virtual IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items) {
+        if (!DnfExpression.Any()) {
+            return items;
         }
 
-        public virtual bool Apply(ItemOwnedModel item) {
-            if(!DnfExpression.Any()) {
-                return true;
+        var filteredItems = items.Where(i => DnfExpression.Any(r => {
+            var sat = r.Satisfied(i);
+            if (sat) {
+                i.Remark = r.Remark;
             }
+            return sat;
+        }));
+        return AllPass ? items : filteredItems;
+    }
 
-            var filterResult = DnfExpression.Any(r => {
-                var sat = r.Satisfied(item);
-                if(sat) {
-                    item.Remark = r.Remark;
-                }
-                return sat;
-            });
-            return AllPass || filterResult;
+    public virtual bool Apply(ItemOwnedModel item) {
+        if(!DnfExpression.Any()) {
+            return true;
         }
+
+        var filterResult = DnfExpression.Any(r => {
+            var sat = r.Satisfied(item);
+            if(sat) {
+                item.Remark = r.Remark;
+            }
+            return sat;
+        });
+        return AllPass || filterResult;
     }
 }

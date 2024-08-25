@@ -7,8 +7,7 @@ using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper.Enums;
 using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper.Results;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Results;
-
-;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
 

@@ -1,14 +1,14 @@
 ﻿using System.Net;
-using Microsoft.Extensions.Options;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteGgItemProvider(IFortniteGgScrapper fortniteGgScrapper, IFortniteGgItemMapper mapper, IOptions<ItemFetchOptions> itemOptions) : IFortniteGgItemProvider
+public class FortniteGgItemProvider(IFortniteGgScrapper fortniteGgScrapper, IFortniteGgItemMapper mapper, IWritableOptions<ItemFetchOptions> itemOptions) : IFortniteGgItemProvider
 {
     public async Task<IEnumerable<ItemModel>?> GetItemsAsync() {
         return await GetItemsAsync(null);

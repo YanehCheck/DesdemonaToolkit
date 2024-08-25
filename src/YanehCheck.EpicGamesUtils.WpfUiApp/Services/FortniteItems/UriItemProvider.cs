@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
@@ -7,11 +6,12 @@ using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper.Model;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
 /// <inheritdoc cref="IUriItemProvider"/>
-public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mapper, IOptions<ItemFetchOptions> options) : IUriItemProvider
+public class UriItemProvider(IRestClient restClient, IFortniteGgItemMapper mapper, IWritableOptions<ItemFetchOptions> options) : IUriItemProvider
 {
     public async Task<IEnumerable<ItemModel>?> GetItemsAsync() {
         return await GetItemsAsync(null);

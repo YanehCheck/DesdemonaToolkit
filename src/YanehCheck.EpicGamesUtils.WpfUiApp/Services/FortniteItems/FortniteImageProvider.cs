@@ -4,14 +4,14 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Http;
 using System.Windows.Media.Imaging;
-using Microsoft.Extensions.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 using Size = System.Drawing.Size;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteImageProvider(IOptions<ItemImageCachingOptions> options) : IFortniteImageProvider {
+public class FortniteImageProvider(IWritableOptions<ItemImageCachingOptions> options) : IFortniteImageProvider {
     private readonly HttpClient httpClient = new();
 
     public string ImageDirectory { get; } = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName)!, "data/images");

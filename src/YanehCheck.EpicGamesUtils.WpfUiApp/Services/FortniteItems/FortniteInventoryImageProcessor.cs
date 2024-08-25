@@ -1,7 +1,6 @@
 ﻿using System.Buffers;
 using System.Collections.Concurrent;
 using System.IO;
-using Microsoft.Extensions.Options;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -10,6 +9,7 @@ using SixLabors.ImageSharp.Processing;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 using Color = SixLabors.ImageSharp.Color;
 using Font = SixLabors.Fonts.Font;
 using FontFamily = SixLabors.Fonts.FontFamily;
@@ -24,7 +24,7 @@ using TextOptions = SixLabors.Fonts.TextOptions;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteInventoryImageProcessor(IOptions<ItemExportImageAppearanceOptions> options)
+public class FortniteInventoryImageProcessor(IWritableOptions<ItemExportImageAppearanceOptions> options)
     : IFortniteInventoryImageProcessor {
     private readonly int headerHeight = 250;
     private readonly string logoMainText = "DESDEMONA TOOLKIT";

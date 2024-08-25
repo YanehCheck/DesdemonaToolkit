@@ -6,7 +6,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options;
 
-public class JsonOptionsWriter (
+public class JsonOptionsWriter(
     IHostEnvironment environment,
     IConfigurationRoot configuration,
     string file)
@@ -20,22 +20,22 @@ public class JsonOptionsWriter (
 
         JObject config;
 
-        lock(fileLock){
-            using (var readStream = fileProvider.GetFileInfo(file).CreateReadStream()) {
-                using var reader = new StreamReader(readStream);
+        lock(fileLock) {
+            using(var readStream = fileProvider.GetFileInfo(file).CreateReadStream())
+            using(var reader = new StreamReader(readStream)) {
                 config = JObject.Parse(reader.ReadToEnd());
             }
 
             callback(config);
 
-            using (var writeStream = File.Open(fi.PhysicalPath!, FileMode.Create)) {
-                using var writer = new StreamWriter(writeStream);
+            using(var writeStream = new FileStream(fi.PhysicalPath!, FileMode.Create, FileAccess.Write, FileShare.None))
+            using(var writer = new StreamWriter(writeStream)) {
                 writer.Write(config.ToString());
-
             }
-        }
-        if (reload) {
-            configuration.Reload();
+
+            if(reload) {
+                configuration.Reload();
+            }
         }
     }
 }

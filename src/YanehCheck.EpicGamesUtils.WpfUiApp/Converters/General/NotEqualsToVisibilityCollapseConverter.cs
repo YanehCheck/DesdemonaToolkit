@@ -3,15 +3,15 @@ using System.Windows.Data;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 
-public class EqualsToVisibilityConverter : IValueConverter {
+public class NotEqualsToVisibilityCollapseConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if(value == null || parameter == null) {
-            return Visibility.Hidden;
+            return Visibility.Collapsed;
         }
 
 
         if(value.Equals(parameter)) {
-            return Visibility.Hidden;
+            return Visibility.Collapsed;
         }
 
 

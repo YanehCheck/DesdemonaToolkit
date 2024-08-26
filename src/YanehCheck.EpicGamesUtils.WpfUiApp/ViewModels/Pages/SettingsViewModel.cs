@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
@@ -8,11 +9,11 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
-public partial class SettingsViewModel(IBrowserService browserService, 
+public partial class SettingsViewModel(IBrowserService browserService,
     IWritableOptions<ItemImageCachingOptions> itemImageCacheOptions,
     IWritableOptions<ItemFetchOptions> itemFetchOptions,
     IWritableOptions<ItemExportImageFormatOptions> itemExportFormatOptions,
-    IWritableOptions<ItemExportImageAppearanceOptions> itemExportAppearanceOptions) : ObservableObject, IViewModel, INavigationAware {
+    IWritableOptions<ItemExportImageAppearanceOptions> itemExportAppearanceOptions) : ObservableObject, IViewModel, INavigationAware, INotifyPropertyChanged {
     private bool _isInitialized = false;
 
     [ObservableProperty]
@@ -23,29 +24,114 @@ public partial class SettingsViewModel(IBrowserService browserService,
 
     public bool CacheDownloadedImages {
         get => itemImageCacheOptions.Value.CacheDownloadedImages;
-        set => itemImageCacheOptions.Update(o => o.CacheDownloadedImages = value);
+        set {
+            if(value != itemImageCacheOptions.Value.CacheDownloadedImages) {
+                itemImageCacheOptions.Update(o => o.CacheDownloadedImages = value);
+                OnPropertyChanged();
+            }
+        }
     }
 
     public string StableSourceUri {
         get => itemFetchOptions.Value.StableSourceUri;
-        set => itemFetchOptions.Update(o => o.StableSourceUri = value);
+        set {
+            if(value != itemFetchOptions.Value.StableSourceUri) {
+                itemFetchOptions.Update(o => o.StableSourceUri = value);
+                OnPropertyChanged();
+            }
+        }
     }
 
     public int FortniteGgIdRange {
         get => itemFetchOptions.Value.FortniteGgIdRange;
-        set => itemFetchOptions.Update(o => o.FortniteGgIdRange = value);
+        set {
+            if(value != itemFetchOptions.Value.FortniteGgIdRange) {
+                itemFetchOptions.Update(o => o.FortniteGgIdRange = value);
+                OnPropertyChanged();
+            }
+        }
     }
 
     public ImageFormat ImageFormat {
         get => itemExportFormatOptions.Value.ImageFormat;
-        set => itemExportFormatOptions.Update(o => o.ImageFormat = value);
+        set {
+            if(value != itemExportFormatOptions.Value.ImageFormat) {
+                itemExportFormatOptions.Update(o => o.ImageFormat = value);
+                OnPropertyChanged();
+            }
+        }
     }
 
     public IList<ImageFormat> ImageFormatValues => (ImageFormat[]) Enum.GetValues(typeof(ImageFormat));
 
     public int ImageJpegQuality {
         get => itemExportFormatOptions.Value.ImageJpegQuality;
-        set => itemExportFormatOptions.Update(o => o.ImageJpegQuality = value);
+        set {
+            if(value != itemExportFormatOptions.Value.ImageJpegQuality) {
+                itemExportFormatOptions.Update(o => o.ImageJpegQuality = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool ImageIncludeDisplayName {
+        get => itemExportAppearanceOptions.Value.StampIncludePlayerName;
+        set {
+            if(value != itemExportAppearanceOptions.Value.StampIncludePlayerName) {
+                itemExportAppearanceOptions.Update(o => o.StampIncludePlayerName = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool ImageCensorDisplayName {
+        get => itemExportAppearanceOptions.Value.StampCensorPlayerName;
+        set {
+            if(value != itemExportAppearanceOptions.Value.StampCensorPlayerName) {
+                itemExportAppearanceOptions.Update(o => o.StampCensorPlayerName = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool ImageIncludeDate {
+        get => itemExportAppearanceOptions.Value.StampIncludeDate;
+        set {
+            if(value != itemExportAppearanceOptions.Value.StampIncludeDate) {
+                itemExportAppearanceOptions.Update(o => o.StampIncludeDate = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool ImageIncludeItemCount {
+        get => itemExportAppearanceOptions.Value.StampIncludeItemCount;
+        set {
+            if(value != itemExportAppearanceOptions.Value.StampIncludeItemCount) {
+                itemExportAppearanceOptions.Update(o => o.StampIncludeItemCount = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public bool ImageIncludeCustomText {
+        get => itemExportAppearanceOptions.Value.StampIncludeCustomText;
+        set {
+            if(value != itemExportAppearanceOptions.Value.StampIncludeCustomText) {
+                itemExportAppearanceOptions.Update(o => o.StampIncludeCustomText = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public string ImageCustomText {
+        get => itemExportAppearanceOptions.Value.StampCustomText;
+        set {
+            if(value != itemExportAppearanceOptions.Value.StampCustomText) {
+                itemExportAppearanceOptions.Update(o => o.StampCustomText = value);
+                OnPropertyChanged();
+            }
+        }
     }
 
     public void OnNavigatedTo() {

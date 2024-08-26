@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General"
+    xmlns:enums="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums"
     Title="SettingsPage"
     d:DataContext="{d:DesignInstance local:SettingsPage,
                                      IsDesignTimeCreatable=False}"
@@ -19,142 +20,282 @@
     <DockPanel>
         <StackPanel
             DockPanel.Dock="Top">
-            <ui:TextBlock
-                Margin="0,0,0,8"
-                Text="General"
-                FontTypography="BodyStrong"/>
-            <ui:CardControl 
-                Margin="0,0,0,12" 
-                Icon="{ui:SymbolIcon ArrowDownload24}">
-                <ui:CardControl.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ui:TextBlock
-                            Grid.Row="0"
-                            FontTypography="Body"
-                            Text="Item image caching" />
-                        <ui:TextBlock
-                            Grid.Row="1"
-                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                            Text="Caching item images can greatly speed up item browsing, but it uses additional disk space." />
-                    </Grid>
-                </ui:CardControl.Header>
-                <CheckBox 
-                    IsChecked="{Binding ViewModel.CacheDownloadedImages, Mode=TwoWay}"/>
-            </ui:CardControl>
-            <ui:CardControl 
-                Margin="0,0,0,12" 
-                Icon="{ui:SymbolIcon ArrowDownload24}">
-                <ui:CardControl.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ui:TextBlock
-                            Grid.Row="0"
-                            FontTypography="Body"
-                            Text="Stable item source URL" />
-                        <ui:TextBlock
-                            Grid.Row="1"
-                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
-                            Text="Determines from which URL will the data be downloaded." />
-                    </Grid>
-                </ui:CardControl.Header>
-                <ui:TextBox
-                    Text="{Binding ViewModel.StableSourceUri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Width="560"
-                    FocusManager.IsFocusScope="False"/>
-            </ui:CardControl>
-            <ui:CardControl 
-                Margin="0,0,0,12" 
-                Icon="{ui:SymbolIcon ArrowDownload24}">
-                <ui:CardControl.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ui:TextBlock
+            <ui:CardExpander Margin="0,0,0,12" 
+                             Icon="{ui:SymbolIcon DocumentDatabase24}"
+                             ContentPadding="0">
+                <ui:CardExpander.Header>
+                    <ui:TextBlock
+                        FontTypography="Body"
+                        VerticalAlignment="Center"
+                        Text="Item data and content" />
+                </ui:CardExpander.Header>
+                <StackPanel>
+                    <ui:TextBlock 
+                        Text="Images"
+                        Margin="6, 5, 0, 0"
+                        FontTypography="BodyStrong"/>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Item image caching" />
+                                <ui:TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Keeps downloaded item images. Brings a huge benefit to users with slower connection, but uses additional disk space." />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <CheckBox 
+                        IsChecked="{Binding ViewModel.CacheDownloadedImages, Mode=TwoWay}"/>
+                    </ui:CardControl>
+                    <ui:TextBlock 
+                        Text="Data fetching"
+                        Margin="6, 5, 0, 0"
+                        FontTypography="BodyStrong"/>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Stable item source URL" />
+                                <ui:TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Determines from which URL will the data be downloaded." />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ui:TextBox
+                            Text="{Binding ViewModel.StableSourceUri, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="560"
+                            FocusManager.IsFocusScope="False"/>
+                    </ui:CardControl>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
                             Grid.Row="0"
                             FontTypography="Body"
                             Text="Fortnite.GG item source ID range" />
-                        <ui:TextBlock
+                                <ui:TextBlock
                             Grid.Row="1"
                             Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
                             Text="Increase this by 1000-5000 if you are still missing some item data even after fetching." />
-                    </Grid>
-                </ui:CardControl.Header>
-                <ui:NumberBox
-                    Minimum="0"
-                    MaxDecimalPlaces="0"
-                    SpinButtonPlacementMode="Compact"
-                    Width="100"
-                    Value="{Binding ViewModel.FortniteGgIdRange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </ui:CardControl>
-            <ui:TextBlock
-                Margin="0,0,0,8"
-                Text="Export"
-                FontTypography="BodyStrong"/>
-            <ui:CardControl 
-                Margin="0,0,0,12" 
-                Icon="{ui:SymbolIcon PaintBrush24}">
-                <ui:CardControl.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ui:TextBlock
-                            Grid.Row="0"
-                            FontTypography="Body"
-                            Text="Output Image Format" />
-                    </Grid>
-                </ui:CardControl.Header>
-                <ComboBox 
-                    ItemsSource="{Binding ViewModel.ImageFormatValues, Mode=OneTime}"
-                    SelectedItem="{Binding ViewModel.ImageFormat, Mode=TwoWay}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumToUppercaseStringConverter}}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </ui:CardControl>
-            <ui:CardControl 
-                Margin="0,0,0,12" 
-                Icon="{ui:SymbolIcon ArrowDownload24}">
-                <ui:CardControl.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <ui:TextBlock
-                            Grid.Row="0"
-                            FontTypography="Body"
-                            Text="Output Image JPEG Quality" />
-                    </Grid>
-                </ui:CardControl.Header>
-                <Slider 
-                    Width="150"
-                    Minimum="1"
-                    Maximum="100"
-                    TickFrequency="10"
-                    TickPlacement="TopLeft"
-                    IsMoveToPointEnabled="True"
-                    AutoToolTipPlacement="BottomRight"
-                    IsSnapToTickEnabled="False"
-                    Value="{Binding ViewModel.ImageJpegQuality}"
-                    />
-            </ui:CardControl>
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ui:NumberBox
+                            Minimum="0"
+                            MaxDecimalPlaces="0"
+                            SpinButtonPlacementMode="Compact"
+                            Width="100"
+                            Value="{Binding ViewModel.FortniteGgIdRange, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ui:CardControl>
+                </StackPanel>
+            </ui:CardExpander>
+            <ui:CardExpander Margin="0,0,0,12" 
+                             Icon="{ui:SymbolIcon PaintBrush24}"
+                             ContentPadding="0">
+                <ui:CardExpander.Header>
+                    <ui:TextBlock
+                        FontTypography="Body"
+                        VerticalAlignment="Center"
+                        Text="Image export" />
+                </ui:CardExpander.Header>
+                <StackPanel>
+                    <ui:TextBlock 
+                        Text="Format"
+                        Margin="6, 5, 0, 0"
+                        FontTypography="BodyStrong"/>
+                    <ui:CardControl 
+                        Margin="0,5,0,0" >
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Output image format" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ComboBox 
+                            ItemsSource="{Binding ViewModel.ImageFormatValues, Mode=OneTime}"
+                            SelectedItem="{Binding ViewModel.ImageFormat, Mode=TwoWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource EnumToUppercaseStringConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </ui:CardControl>
+                    <ui:CardControl 
+                        Visibility="{Binding ViewModel.ImageFormat, 
+                            Converter={StaticResource EqualsToVisibilityCollapseConverter},
+                            ConverterParameter={x:Static enums:ImageFormat.Jpg},
+                            Mode=OneWay}"
+                        Margin="0,5,0,0" >
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="JPEG format quality" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <Slider 
+                            Width="150"
+                            Minimum="1"
+                            Maximum="100"
+                            TickFrequency="10"
+                            TickPlacement="TopLeft"
+                            IsMoveToPointEnabled="True"
+                            AutoToolTipPlacement="BottomRight"
+                            IsSnapToTickEnabled="False"
+                            Value="{Binding ViewModel.ImageJpegQuality, Mode=TwoWay, Delay=500}"
+                        /> <!-- The delay is needed as the binding fires for every single value if dragging and breaks File.Write despite it having exclusive static lock?-->
+                    </ui:CardControl>
+                    <ui:TextBlock 
+                        Text="Included information"
+                        Margin="6, 5, 0, 0"
+                        FontTypography="BodyStrong"/>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Include display name" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <CheckBox 
+                            IsChecked="{Binding ViewModel.ImageIncludeDisplayName, Mode=TwoWay}"/>
+                    </ui:CardControl>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Censor display name" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <CheckBox 
+                            IsChecked="{Binding ViewModel.ImageCensorDisplayName, Mode=TwoWay}"/>
+                    </ui:CardControl>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Include total item count" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <CheckBox 
+                            IsChecked="{Binding ViewModel.ImageIncludeItemCount, Mode=TwoWay}"/>
+                    </ui:CardControl>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Include date" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <CheckBox 
+                            IsChecked="{Binding ViewModel.ImageIncludeDate, Mode=TwoWay}"/>
+                    </ui:CardControl>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Include custom text" />
+                                <ui:TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Adds any short text to the image header." />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <CheckBox 
+                            IsChecked="{Binding ViewModel.ImageIncludeCustomText, Mode=TwoWay}"/>
+                    </ui:CardControl>
+                    <ui:CardControl 
+                        Visibility="{Binding ViewModel.ImageIncludeCustomText, Converter={StaticResource BoolToVisibilityCollapseConverter}, Mode=OneWay}"
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Custom text" />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ui:TextBox
+                            Text="{Binding ViewModel.ImageCustomText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="560"
+                            FocusManager.IsFocusScope="False"/>
+                    </ui:CardControl>
+                </StackPanel>
+            </ui:CardExpander>
         </StackPanel>
         <TextBlock 
             Margin="0,20"
-            Text="{Binding ViewModel.AppVersion, Mode=OneWay}" 
+            Text="{Binding ViewModel.AppVersion, Mode=OneTime}" 
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"/>
     </DockPanel>

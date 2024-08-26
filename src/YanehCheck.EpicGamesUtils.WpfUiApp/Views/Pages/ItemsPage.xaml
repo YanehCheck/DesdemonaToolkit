@@ -1958,7 +1958,7 @@
                                         Margin="0,5,0,0"
                                         Orientation="Horizontal"
                                         Visibility="{Binding Source, Mode=OneTime,
-                                                    Converter={StaticResource EqualsToVisibilityCollapseConverter},
+                                                    Converter={StaticResource NotEqualsToVisibilityCollapseConverter},
                                                     ConverterParameter={x:Static items:ItemSource.Unknown}}">
                                         <TextBlock
                                             Text="Source: " />

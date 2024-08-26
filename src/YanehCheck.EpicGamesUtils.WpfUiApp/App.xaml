@@ -30,8 +30,9 @@
             <generalConverters:EqualsToColorConverter x:Key="EqualsToColorConverter" />
             <generalConverters:EqualsToColorTintConverter x:Key="EqualsToColorTintConverter" />
             <generalConverters:EqualsToColorMultiConverter x:Key="EqualsToColorMultiConverter" />
-            <generalConverters:EqualsToVisibilityConverter x:Key="EqualsToVisibilityConverter" />
             <generalConverters:EqualsToVisibilityCollapseConverter x:Key="EqualsToVisibilityCollapseConverter" />
+            <generalConverters:NotEqualsToVisibilityConverter x:Key="NotEqualsToVisibilityConverter" />
+            <generalConverters:NotEqualsToVisibilityCollapseConverter x:Key="NotEqualsToVisibilityCollapseConverter" />
 
             <generalConverters:EnumerableAnyToColorConverter x:Key="EnumerableAnyToColorConverter" />
             <generalConverters:EnumerableAnyToVisibilityCollapseConverter x:Key="EnumerableAnyToVisibilityCollapseConverter"/>

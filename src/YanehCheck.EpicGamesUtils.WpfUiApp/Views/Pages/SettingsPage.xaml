@@ -290,6 +290,56 @@
                             Width="560"
                             FocusManager.IsFocusScope="False"/>
                     </ui:CardControl>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Include item remarks" />
+                                <ui:TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Item remark is a text attached to specific items by custom filters (e.g. style information)." />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <CheckBox 
+                            IsChecked="{Binding ViewModel.ImageIncludeItemRemarks, Mode=TwoWay}"/>
+                    </ui:CardControl>
+                    <ui:TextBlock 
+                        Text="Appearance"
+                        Margin="6, 5, 0, 0"
+                        FontTypography="BodyStrong"/>
+                    <ui:CardControl 
+                        Margin="0,5,0,0">
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Items per row" />
+                                <ui:TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Warning! Setting this too low may cause some text to overlap or other issues." />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ui:NumberBox
+                            Minimum="8"
+                            MaxDecimalPlaces="0"
+                            SpinButtonPlacementMode="Compact"
+                            Width="100"
+                            Value="{Binding ViewModel.ImageItemsPerRow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ui:CardControl>
                 </StackPanel>
             </ui:CardExpander>
         </StackPanel>

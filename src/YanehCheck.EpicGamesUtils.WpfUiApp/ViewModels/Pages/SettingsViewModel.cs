@@ -134,6 +134,26 @@ public partial class SettingsViewModel(IBrowserService browserService,
         }
     }
 
+    public bool ImageIncludeItemRemarks {
+        get => itemExportAppearanceOptions.Value.ItemIncludeRemark;
+        set {
+            if(value != itemExportAppearanceOptions.Value.ItemIncludeRemark) {
+                itemExportAppearanceOptions.Update(o => o.ItemIncludeRemark = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public int ImageItemsPerRow {
+        get => itemExportAppearanceOptions.Value.ItemsPerRow;
+        set {
+            if(value != itemExportAppearanceOptions.Value.ItemsPerRow) {
+                itemExportAppearanceOptions.Update(o => o.ItemsPerRow = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public void OnNavigatedTo() {
         if(!_isInitialized) {
             InitializeViewModel();

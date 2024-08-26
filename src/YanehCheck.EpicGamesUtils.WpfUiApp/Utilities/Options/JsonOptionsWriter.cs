@@ -12,6 +12,7 @@ public class JsonOptionsWriter(
     string file)
     : IOptionsWriter<JObject> {
 
+    // Not ideal, but I don't think it should matter even if we somehow have multiple user configs
     private static readonly object fileLock = new();
 
     public void Update(Action<JObject> callback, bool reload = true) {

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using Microsoft.Extensions.Options;
 using Microsoft.Win32;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats;
@@ -15,10 +14,11 @@ using SixLabors.ImageSharp.Formats.Webp;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI;
 
-public class FileSaveDialogService(IOptions<ItemExportImageFormatOptions> imageSaveOptions) : IFileSaveDialogService
+public class FileSaveDialogService(IWritableOptions<ItemExportImageFormatOptions> imageSaveOptions) : IFileSaveDialogService
 {
     public async Task SaveTextFile(string content, string fileName, string defaultExt = ".txt", string filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*")
     {

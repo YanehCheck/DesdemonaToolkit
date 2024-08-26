@@ -1820,7 +1820,7 @@
                         </Border.CacheMode>
                         <Border.Background>
                             <ImageBrush 
-                                ImageSource="{Binding BitmapFrame, Mode=OneTime}"
+                                ImageSource="{Binding BitmapFrame, Mode=OneWay}"
                                 RenderOptions.BitmapScalingMode="LowQuality"/>
                         </Border.Background>
                         <Grid

@@ -342,6 +342,30 @@
                     </ui:CardControl>
                 </StackPanel>
             </ui:CardExpander>
+            <ui:CardControl 
+                Margin="0,5,0,0"
+                Icon="{ui:SymbolIcon 60628}"> <!--60628 == TextBoxSettings24-->
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body"
+                            Text="Extra settings" />
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}">
+                            By editing following JSON file you may access experimental settings. <Bold>Advanced users only!</Bold>
+                        </ui:TextBlock>
+                    </Grid>
+                </ui:CardControl.Header>
+                <ui:Button
+                    Content="Open appsettings.json"
+                    Command="{Binding ViewModel.OpenAppSettingsFileCommand}"/>
+            </ui:CardControl>
         </StackPanel>
         <TextBlock 
             Margin="0,20"

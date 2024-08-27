@@ -129,6 +129,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         ItemsLoaded = false;
         items = [];
         CustomFilterUpdate();
+        epicGamesService.Invalidate(nameof(ICachedEpicGamesService.GetFortniteProfile));
         InitializeViewModelForUserAndShowResult(() => {
             ItemsLoaded = true;
         });

@@ -13,7 +13,8 @@ public partial class SettingsViewModel(IBrowserService browserService,
     IWritableOptions<ItemImageCachingOptions> itemImageCacheOptions,
     IWritableOptions<ItemFetchOptions> itemFetchOptions,
     IWritableOptions<ItemExportImageFormatOptions> itemExportFormatOptions,
-    IWritableOptions<ItemExportImageAppearanceOptions> itemExportAppearanceOptions) : ObservableObject, IViewModel, INavigationAware, INotifyPropertyChanged {
+    IWritableOptions<ItemExportImageAppearanceOptions> itemExportAppearanceOptions,
+    IWritableOptions<ItemExportFortniteGgOptions> itemExportFortniteGgOptions) : ObservableObject, IViewModel, INavigationAware, INotifyPropertyChanged {
     private bool _isInitialized = false;
 
     [ObservableProperty]
@@ -149,6 +150,16 @@ public partial class SettingsViewModel(IBrowserService browserService,
         set {
             if(value != itemExportAppearanceOptions.Value.ItemsPerRow) {
                 itemExportAppearanceOptions.Update(o => o.ItemsPerRow = value);
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public int FortniteGgRequestsPerItem {
+        get => itemExportFortniteGgOptions.Value.RequestsPerItem;
+        set {
+            if(value != itemExportFortniteGgOptions.Value.RequestsPerItem) {
+                itemExportFortniteGgOptions.Update(o => o.RequestsPerItem = value);
                 OnPropertyChanged();
             }
         }

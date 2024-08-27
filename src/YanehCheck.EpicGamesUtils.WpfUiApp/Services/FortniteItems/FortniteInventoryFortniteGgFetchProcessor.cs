@@ -1,9 +1,11 @@
 ﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteInventoryFortniteGgFetchProcessor : IFortniteInventoryFortniteGgFetchProcessor {
+public class FortniteInventoryFortniteGgFetchProcessor(IWritableOptions<ItemExportFortniteGgOptions> options) : IFortniteInventoryFortniteGgFetchProcessor {
 
     private const string JavascriptFetchSnippet =
         """ 
@@ -66,6 +68,6 @@ public class FortniteInventoryFortniteGgFetchProcessor : IFortniteInventoryFortn
     public string Create(IEnumerable<ItemModel> items) {
         var ids = items.Select(i => i.FortniteGgId).ToList();
         var arrayString = "[" + string.Join(", ", ids) + "]";
-        return string.Format(JavascriptFetchSnippet, arrayString, 5);
+        return string.Format(JavascriptFetchSnippet, arrayString, options.Value.RequestsPerItem);
     }
 }

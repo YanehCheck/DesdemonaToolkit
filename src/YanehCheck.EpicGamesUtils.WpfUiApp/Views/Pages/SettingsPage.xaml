@@ -110,7 +110,7 @@
                 </StackPanel>
             </ui:CardExpander>
             <ui:CardExpander Margin="0,0,0,12" 
-                             Icon="{ui:SymbolIcon PaintBrush24}"
+                             Icon="{ui:SymbolIcon PaintBrushArrowUp24}"
                              ContentPadding="0">
                 <ui:CardExpander.Header>
                     <ui:TextBlock
@@ -339,6 +339,47 @@
                             SpinButtonPlacementMode="Compact"
                             Width="100"
                             Value="{Binding ViewModel.ImageItemsPerRow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </ui:CardControl>
+                </StackPanel>
+            </ui:CardExpander>
+            <ui:CardExpander Margin="0,0,0,12" 
+                 Icon="{ui:SymbolIcon CloudArrowUp24}"
+                 ContentPadding="0">
+                <ui:CardExpander.Header>
+                    <ui:TextBlock
+                        FontTypography="Body"
+                        VerticalAlignment="Center"
+                        Text="Other export" />
+                </ui:CardExpander.Header>
+                <StackPanel>
+                    <ui:TextBlock 
+                        Text="Fortnite.GG"
+                        Margin="6, 5, 0, 0"
+                        FontTypography="BodyStrong"/>
+                                <ui:CardControl 
+                        Margin="0,5,0,0" >
+                        <ui:CardControl.Header>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ui:TextBlock
+                                    Grid.Row="0"
+                                    FontTypography="Body"
+                                    Text="Requests per item" />
+                                <ui:TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="Decreasing this makes the export script faster, but increases chance that some items will not be added. Values 5+ should add everything." />
+                            </Grid>
+                        </ui:CardControl.Header>
+                        <ui:NumberBox
+                            Minimum="1"
+                            MaxDecimalPlaces="0"
+                            SpinButtonPlacementMode="Compact"
+                            Width="100"
+                            Value="{Binding ViewModel.FortniteGgRequestsPerItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </ui:CardControl>
                 </StackPanel>
             </ui:CardExpander>

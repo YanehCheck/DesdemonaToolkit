@@ -4,7 +4,7 @@ using YanehCheck.EpicGamesUtils.Db.Dal.Entities;
 
 namespace YanehCheck.EpicGamesUtils.Db.Bl.Mappers;
 
-public class ItemModelMapper : IModelMapper<ItemEntity, ItemModel> {
+public class ItemModelMapper(ItemStyleModelMapper itemStyleMapper) : IModelMapper<ItemEntity, ItemModel> {
     public ItemModel MapToModel(ItemEntity entity) {
         return new ItemModel() {
             Id = entity.Id,
@@ -23,7 +23,8 @@ public class ItemModelMapper : IModelMapper<ItemEntity, ItemModel> {
             Release = entity.Release,
             LastSeen = entity.LastSeen,
             FortniteGgStyles = entity.FortniteGgStyles,
-            Tags = entity.Tags
+            Tags = entity.Tags,
+            Styles = entity.Styles?.Select(itemStyleMapper.MapToModel)!
         };
     }
 
@@ -45,7 +46,8 @@ public class ItemModelMapper : IModelMapper<ItemEntity, ItemModel> {
             Release = model.Release,
             LastSeen = model.LastSeen,
             FortniteGgStyles = model.FortniteGgStyles,
-            Tags = model.Tags
+            Tags = model.Tags,
+            Styles = model.Styles?.Select(itemStyleMapper.MapToEntity)!
         };
     }
 }

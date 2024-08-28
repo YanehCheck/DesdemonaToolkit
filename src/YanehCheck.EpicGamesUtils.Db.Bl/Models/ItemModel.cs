@@ -21,6 +21,7 @@ public class ItemModel : IModel {
     public DateTime? LastSeen { get; set; }
     public IEnumerable<string> FortniteGgStyles { get; set; }
     public IEnumerable<ItemTag> Tags { get; set; }
+    public IEnumerable<ItemStyleModel> Styles { get; set; }
 
     public ItemModel GetEmpty() => new() {
         Id = Guid.Empty,
@@ -39,6 +40,7 @@ public class ItemModel : IModel {
         Release = default,
         LastSeen = default,
         FortniteGgStyles = default!,
-        Tags = default!
+        Tags = default!,
+        Styles = default!
     };
 }

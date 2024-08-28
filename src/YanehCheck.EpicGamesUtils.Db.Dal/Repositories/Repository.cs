@@ -34,7 +34,8 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, I
 
     public async Task BulkReadAsync(IEnumerable<TEntity> entities, List<string> byProperties = null) {
         await context.BulkReadAsync(entities, new BulkConfig {
-            UpdateByProperties = byProperties
+            UpdateByProperties = byProperties,
+            ReplaceReadEntities = true
         });
     }
 

@@ -15,7 +15,10 @@ public class EpicGamesUtilsDbContext : DbContext {
             .HasConversion(v => v.ToLowerInvariant(), 
                 v => v);
         modelBuilder.Entity<ItemEntity>()
-            .Property(e => e.Styles)
+            .Navigation(i => i.Styles)
+            .AutoInclude();
+        modelBuilder.Entity<ItemEntity>()
+            .Property(e => e.FortniteGgStyles)
             .HasConversion(
                 v => string.Join(',', v),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
@@ -24,5 +27,24 @@ public class EpicGamesUtilsDbContext : DbContext {
             .HasConversion(
                 v => string.Join(',', v.Select(x => (int) x)),
                 v => v.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(x => (ItemTag) Convert.ToInt32(x)));
+
+        modelBuilder.Entity<ItemStyleEntity>()
+            .Property(e => e.ItemFortniteId)
+            .HasConversion(v => v.ToLowerInvariant(),
+                v => v);
+        modelBuilder.Entity<ItemStyleEntity>()
+            .Property(e => e.FortniteId)
+            .HasConversion(v => v.ToLowerInvariant(),
+                v => v);
+        modelBuilder.Entity<ItemEntity>()
+            .HasMany(e => e.Styles)
+            .WithOne(e => e.Item)
+            .HasPrincipalKey(e => e.FortniteId);
+        modelBuilder.Entity<ItemStyleEntity>()
+            .HasOne(e => e.Item)
+            .WithMany(e => e.Styles)
+            .HasForeignKey(e => e.ItemFortniteId)
+            .OnDelete(DeleteBehavior.NoAction);
+
     }
 }

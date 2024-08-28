@@ -130,7 +130,8 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         }
 
         try {
-            await itemFacade.SaveByFortniteIdAsync(items.Where(i => i.FortniteId != null));
+            var filteredItems = items.Where(i => i.FortniteId != null).DistinctBy(i => i.FortniteId);
+            await itemFacade.SaveByFortniteIdAsync(filteredItems);
 
             LastItemFetch = DateTime.Now;
             persistenceProvider.LastItemFetch = LastItemFetch;

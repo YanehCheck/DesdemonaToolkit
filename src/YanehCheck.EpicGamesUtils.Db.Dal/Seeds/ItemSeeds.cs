@@ -18,7 +18,7 @@ public static class ItemSeeds {
         Release = new DateTime(2020, 4, 4),
         Description = "Test description",
         SourceDescription = "Source description",
-        Styles = ["NAKED", "HOT"],
+        FortniteGgStyles = ["NAKED", "HOT"],
         Source = ItemSource.BattlePass,
         Set = "Test Set",
         Season = "c4s2"

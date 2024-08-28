@@ -18,7 +18,7 @@ public class ItemEntityMapper : IEntityMapper<ItemEntity> {
         newEntity.Set = originalEntity.Set;
         newEntity.Release = originalEntity.Release;
         newEntity.LastSeen = originalEntity.LastSeen;
-        newEntity.Styles = originalEntity.Styles;
+        newEntity.FortniteGgStyles = originalEntity.FortniteGgStyles;
         newEntity.Tags = originalEntity.Tags;
     }
 }

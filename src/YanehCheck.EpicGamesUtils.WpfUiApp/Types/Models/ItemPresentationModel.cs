@@ -37,7 +37,7 @@ public partial class ItemPresentationModel : ItemOwnedModel {
         Set = item.Set;
         Release = item.Release;
         LastSeen = item.LastSeen;
-        Styles = item.Styles ?? [];
+        FortniteGgStyles = item.FortniteGgStyles ?? [];
         Tags = item.Tags ?? [];
         OwnedStylesRaw = item.OwnedStylesRaw;
         Remark = item.Remark;
@@ -59,7 +59,7 @@ public partial class ItemPresentationModel : ItemOwnedModel {
         Set = item.Set;
         Release = item.Release;
         LastSeen = item.LastSeen;
-        Styles = item.Styles ?? [];
+        FortniteGgStyles = item.FortniteGgStyles ?? [];
         Tags = item.Tags ?? [];
     }
 }

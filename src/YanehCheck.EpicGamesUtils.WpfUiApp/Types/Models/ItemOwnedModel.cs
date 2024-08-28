@@ -29,7 +29,7 @@ public class ItemOwnedModel : ItemModel
         Set = item.Set;
         Release = item.Release;
         LastSeen = item.LastSeen;
-        Styles = item.Styles ?? [];
+        FortniteGgStyles = item.FortniteGgStyles ?? [];
         Tags = item.Tags ?? [];
     }
 }

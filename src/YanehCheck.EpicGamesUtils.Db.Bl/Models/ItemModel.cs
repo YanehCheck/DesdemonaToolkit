@@ -19,7 +19,7 @@ public class ItemModel : IModel {
     public string? Set { get; set; }
     public DateTime? Release { get; set; }
     public DateTime? LastSeen { get; set; }
-    public IEnumerable<string> Styles { get; set; }
+    public IEnumerable<string> FortniteGgStyles { get; set; }
     public IEnumerable<ItemTag> Tags { get; set; }
 
     public ItemModel GetEmpty() => new() {
@@ -38,7 +38,7 @@ public class ItemModel : IModel {
         Set = default,
         Release = default,
         LastSeen = default,
-        Styles = default!,
+        FortniteGgStyles = default!,
         Tags = default!
     };
 }

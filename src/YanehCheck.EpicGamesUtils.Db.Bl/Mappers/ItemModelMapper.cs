@@ -22,7 +22,7 @@ public class ItemModelMapper : IModelMapper<ItemEntity, ItemModel> {
             Set = entity.Set,
             Release = entity.Release,
             LastSeen = entity.LastSeen,
-            Styles = entity.Styles,
+            FortniteGgStyles = entity.FortniteGgStyles,
             Tags = entity.Tags
         };
     }
@@ -44,7 +44,7 @@ public class ItemModelMapper : IModelMapper<ItemEntity, ItemModel> {
             Set = model.Set,
             Release = model.Release,
             LastSeen = model.LastSeen,
-            Styles = model.Styles,
+            FortniteGgStyles = model.FortniteGgStyles,
             Tags = model.Tags
         };
     }

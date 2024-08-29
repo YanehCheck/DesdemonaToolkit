@@ -39,12 +39,9 @@ public class EpicGamesUtilsDbContext : DbContext {
         modelBuilder.Entity<ItemEntity>()
             .HasMany(e => e.Styles)
             .WithOne(e => e.Item)
-            .HasPrincipalKey(e => e.FortniteId);
-        modelBuilder.Entity<ItemStyleEntity>()
-            .HasOne(e => e.Item)
-            .WithMany(e => e.Styles)
+            .HasPrincipalKey(e => e.FortniteId)
             .HasForeignKey(e => e.ItemFortniteId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.NoAction);
-
     }
 }

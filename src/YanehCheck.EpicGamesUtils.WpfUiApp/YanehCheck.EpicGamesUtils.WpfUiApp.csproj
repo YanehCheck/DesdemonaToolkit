@@ -121,6 +121,7 @@
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Utils.EgApiWrapper\YanehCheck.EpicGamesUtils.Utils.EgApiWrapper.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Db.Bl\YanehCheck.EpicGamesUtils.Db.Bl.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Db.Dal\YanehCheck.EpicGamesUtils.Db.Dal.csproj" />
+    <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer\YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper\YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper.csproj" />
   </ItemGroup>
 
@@ -207,6 +208,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Assets\Data\" />
     <Folder Include="Converters\SettingsPage\" />
   </ItemGroup>
 

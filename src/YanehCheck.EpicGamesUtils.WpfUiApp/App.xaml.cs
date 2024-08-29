@@ -10,6 +10,8 @@ using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Db.Bl;
 using YanehCheck.EpicGamesUtils.Db.Dal;
 using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper;
+using YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer;
+using YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer.Interfaces;
 using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
@@ -74,6 +76,7 @@ public partial class App {
             // Other fortnite
             services.AddTransient<IFortniteImageProvider, FortniteImageProvider>();
             services.AddTransient<IFortniteGgItemMapper, FortniteGgItemMapper>();
+            services.AddTransient<IItemStyleAssetMapper, ItemStyleAssetMapper>();
             services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();
             services.AddSingleton<IFortniteGgItemProvider, FortniteGgItemProvider>();
             services.AddSingleton<IFortniteInventoryFortniteGgFetchProcessor, FortniteInventoryFortniteGgFetchProcessor>();
@@ -81,9 +84,11 @@ public partial class App {
             services.AddSingleton<IUriItemProvider, UriItemProvider>();
             services.AddSingleton<ICustomFilterParser, CustomFilterParser>();
             services.AddSingleton<ICustomFilterProvider, CustomFilterProvider>();
+            services.AddSingleton<IFortniteAssetSerializer, FortniteAssetSerializer>();
+            services.AddSingleton<IFortniteAssetStyleProvider, FortniteAssetStyleProvider>();
 
             // General
-            services.AddSingleton<IFileSaveDialogService, FileSaveDialogService>();
+            services.AddSingleton<IDialogService, DialogService>();
             services.AddSingleton<IBrowserService, BrowserService>();
             services.AddSingleton<IPersistenceProvider, PersistenceProvider>();
             services.AddSingleton<ISessionService, SessionService>();

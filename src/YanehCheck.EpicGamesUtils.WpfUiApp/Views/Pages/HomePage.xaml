@@ -113,9 +113,13 @@
                         <LineBreak />
                         You have a couple of options to fetch item information:
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• Fortnite.gg" /> : Slow and might not always work, but you’ll always get the latest information.
+                        <Run FontWeight="SemiBold" Text="• Items - Fortnite.gg" /> : Slow, but you’ll always get the latest information.
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• Stable" /> : Fast and stable, but newer cosmetics might be missing.
+                        <Run FontWeight="SemiBold" Text="• Items - Stable" /> : Fast and stable, but newer cosmetics might be missing.
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="• Styles - Application" /> : Style information bundled with the application (v30.10).
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" Text="• Styles - Directory properties" /> : Styles information from exported FModel's directory properties export.
                         <LineBreak />
                     </ui:TextBlock>
                 </StackPanel>

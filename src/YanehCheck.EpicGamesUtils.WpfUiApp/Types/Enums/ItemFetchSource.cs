@@ -3,5 +3,7 @@
 public enum ItemFetchSource
 {
     FortniteGg,
-    Stable
+    Stable,
+    StylesBundledWithApp,
+    StylesDirectoryProperties
 }

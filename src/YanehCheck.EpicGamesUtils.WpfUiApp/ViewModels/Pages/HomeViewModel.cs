@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.IO;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
+using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
@@ -17,7 +19,10 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     ICachedEpicGamesService epicGamesService,
     IFortniteGgItemProvider fortniteGgItemProvider,
     IUriItemProvider uriItemProvider,
-    IItemFacade itemFacade) : ObservableObject, IViewModel, INavigationAware {
+    IItemFacade itemFacade,
+    IItemStyleFacade itemStyleFacade,
+    IFortniteAssetStyleProvider styleProvider,
+    IDialogService dialogService) : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
     [ObservableProperty] 
@@ -110,19 +115,30 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
     [RelayCommand]
     public async Task OnButtonFetchItemDataClick() {
+        FetchingData = true;
+
+        if (SelectedItemFetchSource is ItemFetchSource.FortniteGg or ItemFetchSource.Stable) {
+            await FetchItemData();
+        }
+        else {
+            await FetchStyleData();
+        }
+
+        FetchingData = false;
+        FetchProgressPercentage = 0;
+    }
+
+    private async Task FetchItemData() {
         IFortniteItemProvider source = SelectedItemFetchSource switch {
             ItemFetchSource.FortniteGg => fortniteGgItemProvider,
-            ItemFetchSource.Stable => uriItemProvider,
-            _ => throw new ArgumentException("Invalid item source selected.")
+            ItemFetchSource.Stable => uriItemProvider
         };
-        FetchingData = true;
+
         var items = await source.GetItemsAsync(progress => {
             FetchProgressPercentage = (int) (progress * 100);
         });
 
-        // TODO: Proper exceptions
-        if (items == null) {
-            FetchingData = false;
+        if(items == null) {
             snackbarService.Show("Failure",
                 "An error occured while fetching item data. Please check your connection or use different source.",
                 ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
@@ -130,7 +146,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         }
 
         try {
-            var filteredItems = items.Where(i => i.FortniteId != null).DistinctBy(i => i.FortniteId);
+            var filteredItems = items.Where(i => i.FortniteId != null!).DistinctBy(i => i.FortniteId);
             await itemFacade.SaveByFortniteIdAsync(filteredItems);
 
             LastItemFetch = DateTime.Now;
@@ -140,11 +156,50 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success,
                 null, TimeSpan.FromSeconds(5));
         }
-        catch (Exception ex) {
+        catch(Exception ex) {
             snackbarService.Show("Failure", $"An error occured while saving item data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
         }
+    }
 
-        FetchingData = false;
-        FetchProgressPercentage = 0;
+    private async Task FetchStyleData() {
+        IReadOnlyCollection<ItemStyleModel> styles;
+        if (SelectedItemFetchSource == ItemFetchSource.StylesDirectoryProperties) {
+            var directory = dialogService.OpenFolder();
+            if (directory == null) {
+                return;
+            }
+
+            styles = await styleProvider.GetFromPackagePropertiesFileRecursive(directory,
+                progress => { FetchProgressPercentage = (int) (progress * 100); });
+        }
+        else { //(SelectedItemFetchSource == ItemFetchSource.StylesBundledWithApp)
+            var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundledstyles.json");
+            if (File.Exists(path)) {
+                var result = await styleProvider.GetFromSerializedJson(path, progress => { FetchProgressPercentage = (int) (progress * 100); });
+                if (result != null) {
+                    styles = result;
+                }
+                else {
+                    snackbarService.Show("Failure",
+                        "An error occured while fetching style data.",
+                        ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+                    return;
+                }
+            }
+            else {
+                snackbarService.Show("Failure",
+                    "An error occured while fetching style data. Bundled styles file not found.",
+                    ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+                return;
+            }
+        }
+
+        try {
+            var filteredStyles = styles.Where(i => i.FortniteId != null!).DistinctBy(i => i.FortniteId);
+            await itemStyleFacade.SaveByFortniteIdAsync(filteredStyles);
+        }
+        catch(Exception ex) {
+            snackbarService.Show("Failure", $"An error occured while saving item data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+        }
     }
 }

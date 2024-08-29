@@ -23,7 +23,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private readonly IFortniteInventoryImageProcessor imageInventoryProcessor;
     private readonly IFortniteInventoryFortniteGgFetchProcessor fetchInventoryProcessor;
     private readonly IFortniteImageProvider imageProvider;
-    private readonly IFileSaveDialogService fileSaveService;
+    private readonly IDialogService service;
     private readonly ICustomFilterProvider filterProvider;
 
     private string _initializedForAccountId = "";
@@ -73,7 +73,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         IFortniteImageProvider imageProvider,
         IFortniteInventoryImageProcessor imageInventoryProcessor,
         IFortniteInventoryFortniteGgFetchProcessor fetchInventoryProcessor,
-        IFileSaveDialogService fileSaveService,
+        IDialogService service,
         ICustomFilterProvider filterProvider) {
         this.epicGamesService = epicGamesService;
         this.itemFacade = itemFacade;
@@ -81,7 +81,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         this.snackbarService = snackbarService;
         this.imageProvider = imageProvider;
         this.imageInventoryProcessor = imageInventoryProcessor;
-        this.fileSaveService = fileSaveService;
+        this.service = service;
         this.filterProvider = filterProvider;
         this.fetchInventoryProcessor = fetchInventoryProcessor;
     }
@@ -95,12 +95,12 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         if (to == InventoryExport.Text) {
             var names = PresentedItems.Select(i => i.Name);
             var content = string.Join('\n', names);
-            await fileSaveService.SaveTextFile(content, fileName);
+            await service.SaveTextFile(content, fileName);
         }
         else if (to == InventoryExport.Image) {
             try {
                 using var image = imageInventoryProcessor.Create(PresentedItems.ToList(), sessionService.DisplayName!);
-                await fileSaveService.SaveImageFile(image, fileName);
+                await service.SaveImageFile(image, fileName);
             }
             catch (ArgumentException e) {
                 snackbarService.Show(

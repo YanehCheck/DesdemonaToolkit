@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YanehCheck.EpicGamesUtils.D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "YanehCheck.EpicGamesUtils.Utils", "YanehCheck.EpicGamesUtils.Utils", "{B0F09CEE-DD40-4E1C-AFD9-BB55BA1B332E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer", "YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer\YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer.csproj", "{066CC67A-FD22-44A9-8CA9-2B61EB58A875}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{01E31841-1224-48E8-8834-032B246C89F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01E31841-1224-48E8-8834-032B246C89F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01E31841-1224-48E8-8834-032B246C89F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{066CC67A-FD22-44A9-8CA9-2B61EB58A875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066CC67A-FD22-44A9-8CA9-2B61EB58A875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066CC67A-FD22-44A9-8CA9-2B61EB58A875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066CC67A-FD22-44A9-8CA9-2B61EB58A875}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +64,7 @@ Global
 		{D55AA83E-703F-40B4-A206-DD0497571980} = {B0F09CEE-DD40-4E1C-AFD9-BB55BA1B332E}
 		{FB66DC77-DABD-49D7-801D-A59797820E3E} = {9BEF777E-7789-42AE-B037-DC94CBA0D65B}
 		{01E31841-1224-48E8-8834-032B246C89F1} = {9BEF777E-7789-42AE-B037-DC94CBA0D65B}
+		{066CC67A-FD22-44A9-8CA9-2B61EB58A875} = {B0F09CEE-DD40-4E1C-AFD9-BB55BA1B332E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {38FCFCE7-8128-4B2D-A317-E77EF0FBAEED}

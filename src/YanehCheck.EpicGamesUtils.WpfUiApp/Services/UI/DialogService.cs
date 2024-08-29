@@ -18,7 +18,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI;
 
-public class FileSaveDialogService(IWritableOptions<ItemExportImageFormatOptions> imageSaveOptions) : IFileSaveDialogService
+public class DialogService(IWritableOptions<ItemExportImageFormatOptions> imageSaveOptions) : IDialogService
 {
     public async Task SaveTextFile(string content, string fileName, string defaultExt = ".txt", string filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*")
     {
@@ -57,6 +57,20 @@ public class FileSaveDialogService(IWritableOptions<ItemExportImageFormatOptions
             await using var stream = new FileStream(filePath, FileMode.Create);
             await image.SaveAsync(stream, GetEncoder());
         }
+    }
+
+    public string? OpenFolder() {
+        var dialog = new OpenFolderDialog
+        {
+            Multiselect = false,
+            ValidateNames = true
+        };
+
+        if (dialog.ShowDialog() == true) {
+            return dialog.FolderName;
+        }
+
+        return null;
     }
 
     public ImageEncoder GetEncoder()

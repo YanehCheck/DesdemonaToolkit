@@ -133,7 +133,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         };
 
         var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundled_items.json");
-        if (!File.Exists(path)) {
+        if (!File.Exists(path) && SelectedItemFetchSource == ItemFetchSource.AllBundled) {
             snackbarService.Show("Failure",
                 "An error occured while loading item data. Bundled items file not found.",
                 ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));

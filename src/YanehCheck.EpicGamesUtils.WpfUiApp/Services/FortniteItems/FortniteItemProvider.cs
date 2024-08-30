@@ -12,12 +12,12 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteItemProvider(IFortniteGgScrapper fortniteGgScrapper, IRestClient restClient, IFortniteGgItemMapper mapper, IWritableOptions<ItemFetchOptions> options) : IFortniteItemProvider {
+public class FortniteItemProvider(IFortniteGgScrapper fortniteGgScrapper, IRestClient restClient, FortniteGgItemMapper mapper, IWritableOptions<ItemFetchOptions> options) : IFortniteItemProvider {
     public async Task<IEnumerable<ItemModel>?> GetItemsJsonFileAsync(string path, Action<double>? progressReport) {
         try {
             var json = await File.ReadAllTextAsync(path);
 
-            var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(json);
+            var items = JsonConvert.DeserializeObject<List<FortniteGgItemDto>>(json);
             return items!.Select(DecodeAndMap);
         }
         catch(Exception e) {
@@ -35,7 +35,7 @@ public class FortniteItemProvider(IFortniteGgScrapper fortniteGgScrapper, IRestC
 
             progressReport?.Invoke(100);
 
-            var items = JsonConvert.DeserializeObject<List<FortniteGgItem>>(response.Content!);
+            var items = JsonConvert.DeserializeObject<List<FortniteGgItemDto>>(response.Content!);
             return items!.Select(DecodeAndMap);
         }
         catch(Exception e) {
@@ -50,7 +50,7 @@ public class FortniteItemProvider(IFortniteGgScrapper fortniteGgScrapper, IRestC
             items.Select(DecodeAndMap);
     }
 
-    private ItemModel DecodeAndMap(FortniteGgItem item) {
+    private ItemModel DecodeAndMap(FortniteGgItemDto item) {
         item.Name = WebUtility.HtmlDecode(item.Name);
         item.Description = WebUtility.HtmlDecode(item.Description);
         item.SourceDescription = WebUtility.HtmlDecode(item.SourceDescription);

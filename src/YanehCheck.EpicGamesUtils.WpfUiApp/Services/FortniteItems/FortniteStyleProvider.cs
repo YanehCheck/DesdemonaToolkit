@@ -8,7 +8,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
-public class FortniteStyleProvider(IFortniteAssetSerializer assetSerializer, IItemStyleAssetMapper mapper) : IFortniteStyleProvider {
+public class FortniteStyleProvider(IFortniteAssetSerializer assetSerializer, ItemStyleAssetMapper mapper) : IFortniteStyleProvider {
     public async Task<ConcurrentBag<ItemStyleModel>> GetStylesPackagePropertiesFileRecursiveAsync(string directory, Action<double>? progressReport = null) {
         var styles = new ConcurrentBag<ItemStyleModel>();
         var files = Directory.GetFiles(directory, "*.json", SearchOption.AllDirectories);

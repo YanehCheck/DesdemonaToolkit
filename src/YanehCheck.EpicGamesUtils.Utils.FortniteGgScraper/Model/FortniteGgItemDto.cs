@@ -3,7 +3,7 @@ using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 
 namespace YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper.Model;
 
-public class FortniteGgItem
+public class FortniteGgItemDto
 {
     [JsonProperty(PropertyName = "FortniteId")]
     public string Id { get; set; }

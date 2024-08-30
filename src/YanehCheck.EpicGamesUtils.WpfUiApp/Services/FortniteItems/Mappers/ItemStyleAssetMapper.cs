@@ -3,7 +3,7 @@ using YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer.Dtos;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
 
-public class ItemStyleAssetMapper : IItemStyleAssetMapper {
+public class ItemStyleAssetMapper {
     public ItemStyleModel MapToModel(ItemStyleAssetDto dto) {
         return new ItemStyleModel {
             FortniteId = dto.FortniteId,

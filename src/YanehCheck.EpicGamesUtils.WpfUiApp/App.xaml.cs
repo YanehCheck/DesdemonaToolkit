@@ -75,8 +75,8 @@ public partial class App {
 
             // Other fortnite
             services.AddTransient<IFortniteImageProvider, FortniteImageProvider>();
-            services.AddTransient<IFortniteGgItemMapper, FortniteGgItemMapper>();
-            services.AddTransient<IItemStyleAssetMapper, ItemStyleAssetMapper>();
+            services.AddTransient<FortniteGgItemMapper>();
+            services.AddTransient<ItemStyleAssetMapper>();
             services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();
             services.AddSingleton<IFortniteItemProvider, FortniteItemProvider>();
             services.AddSingleton<IFortniteInventoryFortniteGgFetchProcessor, FortniteInventoryFortniteGgFetchProcessor>();

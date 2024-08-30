@@ -11,8 +11,8 @@ namespace YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
 public class FortniteGgScrapper : IFortniteGgScrapper {
     // TODO: Put this into DI
     private static readonly HttpClient Client = new(); 
-    public async Task<List<FortniteGgItem>> ScrapIdRangeAsync(int from, int to) {
-        var items = new List<FortniteGgItem>();
+    public async Task<List<FortniteGgItemDto>> ScrapIdRangeAsync(int from, int to) {
+        var items = new List<FortniteGgItemDto>();
         for(int i = from; i <= to; i++) {
             try {
                 var item = await ScrapItemAsync(i.ToString());
@@ -29,12 +29,12 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return items;
     }
 
-    public async Task<ConcurrentBag<FortniteGgItem>> ScrapIdRangeParallelAsync(int from, int to) {
+    public async Task<ConcurrentBag<FortniteGgItemDto>> ScrapIdRangeParallelAsync(int from, int to) {
         return await ScrapIdRangeParallelAsync(from, to, null);
     }
 
-    public async Task<ConcurrentBag<FortniteGgItem>> ScrapIdRangeParallelAsync(int from, int to, Action<double>? progressReport) {
-        var items = new ConcurrentBag<FortniteGgItem>();
+    public async Task<ConcurrentBag<FortniteGgItemDto>> ScrapIdRangeParallelAsync(int from, int to, Action<double>? progressReport) {
+        var items = new ConcurrentBag<FortniteGgItemDto>();
         int progress = 0;
         await Parallel.ForEachAsync(Enumerable.Range(from, to), async (i, _) => {
             try {
@@ -56,7 +56,7 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return items;
     }
 
-    public async Task<FortniteGgItem?> ScrapItemAsync(string id) {
+    public async Task<FortniteGgItemDto?> ScrapItemAsync(string id) {
         var request = new HttpRequestMessage(HttpMethod.Get, $"https://fortnite.gg/item-details?id={id}");
         request.Headers.Add("User-Agent", "Other");
         request.Headers.Add("Referer", $"https://fortnite.gg/item-details?id={id}");
@@ -72,8 +72,8 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return item;
     }
 
-    private async Task<FortniteGgItem?> ParseItemFromDom(HtmlDocument body, string id) {
-        FortniteGgItem item = new() {
+    private async Task<FortniteGgItemDto?> ParseItemFromDom(HtmlDocument body, string id) {
+        FortniteGgItemDto item = new() {
             FortniteGgId = id
         };
 
@@ -89,7 +89,7 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return item;
     }
 
-    private bool ParseItemStylesFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParseItemStylesFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var nodes = body.DocumentNode.SelectNodes("//*[@data-idx]");
         if(nodes == null || nodes.Count == 0) {  return true; }
         item.Styles = nodes.Select(
@@ -105,7 +105,7 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return true;
     }
 
-    private bool ParseItemSetFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParseItemSetFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var node = body.DocumentNode.SelectSingleNode("//*[.='Part of the ']")?.NextSibling;
         if(node != null) {
             item.Set = node.InnerText.Trim();
@@ -114,7 +114,7 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return true;
     }
 
-    private bool ParseItemDescAndTagsFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParseItemDescAndTagsFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var nodes = body.DocumentNode.SelectNodes("//*[@class='fn-detail-desc grey']");
         if(nodes != null && nodes.Count != 0) {
             foreach (var node in nodes) {
@@ -132,7 +132,7 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return true;
     }
 
-    private bool ParseItemIdFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParseItemIdFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var node = body.DocumentNode.SelectSingleNode("//*[.='ID:']")?.NextSibling;
         if (node != null) {
             item.Id = node.InnerText.Trim();
@@ -140,7 +140,7 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return node != null;
     }
 
-    private bool ParsePriceOrSourceDescriptionFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParsePriceOrSourceDescriptionFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var node = body.DocumentNode.SelectSingleNode("//*[@class='fn-item-price']");
 
         item.PriceUsd = null;
@@ -179,7 +179,7 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return true;
     }
 
-    private bool ParseItemSourceAndDatesFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParseItemSourceAndDatesFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var nodeSource = body.DocumentNode.SelectSingleNode("//*[.='Source:']")?.NextSibling;
         var nodeSeason = body.DocumentNode.SelectSingleNode("//*[.='Introduced in:']")?.NextSibling;
         var nodeLastSeen = body.DocumentNode.SelectSingleNode("//*[.='Last seen:']")?.NextSibling;
@@ -215,14 +215,14 @@ public class FortniteGgScrapper : IFortniteGgScrapper {
         return nodeSeason != null;
     }
 
-    private bool ParseItemNameFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParseItemNameFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var node = body.DocumentNode.SelectSingleNode("//*[@class='fn-detail-name']");
         if(node != null) {
             item.Name = node.InnerText;
         }
         return node != null;
     }
-    private bool ParseRarityAndTypeFromDom(HtmlDocument body, FortniteGgItem item) {
+    private bool ParseRarityAndTypeFromDom(HtmlDocument body, FortniteGgItemDto item) {
         var node = body.DocumentNode.SelectSingleNode("//*[@class='fn-detail-type']");
         if(node != null && node.ChildNodes.Count == 2) {
             item.Rarity = ItemEnumExtensions.FromStringToItemRarity(node.FirstChild.InnerText);

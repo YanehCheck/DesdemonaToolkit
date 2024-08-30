@@ -9,7 +9,7 @@ public class EnumerableAnyToBoolConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null) {
-            return false;
+            return Binding.DoNothing;
         }
 
         if (value is IEnumerable list)
@@ -19,7 +19,7 @@ public class EnumerableAnyToBoolConverter : IValueConverter
             }
         }
 
-        return false;
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

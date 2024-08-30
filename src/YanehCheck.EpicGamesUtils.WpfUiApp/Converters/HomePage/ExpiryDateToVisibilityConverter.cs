@@ -16,7 +16,7 @@ public class ExpiryDateToVisibilityConverter : IValueConverter
                     Visibility.Hidden;
         }
 
-        return Visibility.Hidden;
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -9,7 +9,7 @@ public class BoolNotToVisibilityCollapseConverter : IValueConverter {
             return val ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        return Visibility.Hidden;
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

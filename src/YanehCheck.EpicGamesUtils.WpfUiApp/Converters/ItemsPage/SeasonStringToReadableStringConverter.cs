@@ -8,11 +8,11 @@ public class SeasonStringToReadableStringConverter : IValueConverter {
         switch (value) {
             case null:
             case string { Length: < 4 }:
-                return "";
+                return Binding.DoNothing;
             case string season:
                 return $"Chapter {season[1]}, Season {season[3..]}";
             default:
-                return "";
+                return Binding.DoNothing;
         }
     }
 

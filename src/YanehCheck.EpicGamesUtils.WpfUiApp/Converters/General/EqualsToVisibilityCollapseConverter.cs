@@ -6,7 +6,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 public class EqualsToVisibilityCollapseConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if(value == null || parameter == null) {
-            return Visibility.Collapsed;
+            return Binding.DoNothing;
         }
 
 

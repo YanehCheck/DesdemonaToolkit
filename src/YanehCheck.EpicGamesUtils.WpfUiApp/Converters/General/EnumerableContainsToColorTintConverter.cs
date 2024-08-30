@@ -10,7 +10,7 @@ public class EnumerableContainsToColorTintConverter : IValueConverter
     {
         if (value == null || parameter == null)
         {
-            return "#00000000";
+            return Binding.DoNothing;
         }
 
         if (value is IEnumerable list)

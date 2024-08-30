@@ -14,10 +14,10 @@ public class ItemFetchSourceToStringConverter : IValueConverter {
                 ItemFetchSource.ItemsStable => "Items - Stable",
                 ItemFetchSource.StylesBundled => "Styles - Bundled",
                 ItemFetchSource.StylesDirectoryProperties => "Styles - Directory properties",
-                _ => throw new ArgumentException("ItemSourceToStringConverterInvalidValue")
+                _ => Binding.DoNothing
             };
         }
-        throw new ArgumentException("ItemSourceToStringConverterInvalidValue");
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
@@ -30,9 +30,9 @@ public class ItemFetchSourceToStringConverter : IValueConverter {
                 "Items - Stable" => ItemFetchSource.ItemsStable,
                 "Styles - Bundled" => ItemFetchSource.StylesBundled,
                 "Styles - Directory properties" => ItemFetchSource.StylesDirectoryProperties,
-                _ => throw new ArgumentException("ItemSourceToStringConverterInvalidValue")
+                _ => Binding.DoNothing
             },
-            _ => throw new ArgumentException("ItemSourceToStringConverterInvalidValue")
+            _ => Binding.DoNothing
         };
     }
 }

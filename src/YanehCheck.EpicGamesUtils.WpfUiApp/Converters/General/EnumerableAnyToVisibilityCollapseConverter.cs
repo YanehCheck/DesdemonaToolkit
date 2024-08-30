@@ -9,8 +9,8 @@ public class EnumerableAnyToVisibilityCollapseConverter : IValueConverter {
         return value switch {
             null => Visibility.Collapsed,
             IEnumerable list when list.Cast<object?>().Any() => Visibility.Visible,
-            _ => Visibility.Collapsed
-        };
+            _ => Binding.DoNothing
+    };
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

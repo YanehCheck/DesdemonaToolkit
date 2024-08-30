@@ -15,7 +15,7 @@ public class ExpiryDateToColorConverter : IValueConverter
                 Application.Current.Resources["SystemFillColorSuccessBrush"] ?? Brushes.GreenYellow;
         }
 
-        return Brushes.Black;
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

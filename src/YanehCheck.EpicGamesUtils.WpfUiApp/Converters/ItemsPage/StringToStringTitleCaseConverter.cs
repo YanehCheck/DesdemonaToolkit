@@ -7,7 +7,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage;
 public class StringToStringTitleCaseConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if(value == null) {
-            return string.Empty;
+            return Binding.DoNothing;
         }
 
         if(value is string str) {
@@ -17,7 +17,7 @@ public class StringToStringTitleCaseConverter : IValueConverter {
             return adjustedForFortniteKws;
         }
 
-        return string.Empty;
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

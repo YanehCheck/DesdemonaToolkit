@@ -6,7 +6,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 public class NotEqualsToVisibilityConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if(value == null || parameter == null) {
-            return Visibility.Hidden;
+            return Binding.DoNothing;
         }
 
 

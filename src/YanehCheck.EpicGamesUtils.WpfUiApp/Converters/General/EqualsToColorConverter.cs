@@ -1,22 +1,21 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 
 public class EqualsToColorConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if(value == null || parameter == null) {
-            return Colors.Transparent;
+            return Binding.DoNothing;
         }
 
 
         if(value.Equals(parameter)) {
-            return Application.Current.Resources["SolidBackgroundFillColorTertiaryBrush"] ?? Brushes.Red;
+            return Application.Current.Resources["SolidBackgroundFillColorTertiaryBrush"] ?? Binding.DoNothing;
         }
 
 
-        return Application.Current.Resources["CardBackgroundFillColorDefaultBrush"] ?? Brushes.Red;
+        return Application.Current.Resources["CardBackgroundFillColorDefaultBrush"] ?? Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

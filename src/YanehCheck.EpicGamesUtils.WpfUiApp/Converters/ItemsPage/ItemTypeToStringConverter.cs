@@ -7,9 +7,9 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage;
 public class ItemTypeToStringConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         return value switch {
-            null => "",
+            null => Binding.DoNothing,
             ItemType type => type.ToReadableString(),
-            _ => ""
+            _ => Binding.DoNothing
         };
     }
 

@@ -9,7 +9,7 @@ public class EnumToStringConverter : IValueConverter
     {
         if (value == null || !value.GetType().IsEnum)
         {
-            throw new ArgumentException("EnumToStringConverterInvalidEnumValue");
+            return Binding.DoNothing;
         }
 
         return value.ToString();
@@ -19,7 +19,7 @@ public class EnumToStringConverter : IValueConverter
     {
         if (value == null || targetType == null || !targetType.IsEnum)
         {
-            throw new ArgumentException("EnumToStringConverterInvalidValue");
+            return Binding.DoNothing;
         }
 
         return Enum.Parse(targetType, value.ToString());

@@ -11,7 +11,7 @@ public class EnumToUppercaseStringConverter : IValueConverter
         {
             return enumValue.ToString().ToUpperInvariant();
         }
-        return string.Empty;
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

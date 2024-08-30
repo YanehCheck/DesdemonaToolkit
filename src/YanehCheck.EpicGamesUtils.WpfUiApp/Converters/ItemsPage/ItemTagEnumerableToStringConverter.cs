@@ -7,14 +7,14 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage;
 public class ItemTagEnumerableToStringConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if(value == null) {
-            return string.Empty;
+            return Binding.DoNothing;
         }
 
         if (value is IEnumerable<ItemTag> tags) {
             return string.Join(", ", tags.Select(s => "[" + s + "]"));
         }
 
-        return string.Empty;
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

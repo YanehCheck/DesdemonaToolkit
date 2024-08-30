@@ -9,7 +9,7 @@ public class EqualsToColorTintConverter : IValueConverter
     {
         if (value == null || parameter == null)
         {
-            return "#00000000";
+            return Binding.DoNothing;
         }
 
         if (value.Equals(parameter))

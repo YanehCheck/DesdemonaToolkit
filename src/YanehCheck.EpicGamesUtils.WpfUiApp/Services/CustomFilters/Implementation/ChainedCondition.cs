@@ -1,4 +1,5 @@
 ﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
+using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
@@ -126,9 +127,35 @@ public class ChainedCondition {
         else if(propertyType == typeof(IEnumerable<ItemStyleRaw>)) {
             return HandleItemStyleRawEnumerableValue((IEnumerable<ItemStyleRaw>) propertyValue!, Operation, parameter);
         }
+        else if(propertyType == typeof(IEnumerable<ItemStyleModel>)) {
+            return HandleItemStyleModelEnumerableValue((IEnumerable<ItemStyleModel>) propertyValue!, Operation, parameter);
+        }
         else {
             throw new FilterUnsupportedDataTypeException(
                 $"Type {property.PropertyType} of property {property.Name} is unsupported.");
+        }
+    }
+
+    private bool HandleItemStyleModelEnumerableValue(IEnumerable<ItemStyleModel> propertyValue, Operation operation, object parameter) {
+        if(parameter is string itemStyleParameter) {
+            return operation switch {
+                Operation.Contains => Contains(propertyValue, itemStyleParameter),
+                Operation.NotContains => !Contains(propertyValue, itemStyleParameter),
+                _ => throw new FilterUnsupportedOperationException(
+                    $"Operation {Enum.GetName(operation)!} is not valid for IEnumerable<ItemStyleModel> type.")
+            };
+        }
+        if(parameter is int countParameter) {
+            return HandleEnumerableIntValue(propertyValue, operation, countParameter);
+        }
+
+        throw new FilterUnsupportedDataTypeException("Parameter is not type of string or int.");
+
+        bool Contains(IEnumerable<ItemStyleModel> property, string parameter) {
+            return property.Any(p =>
+                (p.Name?.Equals(parameter, StringComparison.InvariantCultureIgnoreCase) ?? false) || 
+                    p.FortniteId.Equals(parameter, StringComparison.InvariantCultureIgnoreCase) ||
+                    $"{p.Channel}:{p.Property}".Equals(parameter, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 

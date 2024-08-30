@@ -9,8 +9,10 @@ public class ItemFetchSourceToStringConverter : IValueConverter {
         if (value is ItemFetchSource itemSource) {
             return itemSource switch {
                 ItemFetchSource.AllBundled => "All - Bundled (recommended)",
+                ItemFetchSource.ItemsBundled => "Items - Bundled",
                 ItemFetchSource.ItemsFortniteGg => "Items - Fortnite.GG",
                 ItemFetchSource.ItemsStable => "Items - Stable",
+                ItemFetchSource.StylesBundled => "Styles - Bundled",
                 ItemFetchSource.StylesDirectoryProperties => "Styles - Directory properties",
                 _ => throw new ArgumentException("ItemSourceToStringConverterInvalidValue")
             };
@@ -22,9 +24,11 @@ public class ItemFetchSourceToStringConverter : IValueConverter {
         return value switch {
             ItemFetchSource itemSource => itemSource,
             string itemValue => itemValue switch {
+                "All - Bundled (recommended)" => ItemFetchSource.AllBundled,
+                "Items - Bundled" => ItemFetchSource.ItemsBundled,
                 "Items - FortniteGg" or "Items - Fortnite.GG" => ItemFetchSource.ItemsFortniteGg,
                 "Items - Stable" => ItemFetchSource.ItemsStable,
-                "All - Bundled (recommended)" => ItemFetchSource.AllBundled,
+                "Styles - Bundled" => ItemFetchSource.StylesBundled,
                 "Styles - Directory properties" => ItemFetchSource.StylesDirectoryProperties,
                 _ => throw new ArgumentException("ItemSourceToStringConverterInvalidValue")
             },

@@ -23,8 +23,10 @@
         <homePage:ExpiryDateToVisibilityConverter x:Key="ExpiryDateToVisibilityConverter" />
 
         <homePage:ItemFetchSourceToStringConverter x:Key="ItemFetchSourceToStringConverter" />
-        <homePage:FetchDateToColorConverter x:Key="FetchDateToColorConverter" />
-        <homePage:FetchDateToStringConverter x:Key="FetchDateToStringConverter" />
+        <homePage:FetchStatusToColorConverter x:Key="FetchStatusToColorConverter" />
+        <homePage:FetchStatusToStringConverter x:Key="FetchStatusToStringConverter" />
+        <homePage:DateToStringConverter x:Key="DateToStringConverter" />
+        <homePage:FetchStatusToDateVisibilityCollapseConverter x:Key="FetchStatusToDateVisibilityCollapseConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -111,15 +113,15 @@
                         <Run FontWeight="SemiBold" Text="Step 2" /> : Fetch Fortnite Item Information
                         <LineBreak />
                         <LineBreak />
-                        You have a couple of options to fetch item information:
+                        You have a couple of options:
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• Items - Fortnite.gg" /> : Slow, but you’ll always get the latest information.
+                        <Run FontWeight="SemiBold" Text="• All - Bundled" /> : Style and item data included with the release. Updates only with new versions.
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• Items - Stable" /> : Fast and stable, but newer cosmetics might be missing.
+                        <Run FontWeight="SemiBold" Text="• Items - Stable" /> : Item data from semi-updated source.
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• Styles - Application" /> : Style information bundled with the application (v30.10).
+                        <Run FontWeight="SemiBold" Text="• Items - Fortnite.GG" /> : Up-to-date item data from Fortnite.GG.
                         <LineBreak />
-                        <Run FontWeight="SemiBold" Text="• Styles - Directory properties" /> : Styles information from exported FModel's directory properties export.
+                        <Run FontWeight="SemiBold" Text="• Styles - Directory properties" /> : Style data from FModel's directory properties export.
                         <LineBreak />
                     </ui:TextBlock>
                 </StackPanel>
@@ -216,10 +218,35 @@
                         FontWeight="SemiBold"
                         Text="Status"/>
                     <ui:TextBlock 
-                        Margin="0,5,0,0"
-                        Foreground="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToColorConverter}}"
-                        Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource FetchDateToStringConverter}}"
+                        Text="Item data"
                         Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"/>
+                    <StackPanel
+                        Orientation="Vertical"
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"
+                        Margin="0,0,0,5">
+                        <ui:TextBlock 
+                            Foreground="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
+                            Text="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToStringConverter}}"/>
+                        <ui:TextBlock 
+                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
+                            Visibility="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToDateVisibilityCollapseConverter}}"
+                            Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource DateToStringConverter}}"/>
+                    </StackPanel>
+                    <ui:TextBlock 
+                        Text="Style data"
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"/>
+                    <StackPanel
+                        Orientation="Vertical"
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"
+                        Margin="0,0,0,5">
+                        <ui:TextBlock 
+                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
+                            Text="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToStringConverter}}"/>
+                        <ui:TextBlock
+                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
+                            Visibility="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToDateVisibilityCollapseConverter}}"
+                            Text="{Binding ViewModel.LastStyleFetch, Converter={StaticResource DateToStringConverter}}"/>
+                    </StackPanel>
                     <ProgressBar
                         Margin="0,8,0,0"
                         Maximum="100"

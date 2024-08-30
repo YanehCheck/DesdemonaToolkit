@@ -80,5 +80,40 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Properties {
                 this["DisplayName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ItemFetchStatus {
+            get {
+                return ((int)(this["ItemFetchStatus"]));
+            }
+            set {
+                this["ItemFetchStatus"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int StyleFetchStatus {
+            get {
+                return ((int)(this["StyleFetchStatus"]));
+            }
+            set {
+                this["StyleFetchStatus"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime LastStyleFetch {
+            get {
+                return ((global::System.DateTime)(this["LastStyleFetch"]));
+            }
+            set {
+                this["LastStyleFetch"] = value;
+            }
+        }
     }
 }

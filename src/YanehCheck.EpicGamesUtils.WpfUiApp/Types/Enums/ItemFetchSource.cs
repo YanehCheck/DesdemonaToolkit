@@ -3,7 +3,9 @@
 public enum ItemFetchSource
 {
     AllBundled,
+    ItemsBundled,
     ItemsFortniteGg,
     ItemsStable,
+    StylesBundled,
     StylesDirectoryProperties
 }

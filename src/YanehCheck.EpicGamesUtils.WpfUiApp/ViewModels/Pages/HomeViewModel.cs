@@ -30,9 +30,6 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     [ObservableProperty]
     public DateTime _accessTokenExpiry;
 
-    [ObservableProperty]
-    public DateTime _lastItemFetch;
-
     [ObservableProperty] 
     public string _displayName;
 
@@ -40,6 +37,15 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     private ItemFetchSource selectedItemFetchSource = ItemFetchSource.AllBundled;
 
     public ObservableCollection<ItemFetchSource> ItemFetchSources { get; set; } = new(Enum.GetValues<ItemFetchSource>());
+
+    [ObservableProperty]
+    public DateTime _lastItemFetch;
+    [ObservableProperty]
+    public DateTime _lastStyleFetch;
+    [ObservableProperty]
+    public FetchStatus _styleFetchStatus;
+    [ObservableProperty]
+    public FetchStatus _itemFetchStatus;
 
     [ObservableProperty]
     private bool _fetchingData = false;
@@ -56,14 +62,15 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     }
 
     private void InitializeViewModel() {
-        AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
-        if (AccessTokenExpiry > DateTime.Now) {
-            Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId, sessionService.AccessToken));
+        if(sessionService.IsAuthenticated) {
+            Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId!, sessionService.AccessToken!));
         }
 
-        LastItemFetch = sessionService.IsItemDataFetched ? 
-            persistenceProvider.LastItemFetch :
-            DateTime.MinValue;
+        AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
+        LastItemFetch = persistenceProvider.LastItemFetch;
+        LastStyleFetch = persistenceProvider.LastStyleFetch;
+        ItemFetchStatus = persistenceProvider.ItemFetchStatus;
+        StyleFetchStatus = persistenceProvider.StyleFetchStatus;
         DisplayName = persistenceProvider.DisplayName;
     }
 
@@ -76,6 +83,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             return;
         }
 
+        epicGamesService.Invalidate(nameof(ICachedEpicGamesService.AuthenticateAccount));
         var resultAuth = await epicGamesService.AuthenticateAccount(AuthorizationCode);
         if (resultAuth) {
             persistenceProvider.AccountId = resultAuth.AccountId!;
@@ -141,7 +149,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         }
 
         var items = SelectedItemFetchSource switch {
-            ItemFetchSource.AllBundled => await itemProvider.GetItemsJsonFileAsync(path, updateProgress),
+            ItemFetchSource.AllBundled or ItemFetchSource.ItemsBundled => await itemProvider.GetItemsJsonFileAsync(path, updateProgress),
             ItemFetchSource.ItemsFortniteGg => await itemProvider.GetItemsFortniteGgAsync(updateProgress),
             ItemFetchSource.ItemsStable => await itemProvider.GetItemsStableUriAsync(updateProgress)
         };
@@ -149,7 +157,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         if(items == null) {
             snackbarService.Show("Failure",
                 "An error occured while fetching item data. Please check your connection or use different source.",
-                ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+                ControlAppearance.Danger, null, TimeSpan.FromSeconds(10));
             return;
         }
 
@@ -158,14 +166,23 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             await itemFacade.SaveByFortniteIdAsync(filteredItems);
 
             LastItemFetch = DateTime.Now;
+            ItemFetchStatus = SelectedItemFetchSource switch {
+                ItemFetchSource.AllBundled => FetchStatus.BundledSource,
+                ItemFetchSource.ItemsFortniteGg => FetchStatus.UpToDateSource,
+                ItemFetchSource.ItemsStable => FetchStatus.StableSource
+            };
+
             persistenceProvider.LastItemFetch = LastItemFetch;
+            persistenceProvider.ItemFetchStatus = ItemFetchStatus;
             persistenceProvider.Save();
+
             sessionService.IsItemDataFetched = true;
-            snackbarService.Show("Success", $"Successfully fetched {items!.Count()} items!", ControlAppearance.Success,
+
+            snackbarService.Show("Success", $"Successfully fetched {filteredItems!.Count()} items!", ControlAppearance.Success,
                 null, TimeSpan.FromSeconds(5));
         }
         catch(Exception ex) {
-            snackbarService.Show("Failure", $"An error occured while saving item data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            snackbarService.Show("Failure", $"An error occured while saving item data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(10));
         }
     }
 
@@ -180,7 +197,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             styles = await styleProvider.GetStylesPackagePropertiesFileRecursiveAsync(directory,
                 progress => { FetchProgressPercentage = (int) (progress * 100); });
         }
-        else { //(SelectedItemFetchSource == ItemFetchSource.StylesBundledWithApp)
+        else { //(SelectedItemFetchSource == ItemFetchSource.StylesBundled || AllBundled)
             var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundled_styles.json");
             if (File.Exists(path)) {
                 var result = await styleProvider.GetStylesJsonFileAsync(path, progress => { FetchProgressPercentage = (int) (progress * 100); });
@@ -190,14 +207,14 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
                 else {
                     snackbarService.Show("Failure",
                         "An error occured while fetching style data.",
-                        ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+                        ControlAppearance.Danger, null, TimeSpan.FromSeconds(10));
                     return;
                 }
             }
             else {
                 snackbarService.Show("Failure",
                     "An error occured while loading style data. Bundled styles file not found.",
-                    ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+                    ControlAppearance.Danger, null, TimeSpan.FromSeconds(10));
                 return;
             }
         }
@@ -205,9 +222,23 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         try {
             var filteredStyles = styles.Where(i => i.FortniteId != null!).DistinctBy(i => i.FortniteId);
             await itemStyleFacade.SaveByFortniteIdAsync(filteredStyles);
+
+            LastStyleFetch = DateTime.Now;
+            StyleFetchStatus = SelectedItemFetchSource switch {
+                ItemFetchSource.AllBundled or ItemFetchSource.StylesBundled => FetchStatus.BundledSource,
+                ItemFetchSource.StylesDirectoryProperties => FetchStatus.UpToDateSource
+            };
+
+            persistenceProvider.LastStyleFetch = LastStyleFetch;
+            persistenceProvider.StyleFetchStatus = StyleFetchStatus;
+            persistenceProvider.Save();
+
+            sessionService.IsStyleDataFetched = true;
+            snackbarService.Show("Success", $"Successfully fetched {filteredStyles!.Count()} styles!", ControlAppearance.Success,
+                null, TimeSpan.FromSeconds(5));
         }
         catch(Exception ex) {
-            snackbarService.Show("Failure", $"An error occured while saving item data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            snackbarService.Show("Failure", $"An error occured while saving style data to database.\nError: {ex.Message}", ControlAppearance.Danger, null, TimeSpan.FromSeconds(10));
         }
     }
 }

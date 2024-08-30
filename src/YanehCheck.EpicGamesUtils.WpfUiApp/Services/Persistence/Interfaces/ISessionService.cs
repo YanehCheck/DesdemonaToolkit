@@ -8,4 +8,5 @@ public interface ISessionService
     public DateTime? AccessTokenExpiry { get; set; }
     public bool IsItemDataFetched { get; set; }
     public string? DisplayName { get; set; }
+    bool IsStyleDataFetched { get; set; }
 }

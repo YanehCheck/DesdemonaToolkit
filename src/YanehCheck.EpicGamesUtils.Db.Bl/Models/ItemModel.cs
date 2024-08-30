@@ -1,9 +1,11 @@
-﻿using YanehCheck.EpicGamesUtils.Common.Enums.Items;
+﻿using System.Text.Json.Serialization;
+using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models.Interfaces;
 
 namespace YanehCheck.EpicGamesUtils.Db.Bl.Models;
 
 public class ItemModel : IModel {
+    [JsonIgnore]
     public Guid Id { get; set; }
     public string FortniteId { get; set; }
     public string FortniteGgId { get; set; }
@@ -21,7 +23,6 @@ public class ItemModel : IModel {
     public DateTime? LastSeen { get; set; }
     public IEnumerable<string> FortniteGgStyles { get; set; }
     public IEnumerable<ItemTag> Tags { get; set; }
-    public IEnumerable<ItemStyleModel> Styles { get; set; }
 
     public ItemModel GetEmpty() => new() {
         Id = Guid.Empty,
@@ -40,7 +41,6 @@ public class ItemModel : IModel {
         Release = default,
         LastSeen = default,
         FortniteGgStyles = default!,
-        Tags = default!,
-        Styles = default!
+        Tags = default!
     };
 }

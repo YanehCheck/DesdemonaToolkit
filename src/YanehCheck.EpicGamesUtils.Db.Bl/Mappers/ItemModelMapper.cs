@@ -23,8 +23,7 @@ public class ItemModelMapper(ItemStyleModelMapper itemStyleMapper) : IModelMappe
             Release = entity.Release,
             LastSeen = entity.LastSeen,
             FortniteGgStyles = entity.FortniteGgStyles,
-            Tags = entity.Tags,
-            Styles = []
+            Tags = entity.Tags
         };
     }
 

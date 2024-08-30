@@ -78,14 +78,13 @@ public partial class App {
             services.AddTransient<IFortniteGgItemMapper, FortniteGgItemMapper>();
             services.AddTransient<IItemStyleAssetMapper, ItemStyleAssetMapper>();
             services.AddSingleton<IFortniteGgScrapper, FortniteGgScrapper>();
-            services.AddSingleton<IFortniteGgItemProvider, FortniteGgItemProvider>();
+            services.AddSingleton<IFortniteItemProvider, FortniteItemProvider>();
             services.AddSingleton<IFortniteInventoryFortniteGgFetchProcessor, FortniteInventoryFortniteGgFetchProcessor>();
             services.AddSingleton<IFortniteInventoryImageProcessor, FortniteInventoryImageProcessor>();
-            services.AddSingleton<IUriItemProvider, UriItemProvider>();
             services.AddSingleton<ICustomFilterParser, CustomFilterParser>();
             services.AddSingleton<ICustomFilterProvider, CustomFilterProvider>();
             services.AddSingleton<IFortniteAssetSerializer, FortniteAssetSerializer>();
-            services.AddSingleton<IFortniteAssetStyleProvider, FortniteAssetStyleProvider>();
+            services.AddSingleton<IFortniteStyleProvider, FortniteStyleProvider>();
 
             // General
             services.AddSingleton<IDialogService, DialogService>();

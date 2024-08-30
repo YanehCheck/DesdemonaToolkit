@@ -17,11 +17,10 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     IPersistenceProvider persistenceProvider, 
     ISessionService sessionService, 
     ICachedEpicGamesService epicGamesService,
-    IFortniteGgItemProvider fortniteGgItemProvider,
-    IUriItemProvider uriItemProvider,
+    IFortniteItemProvider itemProvider,
     IItemFacade itemFacade,
     IItemStyleFacade itemStyleFacade,
-    IFortniteAssetStyleProvider styleProvider,
+    IFortniteStyleProvider styleProvider,
     IDialogService dialogService) : ObservableObject, IViewModel, INavigationAware {
     private bool _isInitialized = false;
 
@@ -38,7 +37,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     public string _displayName;
 
     [ObservableProperty]
-    private ItemFetchSource selectedItemFetchSource = ItemFetchSource.Stable;
+    private ItemFetchSource selectedItemFetchSource = ItemFetchSource.AllBundled;
 
     public ObservableCollection<ItemFetchSource> ItemFetchSources { get; set; } = new(Enum.GetValues<ItemFetchSource>());
 
@@ -117,10 +116,10 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     public async Task OnButtonFetchItemDataClick() {
         FetchingData = true;
 
-        if (SelectedItemFetchSource is ItemFetchSource.FortniteGg or ItemFetchSource.Stable) {
+        if (SelectedItemFetchSource is ItemFetchSource.ItemsFortniteGg or ItemFetchSource.ItemsStable or ItemFetchSource.AllBundled) {
             await FetchItemData();
         }
-        else {
+        if (SelectedItemFetchSource is ItemFetchSource.StylesDirectoryProperties or ItemFetchSource.AllBundled) {
             await FetchStyleData();
         }
 
@@ -129,14 +128,23 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     }
 
     private async Task FetchItemData() {
-        IFortniteItemProvider source = SelectedItemFetchSource switch {
-            ItemFetchSource.FortniteGg => fortniteGgItemProvider,
-            ItemFetchSource.Stable => uriItemProvider
+        Action<double> updateProgress = progress => {
+            FetchProgressPercentage = (int) (progress * 100);
         };
 
-        var items = await source.GetItemsAsync(progress => {
-            FetchProgressPercentage = (int) (progress * 100);
-        });
+        var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundled_items.json");
+        if (!File.Exists(path)) {
+            snackbarService.Show("Failure",
+                "An error occured while loading item data. Bundled items file not found.",
+                ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+            return;
+        }
+
+        var items = SelectedItemFetchSource switch {
+            ItemFetchSource.AllBundled => await itemProvider.GetItemsJsonFileAsync(path, updateProgress),
+            ItemFetchSource.ItemsFortniteGg => await itemProvider.GetItemsFortniteGgAsync(updateProgress),
+            ItemFetchSource.ItemsStable => await itemProvider.GetItemsStableUriAsync(updateProgress)
+        };
 
         if(items == null) {
             snackbarService.Show("Failure",
@@ -169,13 +177,13 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
                 return;
             }
 
-            styles = await styleProvider.GetFromPackagePropertiesFileRecursive(directory,
+            styles = await styleProvider.GetStylesPackagePropertiesFileRecursiveAsync(directory,
                 progress => { FetchProgressPercentage = (int) (progress * 100); });
         }
         else { //(SelectedItemFetchSource == ItemFetchSource.StylesBundledWithApp)
-            var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundledstyles.json");
+            var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundled_styles.json");
             if (File.Exists(path)) {
-                var result = await styleProvider.GetFromSerializedJson(path, progress => { FetchProgressPercentage = (int) (progress * 100); });
+                var result = await styleProvider.GetStylesJsonFileAsync(path, progress => { FetchProgressPercentage = (int) (progress * 100); });
                 if (result != null) {
                     styles = result;
                 }
@@ -188,7 +196,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             }
             else {
                 snackbarService.Show("Failure",
-                    "An error occured while fetching style data. Bundled styles file not found.",
+                    "An error occured while loading style data. Bundled styles file not found.",
                     ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
                 return;
             }

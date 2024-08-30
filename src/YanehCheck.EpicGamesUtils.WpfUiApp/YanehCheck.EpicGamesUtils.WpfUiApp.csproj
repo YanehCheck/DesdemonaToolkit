@@ -208,7 +208,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Data\" />
     <Folder Include="Converters\SettingsPage\" />
   </ItemGroup>
 

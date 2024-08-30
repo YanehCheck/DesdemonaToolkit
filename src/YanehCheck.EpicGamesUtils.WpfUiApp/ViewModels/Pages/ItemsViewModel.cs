@@ -393,7 +393,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             // Pull required style information from DB for UNLOCKABLE styles
             foreach (var item in itemsWithStyles.Where(e => e.OwnedStylesRaw.Any())) {
                 var validProperties = item.OwnedStylesRaw.SelectMany(i => i.Property);
-                item.Styles = await itemStyleFacade.GetByFortniteItemIdAsync(item.FortniteId, validProperties);
+                item.OwnedStyles = await itemStyleFacade.GetByFortniteItemIdAsync(item.FortniteId, validProperties);
             }
             return (itemsWithStyles,null);
         }

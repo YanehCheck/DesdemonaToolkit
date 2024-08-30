@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Common\YanehCheck.EpicGamesUtils.Common.csproj" />
     <ProjectReference Include="..\YanehCheck.EpicGamesUtils.Db.Dal\YanehCheck.EpicGamesUtils.Db.Dal.csproj" />
   </ItemGroup>

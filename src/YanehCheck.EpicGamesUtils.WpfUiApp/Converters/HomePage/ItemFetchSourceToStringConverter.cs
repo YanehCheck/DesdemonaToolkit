@@ -8,9 +8,9 @@ public class ItemFetchSourceToStringConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
         if (value is ItemFetchSource itemSource) {
             return itemSource switch {
-                ItemFetchSource.FortniteGg => "Items - Fortnite.GG",
-                ItemFetchSource.Stable => "Items - Stable",
-                ItemFetchSource.StylesBundledWithApp => "Styles - Application",
+                ItemFetchSource.AllBundled => "All - Bundled (recommended)",
+                ItemFetchSource.ItemsFortniteGg => "Items - Fortnite.GG",
+                ItemFetchSource.ItemsStable => "Items - Stable",
                 ItemFetchSource.StylesDirectoryProperties => "Styles - Directory properties",
                 _ => throw new ArgumentException("ItemSourceToStringConverterInvalidValue")
             };
@@ -22,9 +22,9 @@ public class ItemFetchSourceToStringConverter : IValueConverter {
         return value switch {
             ItemFetchSource itemSource => itemSource,
             string itemValue => itemValue switch {
-                "Items - FortniteGg" or "Items - Fortnite.GG" => ItemFetchSource.FortniteGg,
-                "Items - Stable" => ItemFetchSource.Stable,
-                "Styles - Application" => ItemFetchSource.StylesBundledWithApp,
+                "Items - FortniteGg" or "Items - Fortnite.GG" => ItemFetchSource.ItemsFortniteGg,
+                "Items - Stable" => ItemFetchSource.ItemsStable,
+                "All - Bundled (recommended)" => ItemFetchSource.AllBundled,
                 "Styles - Directory properties" => ItemFetchSource.StylesDirectoryProperties,
                 _ => throw new ArgumentException("ItemSourceToStringConverterInvalidValue")
             },

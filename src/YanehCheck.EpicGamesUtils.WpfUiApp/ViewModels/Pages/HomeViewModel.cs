@@ -99,6 +99,8 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             DisplayName = resultAuth.DisplayName!;
             AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
 
+            epicGamesService.InvalidateAll();
+
             snackbarService.Show("Success", $"Successfully authenticated as {resultAuth.DisplayName}.", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
         }
         else {

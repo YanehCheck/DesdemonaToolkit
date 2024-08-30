@@ -142,7 +142,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             FetchProgressPercentage = (int) (progress * 100);
         };
 
-        var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundled_items.json");
+        var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/builtin/bundled_items.json");
         if (!File.Exists(path) && SelectedItemFetchSource == ItemFetchSource.AllBundled) {
             snackbarService.Show("Failure",
                 "An error occured while loading item data. Bundled items file not found.",
@@ -200,7 +200,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
                 progress => { FetchProgressPercentage = (int) (progress * 100); });
         }
         else { //(SelectedItemFetchSource == ItemFetchSource.StylesBundled || AllBundled)
-            var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/bundled_styles.json");
+            var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/builtin/bundled_styles.json");
             if (File.Exists(path)) {
                 var result = await styleProvider.GetStylesJsonFileAsync(path, progress => { FetchProgressPercentage = (int) (progress * 100); });
                 if (result != null) {

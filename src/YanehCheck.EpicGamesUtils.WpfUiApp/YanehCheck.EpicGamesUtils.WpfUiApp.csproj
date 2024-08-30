@@ -24,6 +24,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
 
   <ItemGroup>
@@ -102,6 +103,7 @@
     <None Remove="Assets\Images\Rarities\rarity-starwars.png" />
     <None Remove="Assets\Images\Rarities\rarity-tesla.png" />
     <None Remove="Assets\Images\Rarities\rarity-uncommon.png" />
+    <None Remove="Assets\Images\Rarities\rarity-bmw.png" />
     <None Remove="Assets\desdemona-bg-1920.jpg" />
     <None Remove="Assets\Images\vbucks.png" />
   </ItemGroup>
@@ -180,6 +182,7 @@
     <Resource Include="Assets\Images\Rarities\rarity-starwars.png" />
     <Resource Include="Assets\Images\Rarities\rarity-tesla.png" />
     <Resource Include="Assets\Images\Rarities\rarity-uncommon.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-bmw.png" />
     <Resource Include="Assets\Images\desdemona-bg-1920.jpg" />
     <Resource Include="Assets\Images\vbucks.png" />
   </ItemGroup>
@@ -200,22 +203,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Filters Include="Assets\Filters\*.dtkf" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Assets\Images\Rarities\rarity-bmw.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Converters\SettingsPage\" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <OutputPath>$(SolutionDir)bin\$(Configuration)\</OutputPath>
-  </PropertyGroup>
-
-  <Target Name="CopyFilters" AfterTargets="Build">
-    <Copy SourceFiles="@(Filters)" DestinationFolder="$(OutputPath)data\filters" SkipUnchangedFiles="false" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="@echo off&#xD;&#xA;&#xD;&#xA;if not exist &quot;$(ProjectDir)$(OutDir)data\builtin&quot; mkdir &quot;$(ProjectDir)$(OutDir)data\builtin&quot;&#xD;&#xA;if not exist &quot;$(ProjectDir)$(OutDir)data\filters&quot; mkdir &quot;$(ProjectDir)$(OutDir)data\filters&quot;&#xD;&#xA;&#xD;&#xA;echo Copying Data files:&#xD;&#xA;xcopy /d /y /s &quot;$(ProjectDir)Assets\Data\*&quot; &quot;$(ProjectDir)$(OutDir)data\builtin\&quot;&#xD;&#xA;echo.&#xD;&#xA;&#xD;&#xA;echo Copying Filter files:&#xD;&#xA;xcopy /d /y /s &quot;$(ProjectDir)Assets\Filters\*&quot; &quot;$(ProjectDir)$(OutDir)data\filters\&quot;&#xD;&#xA;echo.&#xD;&#xA;&#xD;&#xA;echo Post-build event completed." />
   </Target>
 </Project>

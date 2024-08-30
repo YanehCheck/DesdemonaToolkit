@@ -198,7 +198,7 @@
                         Text="Source:"
                     />
                     <ComboBox
-                        ItemsSource="{Binding ViewModel.ItemFetchSources}"
+                        ItemsSource="{Binding ViewModel.ItemFetchSources, Mode=OneTime}"
                         SelectedItem="{Binding ViewModel.SelectedItemFetchSource, Mode=TwoWay}"
                         Margin="0, 5, 0, 10">
                         <ComboBox.ItemTemplate>
@@ -209,7 +209,7 @@
                     </ComboBox>
                     <ui:Button
                         Content="Fetch"
-                        Command="{Binding ViewModel.ButtonFetchItemDataClickCommand}"
+                        Command="{Binding ViewModel.ButtonFetchItemDataClickCommand, Mode=OneTime}"
                     />
                     <Separator 
                         Margin="3, 5"/>
@@ -219,33 +219,33 @@
                         Text="Status"/>
                     <ui:TextBlock 
                         Text="Item data"
-                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"/>
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}, Mode=OneWay}"/>
                     <StackPanel
                         Orientation="Vertical"
-                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}, Mode=OneWay}"
                         Margin="0,0,0,5">
                         <ui:TextBlock 
-                            Foreground="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
-                            Text="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToStringConverter}}"/>
+                            Foreground="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToColorConverter}, Mode=OneWay}"
+                            Text="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToStringConverter}, Mode=OneWay}"/>
                         <ui:TextBlock 
-                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
-                            Visibility="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToDateVisibilityCollapseConverter}}"
-                            Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource DateToStringConverter}}"/>
+                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}, Mode=OneWay}"
+                            Visibility="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToDateVisibilityCollapseConverter}, Mode=OneWay}"
+                            Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource DateToStringConverter}, Mode=OneWay}"/>
                     </StackPanel>
                     <ui:TextBlock 
                         Text="Style data"
-                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"/>
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}, Mode=OneWay}"/>
                     <StackPanel
                         Orientation="Vertical"
-                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}}"
+                        Visibility="{Binding ViewModel.FetchingData, Converter={StaticResource BoolNotToVisibilityCollapseConverter}, Mode=OneWay}"
                         Margin="0,0,0,5">
                         <ui:TextBlock 
-                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
-                            Text="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToStringConverter}}"/>
+                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}, Mode=OneWay}"
+                            Text="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToStringConverter}, Mode=OneWay}"/>
                         <ui:TextBlock
-                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}}"
-                            Visibility="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToDateVisibilityCollapseConverter}}"
-                            Text="{Binding ViewModel.LastStyleFetch, Converter={StaticResource DateToStringConverter}}"/>
+                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}, Mode=OneWay}"
+                            Visibility="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToDateVisibilityCollapseConverter}, Mode=OneWay}"
+                            Text="{Binding ViewModel.LastStyleFetch, Converter={StaticResource DateToStringConverter}, Mode=OneWay}"/>
                     </StackPanel>
                     <ProgressBar
                         Margin="0,8,0,0"

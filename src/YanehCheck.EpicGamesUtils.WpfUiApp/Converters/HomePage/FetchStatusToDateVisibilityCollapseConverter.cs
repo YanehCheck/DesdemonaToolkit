@@ -9,7 +9,7 @@ public class FetchStatusToDateVisibilityCollapseConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is FetchStatus status) {
-            return status is not FetchStatus.NotFetched or FetchStatus.BundledSource ? Visibility.Visible : Visibility.Collapsed;
+            return status != FetchStatus.NotFetched && status != FetchStatus.BundledSource ? Visibility.Visible : Visibility.Collapsed;
         }
 
         return Binding.DoNothing;

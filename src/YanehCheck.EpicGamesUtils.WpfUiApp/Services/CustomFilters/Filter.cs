@@ -1,4 +1,6 @@
-﻿using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
+﻿using System.Text.RegularExpressions;
+using YanehCheck.EpicGamesUtils.Common.Enums.Items;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Implementation.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
@@ -39,7 +41,7 @@ public class Filter : IFilter {
         var filteredItems = items.Where(i => DnfExpression.Any(r => {
             var sat = r.Satisfied(i);
             if (sat) {
-                i.Remark = r.Remark;
+                i.Remark = InterpolateVarsInRemark(i, r.Remark);
             }
             return sat;
         }));
@@ -54,10 +56,50 @@ public class Filter : IFilter {
         var filterResult = DnfExpression.Any(r => {
             var sat = r.Satisfied(item);
             if(sat) {
-                item.Remark = r.Remark;
+                item.Remark = InterpolateVarsInRemark(item, r.Remark);
             }
             return sat;
         });
         return AllPass || filterResult;
+    }
+
+    private string? InterpolateVarsInRemark(ItemOwnedModel model, string? remark) {
+        if (remark == null) {
+            return null;
+        }
+
+        bool wasSomethingNull = false;
+        var resultRemark = Regex.Replace(remark, @"\{([^}]+)\}", match =>
+        {
+            var propertyName = match.Groups[1].Value;
+            var property = typeof(ItemOwnedModel).GetProperty(propertyName);
+
+            if (property == null) {
+                return match.Value;
+            }
+
+            var value = property.GetValue(model);
+            if(value == null) {
+                wasSomethingNull = true;
+                return string.Empty;
+            }
+
+            Type propertyType = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+
+            return propertyType switch {
+                Type t when t == typeof(string) => value.ToString(),
+                Type t when t == typeof(int) || t == typeof(long) || t == typeof(short) => value.ToString(),
+                Type t when t == typeof(float) || t == typeof(double) || t == typeof(decimal) =>
+                    ((IFormattable) value).ToString("F2", null),  // Format with 2 decimal places
+                Type t when t == typeof(DateTime) => ((DateTime) value).ToString("yyyy-MM-dd"),
+                Type t when t == typeof(bool) => (bool) value ? "Yes" : "No",
+                Type t when t == typeof(ItemRarity) => ((ItemRarity) value).ToReadableString(),
+                Type t when t == typeof(ItemSource) => ((ItemSource) value).ToReadableString(),
+                Type t when t == typeof(ItemType) => ((ItemType) value).ToReadableString(),
+                _ => value.ToString()
+            };
+
+        });
+        return wasSomethingNull ? null : resultRemark;
     }
 }

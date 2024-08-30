@@ -17,5 +17,7 @@ public enum Operation
     CountGreaterThan,
     CountGreaterThanOrEqual,
     CountLessThan,
-    CountLessThanOrEqual
+    CountLessThanOrEqual,
+    ContainsContains,
+    NotContainsContains
 }

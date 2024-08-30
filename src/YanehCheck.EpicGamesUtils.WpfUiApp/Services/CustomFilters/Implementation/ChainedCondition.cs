@@ -141,6 +141,8 @@ public class ChainedCondition {
             return operation switch {
                 Operation.Contains => Contains(propertyValue, itemStyleParameter),
                 Operation.NotContains => !Contains(propertyValue, itemStyleParameter),
+                Operation.ContainsContains => ContainsContains(propertyValue, itemStyleParameter),
+                Operation.NotContainsContains => !ContainsContains(propertyValue, itemStyleParameter),
                 _ => throw new FilterUnsupportedOperationException(
                     $"Operation {Enum.GetName(operation)!} is not valid for IEnumerable<ItemStyleModel> type.")
             };
@@ -157,6 +159,12 @@ public class ChainedCondition {
                     p.FortniteId.Equals(parameter, StringComparison.InvariantCultureIgnoreCase) ||
                     $"{p.Channel}:{p.Property}".Equals(parameter, StringComparison.InvariantCultureIgnoreCase));
         }
+        bool ContainsContains(IEnumerable<ItemStyleModel> property, string parameter) {
+            return property.Any(p =>
+                (p.Name?.Contains(parameter, StringComparison.InvariantCultureIgnoreCase) ?? false) ||
+                p.FortniteId.Contains(parameter, StringComparison.InvariantCultureIgnoreCase) ||
+                $"{p.Channel}:{p.Property}".Contains(parameter, StringComparison.InvariantCultureIgnoreCase));
+        }
     }
 
     private bool HandleItemStyleRawEnumerableValue(IEnumerable<ItemStyleRaw> itemStyleRawValue, Operation operation, object parameter) {
@@ -169,6 +177,8 @@ public class ChainedCondition {
             return operation switch {
                 Operation.Contains => stylesInStringForm.Contains(itemStyleParameter),
                 Operation.NotContains => !stylesInStringForm.Contains(itemStyleParameter),
+                Operation.ContainsContains => stylesInStringForm.Any(s => s.Contains(itemStyleParameter, StringComparison.InvariantCultureIgnoreCase)),
+                Operation.NotContainsContains => !stylesInStringForm.Any(s => s.Contains(itemStyleParameter, StringComparison.InvariantCultureIgnoreCase)),
                 _ => throw new FilterUnsupportedOperationException(
                     $"Operation {Enum.GetName(operation)!} is not valid for IEnumerable<ItemStyleRaw> type.")
             };
@@ -202,6 +212,8 @@ public class ChainedCondition {
             return operation switch {
                 Operation.Contains => stringEnumerableValue.Contains(stringParameter),
                 Operation.NotContains => !stringEnumerableValue.Contains(stringParameter),
+                Operation.ContainsContains => stringEnumerableValue.Any(s => s.Contains(stringParameter, StringComparison.InvariantCultureIgnoreCase)),
+                Operation.NotContainsContains => !stringEnumerableValue.Any(s => s.Contains(stringParameter, StringComparison.InvariantCultureIgnoreCase)),
                 _ => throw new FilterUnsupportedOperationException(
                     $"Operation {Enum.GetName(operation)!} is not valid for IEnumerable<string> type.")
             };

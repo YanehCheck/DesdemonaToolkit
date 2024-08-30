@@ -59,7 +59,7 @@ internal class FilterLexer {
                 }
             }
 
-            if (sourceString[Pos] is '#') {
+            if(sourceString[Pos] is '#') {
                 var newlineIndex = sourceString[Pos..].IndexOf('\n');
                 UpdatePos(newlineIndex);
             }
@@ -155,9 +155,17 @@ internal class FilterLexer {
             UpdatePos(3);
             return new Token(TokenType.Operator, Operation.CountLessThanOrEqual);
         }
+        if(str.StartsWith("{{")) {
+            UpdatePos(2);
+            return new Token(TokenType.Operator, Operation.ContainsContains);
+        }
         if(str.StartsWith("{")) {
             UpdatePos(1);
             return new Token(TokenType.Operator, Operation.Contains);
+        }
+        if(str.StartsWith("!{{")) {
+            UpdatePos(3);
+            return new Token(TokenType.Operator, Operation.NotContainsContains);
         }
         if(str.StartsWith("!{")) {
             UpdatePos(2);
@@ -196,7 +204,7 @@ internal class FilterLexer {
             return new Token(TokenType.Operator, Operation.LessThan);
         }
 
-        if (!Strict) {
+        if(!Strict) {
             if(str.StartsWith("=")) {
                 UpdatePos(1);
                 return new Token(TokenType.Operator, Operation.Equals);

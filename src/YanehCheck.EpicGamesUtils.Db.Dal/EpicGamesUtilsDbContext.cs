@@ -15,9 +15,6 @@ public class EpicGamesUtilsDbContext : DbContext {
             .HasConversion(v => v.ToLowerInvariant(), 
                 v => v);
         modelBuilder.Entity<ItemEntity>()
-            .Navigation(i => i.Styles)
-            .AutoInclude();
-        modelBuilder.Entity<ItemEntity>()
             .Property(e => e.FortniteGgStyles)
             .HasConversion(
                 v => string.Join(',', v),
@@ -36,12 +33,5 @@ public class EpicGamesUtilsDbContext : DbContext {
             .Property(e => e.FortniteId)
             .HasConversion(v => v.ToLowerInvariant(),
                 v => v);
-        modelBuilder.Entity<ItemEntity>()
-            .HasMany(e => e.Styles)
-            .WithOne(e => e.Item)
-            .HasPrincipalKey(e => e.FortniteId)
-            .HasForeignKey(e => e.ItemFortniteId)
-            .IsRequired(false)
-            .OnDelete(DeleteBehavior.NoAction);
     }
 }

@@ -135,7 +135,7 @@ public class ChainedCondition {
     private bool HandleItemStyleRawEnumerableValue(IEnumerable<ItemStyleRaw> itemStyleRawValue, Operation operation, object parameter) {
         var stylesInStringForm = itemStyleRawValue
             .SelectMany(item =>
-                item.Owned.Select(owned => $"{item.Channel}:{owned}")
+                item.Property.Select(owned => $"{item.Channel}:{owned}")
             );
 
         if(parameter is string itemStyleParameter) {

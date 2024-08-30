@@ -24,7 +24,7 @@ public class ItemModelMapper(ItemStyleModelMapper itemStyleMapper) : IModelMappe
             LastSeen = entity.LastSeen,
             FortniteGgStyles = entity.FortniteGgStyles,
             Tags = entity.Tags,
-            Styles = entity.Styles?.Select(itemStyleMapper.MapToModel)!
+            Styles = []
         };
     }
 
@@ -46,8 +46,7 @@ public class ItemModelMapper(ItemStyleModelMapper itemStyleMapper) : IModelMappe
             Release = model.Release,
             LastSeen = model.LastSeen,
             FortniteGgStyles = model.FortniteGgStyles,
-            Tags = model.Tags,
-            Styles = model.Styles?.Select(itemStyleMapper.MapToEntity)!
+            Tags = model.Tags
         };
     }
 }

@@ -25,6 +25,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     private readonly IFortniteImageProvider imageProvider;
     private readonly IDialogService service;
     private readonly ICustomFilterProvider filterProvider;
+    private readonly IItemStyleFacade itemStyleFacade;
 
     private string _initializedForAccountId = "";
 
@@ -74,7 +75,8 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         IFortniteInventoryImageProcessor imageInventoryProcessor,
         IFortniteInventoryFortniteGgFetchProcessor fetchInventoryProcessor,
         IDialogService service,
-        ICustomFilterProvider filterProvider) {
+        ICustomFilterProvider filterProvider,
+        IItemStyleFacade itemStyleFacade) {
         this.epicGamesService = epicGamesService;
         this.itemFacade = itemFacade;
         this.sessionService = sessionService;
@@ -84,6 +86,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         this.service = service;
         this.filterProvider = filterProvider;
         this.fetchInventoryProcessor = fetchInventoryProcessor;
+        this.itemStyleFacade = itemStyleFacade;
     }
 
     public bool AnyFilterApplied => SourceFilter.Any() || RarityFilter.Any() || SeasonFilter.Any() || TagFilter.Any();
@@ -383,10 +386,15 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         try {
             // Pull item data from DB
             var items = await itemFacade.GetByFortniteIdAsync(emptyProfileItems);
-            // Add styles and map to ItemPresentationModel
+            // Add owned raw styles and map to ItemPresentationModel
             var itemsWithStyles = items.Select((item, index) => new ItemPresentationModel(item) {
                 OwnedStylesRaw = profileItems.ElementAt(index).OwnedStylesRaw
-            });
+            }).ToList();
+            // Pull required style information from DB for UNLOCKABLE styles
+            foreach (var item in itemsWithStyles.Where(e => e.OwnedStylesRaw.Any())) {
+                var validProperties = item.OwnedStylesRaw.SelectMany(i => i.Property);
+                item.Styles = await itemStyleFacade.GetByFortniteItemIdAsync(item.FortniteId, validProperties);
+            }
             return (itemsWithStyles,null);
         }
         catch (Exception ex) {

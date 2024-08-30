@@ -23,5 +23,4 @@ public class ItemEntity : IEntity
     public DateTime? LastSeen { get; set; }
     public IEnumerable<string> FortniteGgStyles { get; set; }
     public IEnumerable<ItemTag> Tags { get; set; }
-    public IEnumerable<ItemStyleEntity> Styles { get; set; }
 }

@@ -53,4 +53,13 @@ public class ItemStyleFacade(IUnitOfWorkFactory unitOfWorkFactory, IModelMapper<
         var query = repo.BulkReadAsync(entities, [nameof(ItemStyleEntity.FortniteId)]);
         return entities.Select(Mapper.MapToModel);
     }
+
+    public async Task<IEnumerable<ItemStyleModel>> GetByFortniteItemIdAsync(string itemFortniteId, IEnumerable<string>? validProperties = null) {
+        await using var uow = UnitOfWorkFactory.Create();
+        var repo = uow.GetRepository<ItemStyleEntity, ItemStyleEntityMapper>();
+        var query = repo.Get().Where(e => 
+            e.ItemFortniteId == itemFortniteId && 
+            (validProperties == null ||validProperties.Contains(e.Property)));
+        return query.Select(e => mapper.MapToModel(e)).ToList();
+    }
 }

@@ -11,7 +11,7 @@
     xmlns:items="clr-namespace:YanehCheck.EpicGamesUtils.Common.Enums.Items;assembly=YanehCheck.EpicGamesUtils.Common"
     xmlns:converters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Converters.ItemsPage"
     xmlns:filters="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces"
-    xmlns:models="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models"
+    xmlns:models="clr-namespace:YanehCheck.EpicGamesUtils.WpfUiApp.Types.Classes"
     Title="ItemsPage"
     d:DataContext="{d:DesignInstance local:ItemsPage,
                                      IsDesignTimeCreatable=False}"
@@ -2013,27 +2013,30 @@
                                         Margin="0, 15, 0,0"
                                         FontTypography="BodyStrong"
                                         TextAlignment="Center"/>
-                                    <ItemsControl ItemsSource="{Binding StylesToPresent, Mode=OneTime}"
-                                                  Visibility="{Binding StylesToPresent, Mode=OneTime, 
-                                                  Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Margin="0,5,0,0">
-                                                    <Separator Margin="0,0,0,5"/>
-                                                    <ItemsControl ItemsSource="{Binding}">
-                                                        <ItemsControl.ItemTemplate>
-                                                            <DataTemplate>
-                                                                <ui:TextBlock 
-                                                                    Text="{Binding Name}" 
-                                                                    Margin="0,0,0,2"
-                                                                    Foreground="{Binding UsesChannelPropertyForName, Converter={StaticResource BoolToAlternativeTextColorConverter}}"/>
-                                                            </DataTemplate>
-                                                        </ItemsControl.ItemTemplate>
-                                                    </ItemsControl>
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                    <ScrollViewer
+                                        Visibility="{Binding StylesToPresent, Mode=OneTime, 
+                                                  Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}"
+                                        MaxHeight="200">
+                                            <ItemsControl ItemsSource="{Binding StylesToPresent, Mode=OneTime}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Margin="0,5,0,0">
+                                                        <Separator Margin="0,0,0,5"/>
+                                                        <ItemsControl ItemsSource="{Binding}">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <ui:TextBlock 
+                                                                        Text="{Binding Name}" 
+                                                                        Margin="0,0,0,2"
+                                                                        Foreground="{Binding UsesChannelPropertyForName, Converter={StaticResource BoolToAlternativeTextColorConverter}}"/>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </ScrollViewer>
                                 </VirtualizingStackPanel>
                             </ui:Flyout>
                             <ui:Button

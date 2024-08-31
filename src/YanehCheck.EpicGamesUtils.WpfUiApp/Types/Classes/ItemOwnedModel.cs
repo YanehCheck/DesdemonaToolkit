@@ -1,7 +1,7 @@
 ﻿using YanehCheck.EpicGamesUtils.Db.Bl.Models;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Classes;
 
 /// <summary>
 /// Represents item, extended with user and app specific information.

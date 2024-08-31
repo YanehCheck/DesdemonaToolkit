@@ -11,7 +11,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
-using ItemPresentationModel = YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models.ItemPresentationModel;
+using ItemPresentationModel = YanehCheck.EpicGamesUtils.WpfUiApp.Types.Classes.ItemPresentationModel;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 

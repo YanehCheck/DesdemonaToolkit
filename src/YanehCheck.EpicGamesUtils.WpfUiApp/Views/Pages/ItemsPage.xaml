@@ -29,6 +29,7 @@
         <converters:ItemTypeToStringConverter x:Key="ItemTypeToStringConverter" />
         <converters:SeasonStringToReadableStringConverter x:Key="SeasonStringToReadableStringConverter" />
         <converters:StringToStringTitleCaseConverter x:Key="StringToStringTitleCaseConverter"/>
+        <converters:BoolToAlternativeTextColorConverter x:Key="BoolToAlternativeTextColorConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -2022,7 +2023,10 @@
                                                     <ItemsControl ItemsSource="{Binding}">
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate>
-                                                                <TextBlock Text="{Binding}" Margin="0,0,0,2"/>
+                                                                <ui:TextBlock 
+                                                                    Text="{Binding Name}" 
+                                                                    Margin="0,0,0,2"
+                                                                    Foreground="{Binding UsesChannelPropertyForName, Converter={StaticResource BoolToAlternativeTextColorConverter}}"/>
                                                             </DataTemplate>
                                                         </ItemsControl.ItemTemplate>
                                                     </ItemsControl>

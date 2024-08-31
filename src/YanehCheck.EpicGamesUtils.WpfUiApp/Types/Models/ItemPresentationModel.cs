@@ -18,46 +18,52 @@ public partial class ItemPresentationModel : ItemOwnedModel {
 
     public bool FromChallenge => PriceVbucks == null && PriceUsd == null && SourceDescription != null;
 
-    public IEnumerable<IEnumerable<string>> StylesToPresent => GetStylesToPresent();
+    public IEnumerable<IEnumerable<StyleNamePresentation>> StylesToPresent => GetStylesToPresent();
 
-    private IEnumerable<IEnumerable<string>> GetStylesToPresent() {
-        var stylesByChannel = new Dictionary<string, List<(string PresentationString, string Property)>>();
+    private IEnumerable<IEnumerable<StyleNamePresentation>> GetStylesToPresent() {
+        var stylesByChannel = new Dictionary<string, List<(string Name, string Channel, string Property)>>();
 
         // Process ItemStyleModel objects
         foreach(var style in OwnedStyles) {
             if(!stylesByChannel.ContainsKey(style.Channel)) {
-                stylesByChannel[style.Channel] = new List<(string, string)>();
+                stylesByChannel[style.Channel] = new List<(string, string, string)>();
             }
 
-            string stylePresentation = style.Name ?? $"{style.Channel}:{style.Property}";
-            stylesByChannel[style.Channel].Add((stylePresentation, style.Property));
+            var altName = $"{style.Channel}:{style.Property}";
+            string stylePresentation = style.Name ?? altName;
+            stylesByChannel[style.Channel].Add((stylePresentation,style.Channel, style.Property));
         }
 
         // Fallback if some data is missing
         foreach(var rawStyle in OwnedStylesRaw) {
             if(!stylesByChannel.ContainsKey(rawStyle.Channel)) {
-                stylesByChannel[rawStyle.Channel] = new List<(string, string)>();
+                stylesByChannel[rawStyle.Channel] = new List<(string, string, string)>();
             }
 
             foreach(var property in rawStyle.Property) {
                 string rawStylePresentation = $"{rawStyle.Channel}:{property}";
-                if(stylesByChannel[rawStyle.Channel].All(s => s.PresentationString != rawStylePresentation) &&
+                if(stylesByChannel[rawStyle.Channel].All(s => s.Name != rawStylePresentation) &&
                     !OwnedStyles.Any(s => s.Channel == rawStyle.Channel && s.Property == property)) {
-                    stylesByChannel[rawStyle.Channel].Add((rawStylePresentation, property));
+                    stylesByChannel[rawStyle.Channel].Add((rawStylePresentation, rawStyle.Channel, property));
                 }
             }
         }
 
-
         // Sort styles in each channel by Property, normal string sort should do the trick
+        // Apply some transformation to things that don't have a name defined
+        // Add a flag that says if the name is a property, so it received slightly dimmer color
         return stylesByChannel.Select(kvp => kvp.Value
             .OrderBy(s => s.Property)
-            .Select(s => TransformPresentationString(s.PresentationString, s.Property)));
+            .Select(s => {
+                var newName = TransformPresentationString(s.Name, s.Property);
+                return new StyleNamePresentation(newName, newName == $"{s.Channel}:{s.Property}");
+            }));
 
         string TransformPresentationString(string str, string property) {
             // Case for painted vehicle items:
             var vehiclePrefix = "Vehicle.Painted.";
             if (property.StartsWith(vehiclePrefix)) {
+                // Split the pascal case
                 var colorPascalCase = property.Substring(vehiclePrefix.Length);
                 return string.Join(" ", Regex.Split(colorPascalCase, @"(?<!^)(?=[A-Z])"));
             }

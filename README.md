@@ -6,20 +6,20 @@
 ![.NET](https://img.shields.io/badge/.NET-8.0-8A2824)
 ## About
 
-Desdemona Toolkit is free and open-source application for externally viewing and managing Fortnite accounts.  
+Desdemona Toolkit is free and open-source desktop application for externally viewing and managing Fortnite accounts with high focus on customizability and safety.
 
-<b>Safe</b> - Credentials or data will never be sent to any third party.  
-<b>Open-source</b> - All code is licenced under GPL-3.0!  
+<b>Safe</b> - Designed to guarantee that credentials or any data will never be sent to me or any other third party. 
+<b>Open-source</b> - All code is public and licenced under GPL-3.0!  
 <b>Customization</b> - Make it yours with flexible settings and options.
 
-### ⚠️Desdemona Toolkit is currently in early active development. You should expect bugs, major changes and lack of features early-on.⚠️
+### ⚠️Desdemona Toolkit is currently in early active development. You should expect bugs, breaking changes and lack of features early-on.⚠️
 
 ## Features
 
-⭐ Browse your inventory with custommizable and advanced filtering
-⭐ Export your inventory as a customizable image or to Fortnite.GG  
-⭐ Create custom filter based on your needs and preference wtih support for all unlockable styles
-⭐ Fetch the newest item data at any time  
+⭐ Browse your inventory including unlocked styles with advanced filtering
+⭐ Export your inventory to Fortnite.GG or as a customizable image  
+⭐ Create custom filter based on your needs with simple, but powerful DTKF filtering language
+⭐ Fetch the newest item data at any time 
 
 ## Usage
 

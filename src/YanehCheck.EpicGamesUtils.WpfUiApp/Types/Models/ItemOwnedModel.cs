@@ -9,8 +9,8 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Models;
 public class ItemOwnedModel : ItemModel
 {
     public IEnumerable<ItemStyleRaw> OwnedStylesRaw { get; set; } = [];
+    public IEnumerable<ItemStyleModel> OwnedStyles { get; set; } = [];
     public string? Remark { get; set; } = null;
-    public IEnumerable<ItemStyleModel> OwnedStyles { get; set; }
 
     public ItemOwnedModel() { }
     public ItemOwnedModel(ItemModel item)

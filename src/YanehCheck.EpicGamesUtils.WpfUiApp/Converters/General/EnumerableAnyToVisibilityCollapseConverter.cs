@@ -6,11 +6,11 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Converters.General;
 
 public class EnumerableAnyToVisibilityCollapseConverter : IValueConverter {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-        return value switch {
-            null => Visibility.Collapsed,
-            IEnumerable list when list.Cast<object?>().Any() => Visibility.Visible,
-            _ => Binding.DoNothing
-    };
+        if(value is IEnumerable enumerable) {
+            return enumerable.Cast<object>().Any() ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        return Binding.DoNothing;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

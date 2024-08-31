@@ -2005,6 +2005,31 @@
                                         <TextBlock
                                             Text="{Binding Set, Mode=OneTime}" />
                                     </StackPanel>
+                                    <ui:TextBlock 
+                                        Visibility="{Binding StylesToPresent, Mode=OneWay, 
+                                    Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}"
+                                        Text="Unlocked styles"
+                                        Margin="0, 15, 0,0"
+                                        FontTypography="BodyStrong"
+                                        TextAlignment="Center"/>
+                                    <ItemsControl ItemsSource="{Binding StylesToPresent, Mode=OneTime}"
+                                                  Visibility="{Binding StylesToPresent, Mode=OneTime, 
+                                                  Converter={StaticResource EnumerableAnyToVisibilityCollapseConverter}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,5,0,0">
+                                                    <Separator Margin="0,0,0,5"/>
+                                                    <ItemsControl ItemsSource="{Binding}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <TextBlock Text="{Binding}" Margin="0,0,0,2"/>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </VirtualizingStackPanel>
                             </ui:Flyout>
                             <ui:Button

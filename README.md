@@ -16,9 +16,9 @@ Desdemona Toolkit is free and open-source application for externally viewing and
 
 ## Features
 
-⭐ Browse your inventory with advanced filtering  
-⭐ Export your inventory as an image to show off your inventory  
-⭐ Create custom filter based on your needs  
+⭐ Browse your inventory with custommizable and advanced filtering
+⭐ Export your inventory as a customizable image or to Fortnite.GG  
+⭐ Create custom filter based on your needs and preference wtih support for all unlockable styles
 ⭐ Fetch the newest item data at any time  
 
 ## Usage
@@ -39,17 +39,10 @@ See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage a
 ![Inventory Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot2.png)
   
 ## Roadmap
-
-#### 🛠️ 0.1.4
-- Support for checking unlockable styles through DTKF
-- Adding text above items in image export through DTKF (good for adding info about said styles)
-- Bug fixes
-#### 🛠️ 0.2.0
 - General account information page
 - Inventory statistics like total price, number of items, ...
 - STW: Claim daily quest
 - STW: Check founder codes
-####  🛠️ 1.0.0
 - More auth options
 - UI and UX polish, Full light mode support
 - ????

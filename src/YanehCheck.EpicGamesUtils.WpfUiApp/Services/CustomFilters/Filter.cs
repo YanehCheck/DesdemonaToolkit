@@ -20,12 +20,12 @@ public class Filter : IFilter {
     public IEnumerable<ChainedCondition> DnfExpression { get; set; } = [];
     public ChainedCondition? LastClause => DnfExpression.LastOrDefault()?.Last();
     public void AddClause(bool conjunction = false) {
-        if (!DnfExpression.Any()) {
+        if(!DnfExpression.Any()) {
             DnfExpression = DnfExpression.Append(new ChainedCondition());
             return;
         }
 
-        if (conjunction) {
+        if(conjunction) {
             LastClause!.FollowingTerm = new ChainedCondition();
         }
         else {
@@ -34,13 +34,13 @@ public class Filter : IFilter {
     }
 
     public virtual IEnumerable<ItemOwnedModel> Apply(IEnumerable<ItemOwnedModel> items) {
-        if (!DnfExpression.Any()) {
+        if(!DnfExpression.Any()) {
             return items;
         }
 
         var filteredItems = items.Where(i => DnfExpression.Any(r => {
             var sat = r.Satisfied(i);
-            if (sat) {
+            if(sat) {
                 i.Remark = InterpolateVarsInRemark(i, r.Remark);
             }
             return sat;
@@ -64,17 +64,16 @@ public class Filter : IFilter {
     }
 
     private string? InterpolateVarsInRemark(ItemOwnedModel model, string? remark) {
-        if (remark == null) {
+        if(remark == null) {
             return null;
         }
 
         bool wasSomethingNull = false;
-        var resultRemark = Regex.Replace(remark, @"\{([^}]+)\}", match =>
-        {
+        var resultRemark = Regex.Replace(remark, @"\{([^}]+)\}", match => {
             var propertyName = match.Groups[1].Value;
             var property = typeof(ItemOwnedModel).GetProperty(propertyName);
 
-            if (property == null) {
+            if(property == null) {
                 return match.Value;
             }
 
@@ -100,6 +99,7 @@ public class Filter : IFilter {
             };
 
         });
+
         return wasSomethingNull ? null : resultRemark;
     }
 }

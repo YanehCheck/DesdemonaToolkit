@@ -175,8 +175,8 @@ public class ChainedCondition {
 
         if(parameter is string itemStyleParameter) {
             return operation switch {
-                Operation.Contains => stylesInStringForm.Contains(itemStyleParameter),
-                Operation.NotContains => !stylesInStringForm.Contains(itemStyleParameter),
+                Operation.Contains => stylesInStringForm.Any(s => s.Equals(itemStyleParameter, StringComparison.InvariantCultureIgnoreCase)),
+                Operation.NotContains => !stylesInStringForm.Any(s => s.Equals(itemStyleParameter, StringComparison.InvariantCultureIgnoreCase)),
                 Operation.ContainsContains => stylesInStringForm.Any(s => s.Contains(itemStyleParameter, StringComparison.InvariantCultureIgnoreCase)),
                 Operation.NotContainsContains => !stylesInStringForm.Any(s => s.Contains(itemStyleParameter, StringComparison.InvariantCultureIgnoreCase)),
                 _ => throw new FilterUnsupportedOperationException(
@@ -210,8 +210,8 @@ public class ChainedCondition {
     private bool HandleStringEnumerableValue(IEnumerable<string> stringEnumerableValue, Operation operation, object? parameter) {
         if(parameter is string stringParameter) {
             return operation switch {
-                Operation.Contains => stringEnumerableValue.Contains(stringParameter),
-                Operation.NotContains => !stringEnumerableValue.Contains(stringParameter),
+                Operation.Contains => stringEnumerableValue.Any(s => s.Equals(stringParameter, StringComparison.InvariantCultureIgnoreCase)),
+                Operation.NotContains => !stringEnumerableValue.Any(s => s.Equals(stringParameter, StringComparison.InvariantCultureIgnoreCase)),
                 Operation.ContainsContains => stringEnumerableValue.Any(s => s.Contains(stringParameter, StringComparison.InvariantCultureIgnoreCase)),
                 Operation.NotContainsContains => !stringEnumerableValue.Any(s => s.Contains(stringParameter, StringComparison.InvariantCultureIgnoreCase)),
                 _ => throw new FilterUnsupportedOperationException(
@@ -308,8 +308,8 @@ public class ChainedCondition {
     private bool HandleString(string strValue, Operation operation, object? parameter) {
         if(parameter is string strParameter) {
             return operation switch {
-                Operation.Equals => string.Equals(strValue, strParameter, StringComparison.CurrentCultureIgnoreCase),
-                Operation.NotEquals => !string.Equals(strValue, strParameter, StringComparison.CurrentCultureIgnoreCase),
+                Operation.Equals => string.Equals(strValue, strParameter, StringComparison.InvariantCultureIgnoreCase),
+                Operation.NotEquals => !string.Equals(strValue, strParameter, StringComparison.InvariantCultureIgnoreCase),
                 Operation.StrictEquals => strValue == strParameter,
                 Operation.StrictNotEquals => strValue != strParameter,
                 Operation.Contains => strValue.Contains(strParameter, StringComparison.InvariantCultureIgnoreCase),

@@ -134,12 +134,13 @@ public class FortniteInventoryImageProcessor(IWritableOptions<ItemExportImageApp
         var itemWidth = options.Value.ItemWidth;
         var itemHeight = options.Value.ItemHeight;
         var nameRectangleHeight = options.Value.NameRectangleHeight;
+        var itemNameTransformed = itemName.ToUpper();
 
         // Draw item
         itemImage.Mutate(ctx => ctx.Resize(itemWidth, itemHeight)); // Just to be sure
         inventoryImage.Mutate(ctx => ctx.DrawImage(itemImage, new Point(x, y), 1));
 
-        var font = GetFontWithRightSize(itemName, fontFamily, 
+        var font = GetFontWithRightSize(itemNameTransformed, fontFamily, 
             options.Value.NameFontSize, 
             options.Value.NameFontDownsizeStep, 
             options.Value.NameTextPaddingLr, 
@@ -155,7 +156,7 @@ public class FortniteInventoryImageProcessor(IWritableOptions<ItemExportImageApp
 
         // Draw name
         var namePosition = new PointF(x + leftShift, y + itemHeight - nameRectangleHeight + topShift);
-        inventoryImage.Mutate(ctx => ctx.DrawText(itemName, font, fontColor, namePosition));
+        inventoryImage.Mutate(ctx => ctx.DrawText(itemNameTransformed, font, fontColor, namePosition));
 
         if (itemRemark is not null && options.Value.ItemIncludeRemark) {
             var fontRemark = GetFontWithRightSize(itemRemark, fontFamily, 

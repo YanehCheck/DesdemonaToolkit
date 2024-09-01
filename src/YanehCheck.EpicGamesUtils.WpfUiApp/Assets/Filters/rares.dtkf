@@ -43,6 +43,21 @@ Source==Crew && Release<=2021-9-1
 ||# STW test and creator banners
 SourceDescription*{["STW ALPHA TEST", "SURVIVORS AND SELECT A YOUTUBER"]
 
+||# Other banners
+FortniteId*==["NewsletterBanner", "InfluencerBanner50"]
+
+# Specific emoticons
+||###Remark={SourceDescription}
+FortniteId*==["Emoji_S19_ShowdownReaper", "Emoji_S17_StreamElementsSlurpMonster", "Emoji_S22_FunBreak"]
+
+# Cup, drops, etc
+||###Remark={SourceDescription}
+SourceDescription*{["REDEEM CODE", "TWITCH", "COLLEGIATE CUP", "STREAMER ELEMENTS LEADERBOARD", "GALAXY CUP"] && Release<2023-5-5
+
+# Cups, but only emojis, sprays,..
+||###Remark={SourceDescription}
+SourceDescription{"CUP" && Type*==[Emoji, Spray, Banner] && Release<2023-5-5
+
 ||# STW Founder
 SourceDescription=="STW Founder's Pack" && Type@!=[Backpack, Pickaxe]
 

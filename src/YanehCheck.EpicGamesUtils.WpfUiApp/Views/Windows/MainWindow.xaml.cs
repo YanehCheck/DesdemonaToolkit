@@ -6,7 +6,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Pages;
 
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Views.Windows;
 
-public partial class MainWindow : INavigationWindow {
+public partial class MainWindow : IExtendedNavigationWindow {
     public MainWindowViewModel ViewModel { get; }
 
     public MainWindow(
@@ -38,6 +38,8 @@ public partial class MainWindow : INavigationWindow {
     public void ShowWindow() => Show();
 
     public void CloseWindow() => Close();
+
+    public void HideWindow() => Hide();
 
     #endregion INavigationWindow methods
 

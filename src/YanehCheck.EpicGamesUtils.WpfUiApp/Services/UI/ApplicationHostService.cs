@@ -45,7 +45,7 @@ public class ApplicationHostService : IHostedService
         if (!Application.Current.Windows.OfType<MainWindow>().Any())
         {
             _navigationWindow = (
-                _serviceProvider.GetService(typeof(INavigationWindow)) as INavigationWindow
+                _serviceProvider.GetService(typeof(IExtendedNavigationWindow)) as IExtendedNavigationWindow
             )!;
             _navigationWindow!.ShowWindow();
 

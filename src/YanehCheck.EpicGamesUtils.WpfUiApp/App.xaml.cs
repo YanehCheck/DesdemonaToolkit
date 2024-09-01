@@ -13,6 +13,7 @@ using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper;
 using YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer;
 using YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer.Interfaces;
 using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Cli;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
@@ -98,7 +99,7 @@ public partial class App {
             services.AddSingleton<ITaskBarService, TaskBarService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ISnackbarService, SnackbarService>();
-            services.AddSingleton<INavigationWindow, MainWindow>();
+            services.AddSingleton<IExtendedNavigationWindow, MainWindow>();
             services.Scan(s => s
                 .FromAssembliesOf(typeof(App))
                 .AddClasses(c => c.AssignableTo<IViewModel>())
@@ -110,6 +111,9 @@ public partial class App {
                 .AddClasses(c => c.AssignableTo(typeof(INavigableView<>)))
                 .AsSelfWithInterfaces()
                 .WithSingletonLifetime());
+
+            // Cli
+            services.AddTransient<ICliHandler, CliHandler>();
         })
         .Build();
 
@@ -126,8 +130,21 @@ public partial class App {
     /// <summary>
     /// Occurs when the application is loading.
     /// </summary>
-    private void OnStartup(object sender, StartupEventArgs e) {
-        _host.Start();
+    private async void OnStartup(object sender, StartupEventArgs e) {
+        await _host.StartAsync();
+
+        if(e.Args.Length > 0) {
+            await RunCliMode(e.Args);
+            Shutdown();
+        }
+    }
+    private async Task RunCliMode(string[] args) {
+        using var scope = _host.Services.CreateScope();
+        var cliHandler = scope.ServiceProvider.GetRequiredService<ICliHandler>();
+        var mainWindow = scope.ServiceProvider.GetRequiredService<IExtendedNavigationWindow>();
+        cliHandler.ShowConsole(); // Doesnt actually really work for now, but Ill use it atleast like an indicator
+        mainWindow.HideWindow();
+        await cliHandler.HandleAsync(args);
     }
 
     /// <summary>

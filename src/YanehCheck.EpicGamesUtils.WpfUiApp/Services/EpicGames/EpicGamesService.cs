@@ -72,6 +72,15 @@ public class EpicGamesService(IEpicGamesClient epicGamesClient) : IEpicGamesServ
         );
     }
 
+    public async Task<EpicGamesSetSacCodeResult> SetSacCode(string accountId, string accessToken, string sacCode) {
+        var result = await epicGamesClient.Accounts_SetSacCode(accountId, accessToken, sacCode);
+        if(!result.Success) {
+            var errorParams = HandleError(result);
+            return new EpicGamesSetSacCodeResult(errorParams.Item1, errorMessage: errorParams.Item2);
+        }
+        return new EpicGamesSetSacCodeResult(result.StatusCode, sacCode);
+    }
+
     private IEnumerable<EpicGamesApiItem> ExtractAthenaItems(ApiResult athenaResult) {
         var removeFilter = EpicGamesServiceHelpers.GetQueryProfileRemoveFilter();
 

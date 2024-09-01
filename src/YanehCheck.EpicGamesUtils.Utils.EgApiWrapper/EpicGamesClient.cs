@@ -83,4 +83,19 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
             null;
         return new ApiResult(response.StatusCode, jsonDom);
     }
+
+    public async Task<ApiResult> Accounts_SetSacCode(string accountId, string accessToken, string sacCode) {
+        var request =
+            new RestRequest(
+                $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/profile/{accountId}/client/SetAffiliateName", Method.Post);
+        request.AddHeader("Authorization", $"Bearer {accessToken}");
+        request.AddQueryParameter("profileId", "common_core");
+        request.AddBody($"{{\"affiliateName\":\"{sacCode}\"}}");
+
+        var response = await client.ExecuteAsync(request);
+        var jsonDom = response.Content is not null ?
+            JObject.Parse(response.Content!) :
+            null;
+        return new ApiResult(response.StatusCode, jsonDom);
+    }
 }

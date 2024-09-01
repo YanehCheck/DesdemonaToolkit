@@ -1,6 +1,7 @@
 ﻿using System.Buffers;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Numerics;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -137,50 +138,63 @@ public class FortniteInventoryImageProcessor(IWritableOptions<ItemExportImageApp
         var itemNameTransformed = itemName.RemoveAccents().ToUpper();
 
         // Draw item
-        itemImage.Mutate(ctx => ctx.Resize(itemWidth, itemHeight)); // Just to be sure
+        itemImage.Mutate(ctx => ctx.Resize(itemWidth, itemHeight));
         inventoryImage.Mutate(ctx => ctx.DrawImage(itemImage, new Point(x, y), 1));
 
-        var font = GetFontWithRightSize(itemNameTransformed, fontFamily, 
-            options.Value.NameFontSize, 
-            options.Value.NameFontDownsizeStep, 
-            options.Value.NameTextPaddingLr, 
-            options.Value.NameTextPaddingTb,  
+        // Draw name rectangle and text
+        var font = GetFontWithRightSize(itemNameTransformed, fontFamily,
+            options.Value.NameFontSize,
+            options.Value.NameFontDownsizeStep,
+            options.Value.NameTextPaddingLr,
+            options.Value.NameTextPaddingTb,
             out var size);
         var leftShift = (itemWidth - size.Width) / 2;
         var topShift = (nameRectangleHeight - size.Height) / 2;
-
-        // Draw transparent rectangle for name
         var nameRect = new RectangleF(x, y + itemHeight - nameRectangleHeight, itemWidth, nameRectangleHeight);
         var nameRectCol = Color.ParseHex(options.Value.NameRectangleColor);
         inventoryImage.Mutate(ctx => ctx.Fill(nameRectCol, nameRect));
-
-        // Draw name
         var namePosition = new PointF(x + leftShift, y + itemHeight - nameRectangleHeight + topShift);
         inventoryImage.Mutate(ctx => ctx.DrawText(itemNameTransformed, font, fontColor, namePosition));
 
-        if (itemRemark is not null && options.Value.ItemIncludeRemark) {
-            var fontRemark = GetFontWithRightSize(itemRemark, fontFamily, 
-                options.Value.RemarkFontSize, 
-                options.Value.RemarkFontDownsizeStep, 
+        if(itemRemark is not null && options.Value.ItemIncludeRemark) {
+            // Draw remark
+            var fontRemark = GetFontWithRightSize(itemRemark, fontFamily,
+                options.Value.RemarkFontSize,
+                options.Value.RemarkFontDownsizeStep,
                 options.Value.RemarkTextPaddingLr,
                 options.Value.RemarkTextPaddingTb,
                 out var remarkSize);
 
-            var leftShiftRemark = options.Value.RemarkTextAlign switch { // TODO: Move this away!
+            // TODO: Replace with enum
+            var leftShiftRemark = options.Value.RemarkTextAlign switch {
                 'L' or 'l' => options.Value.RemarkTextPaddingLr,
                 'C' or 'c' => (itemWidth - remarkSize.Width) / 2,
                 'R' or 'r' => itemWidth - remarkSize.Width - options.Value.RemarkTextPaddingLr,
                 _ => options.Value.RemarkTextPaddingLr
             };
 
-            var topShiftRemark = (options.Value.RemarkRectangleHeight - remarkSize.Height) / 2;
+            var remarkBoxHeight = options.Value.RemarkRectangleHeight;
+            var remarkBoxWidth = itemWidth;
 
-            var remarkRect = new RectangleF(x, y, itemWidth, options.Value.RemarkRectangleHeight);
+            var remarkPolygon = new PointF[] {
+                new(x, y),
+                new(x + remarkBoxWidth, y),
+                new(x + remarkBoxWidth, y + remarkBoxHeight),
+                new(x, y + remarkBoxHeight + 10)
+            };
+
             var remarkRectColor = Color.ParseHex(options.Value.RemarkRectangleColor);
-            inventoryImage.Mutate(ctx => ctx.Fill(remarkRectColor, remarkRect));
 
-            var remarkPosition = new PointF(x + leftShiftRemark, y + topShiftRemark);
-            inventoryImage.Mutate(ctx => ctx.DrawText(itemRemark, fontRemark, fontColor, remarkPosition));
+            var topShiftRemark = (remarkBoxHeight - remarkSize.Height) / 2;
+
+            inventoryImage.Mutate(ctx =>
+            {
+                
+                ctx.FillPolygon(remarkRectColor, remarkPolygon);
+
+                ctx.SetDrawingTransform(Matrix3x2.CreateRotation(-3 * (float) Math.PI / 180, new Vector2(x + remarkBoxWidth / 2, y + remarkBoxHeight / 2)));
+                ctx.DrawText(itemRemark, fontRemark, fontColor, new PointF(x + leftShiftRemark, y + topShiftRemark));
+            });
         }
     }
 

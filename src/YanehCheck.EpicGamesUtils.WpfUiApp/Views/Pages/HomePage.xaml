@@ -228,7 +228,7 @@
                             Foreground="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToColorConverter}, Mode=OneWay}"
                             Text="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToStringConverter}, Mode=OneWay}"/>
                         <ui:TextBlock 
-                            Foreground="{Binding ViewModel.StyleFetchStatus, Converter={StaticResource FetchStatusToColorConverter}, Mode=OneWay}"
+                            Foreground="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToColorConverter}, Mode=OneWay}"
                             Visibility="{Binding ViewModel.ItemFetchStatus, Converter={StaticResource FetchStatusToDateVisibilityCollapseConverter}, Mode=OneWay}"
                             Text="{Binding ViewModel.LastItemFetch, Converter={StaticResource DateToStringConverter}, Mode=OneWay}"/>
                     </StackPanel>

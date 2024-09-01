@@ -126,10 +126,10 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     public async Task OnButtonFetchItemDataClick() {
         FetchingData = true;
 
-        if (SelectedItemFetchSource is ItemFetchSource.ItemsFortniteGg or ItemFetchSource.ItemsStable or ItemFetchSource.AllBundled) {
+        if (SelectedItemFetchSource is ItemFetchSource.ItemsFortniteGg or ItemFetchSource.ItemsStable or ItemFetchSource.AllBundled or ItemFetchSource.ItemsBundled) {
             await FetchItemData();
         }
-        if (SelectedItemFetchSource is ItemFetchSource.StylesDirectoryProperties or ItemFetchSource.AllBundled) {
+        if (SelectedItemFetchSource is ItemFetchSource.StylesDirectoryProperties or ItemFetchSource.AllBundled or ItemFetchSource.StylesBundled) {
             await FetchStyleData();
         }
 
@@ -143,7 +143,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         };
 
         var path = Path.Combine(Path.GetDirectoryName(Environment.ProcessPath)!, "data/builtin/bundled_items.json");
-        if (!File.Exists(path) && SelectedItemFetchSource == ItemFetchSource.AllBundled) {
+        if (!File.Exists(path) && SelectedItemFetchSource is ItemFetchSource.AllBundled or ItemFetchSource.ItemsBundled) {
             snackbarService.Show("Failure",
                 "An error occured while loading item data. Bundled items file not found.",
                 ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
@@ -169,7 +169,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
             LastItemFetch = DateTime.Now;
             ItemFetchStatus = SelectedItemFetchSource switch {
-                ItemFetchSource.AllBundled => FetchStatus.BundledSource,
+                ItemFetchSource.AllBundled or ItemFetchSource.ItemsBundled => FetchStatus.BundledSource,
                 ItemFetchSource.ItemsFortniteGg => FetchStatus.UpToDateSource,
                 ItemFetchSource.ItemsStable => FetchStatus.StableSource
             };

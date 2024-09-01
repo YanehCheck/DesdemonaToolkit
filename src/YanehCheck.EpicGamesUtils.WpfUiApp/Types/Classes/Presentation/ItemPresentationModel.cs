@@ -1,9 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows.Media.Imaging;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Classes.Presentation;
 
-namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Classes;
+namespace YanehCheck.EpicGamesUtils.WpfUiApp.Types.Classes.Presentation;
 
 /// <summary>
 /// Version of <see cref="ItemOwnedModel"/> with added presentation-related properties and commands.

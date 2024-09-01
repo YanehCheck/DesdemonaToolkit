@@ -4,7 +4,33 @@
 ###Author=Desdemona Toolkit
 ###Optimizations==0
 
-# Long wait in Shop
+# Purple skull trooper
+###Remark=Purple
+FortniteId=="CID_030_Athena_Commando_M_Halloween" && OwnedStylesRaw{"ClothingColor:Mat1"
+
+# Pink ghoul trooper
+||###Remark=Pink
+FortniteId=="CID_029_Athena_Commando_F_Halloween" && OwnedStylesRaw{"Material:Mat3"
+
+# Max omega/carbide
+||###Remark=Max
+FortniteId*==["CID_116_Athena_Commando_M_CarbideBlack", "CID_115_Athena_Commando_M_CarbideBlue"] && OwnedStylesRaw{"Emissive:Emissive3" && OwnedStylesRaw{"Progressive:Stage5"
+
+# OG gold SS
+||###Remark=Gold
+Season=="c2s2" && Source==BattlePass && OwnedStylesRaw{"Progressive:Stage4" && FortniteId!="VTID_573_TNTina_StyleD"
+||###Remark=Gold
+FortniteId=="CID_691_Athena_Commando_F_TNTina" && OwnedStylesRaw{"Progressive:Stage7"
+
+# World Cup Fishstick
+||###Remark=World Cup
+FortniteId=="CID_315_Athena_Commando_M_TeriyakiFish" && OwnedStylesRaw{"Parts:Stage3"
+
+# Party trooper j Balvin
+||###Remark=Both exclusive
+FortniteId=="CID_920_Athena_Commando_M_PartyTrooper" && OwnedStylesRaw@{["Material:Mat2", "Material:Mat3"]
+
+||# Long wait in Shop
 LastSeen<2020-6-20 && Source==Shop
 
 ||# Early crew

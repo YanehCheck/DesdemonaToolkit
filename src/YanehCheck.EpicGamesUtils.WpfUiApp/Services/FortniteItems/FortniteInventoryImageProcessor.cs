@@ -134,7 +134,7 @@ public class FortniteInventoryImageProcessor(IWritableOptions<ItemExportImageApp
         var itemWidth = options.Value.ItemWidth;
         var itemHeight = options.Value.ItemHeight;
         var nameRectangleHeight = options.Value.NameRectangleHeight;
-        var itemNameTransformed = itemName.ToUpper();
+        var itemNameTransformed = itemName.RemoveAccents().ToUpper();
 
         // Draw item
         itemImage.Mutate(ctx => ctx.Resize(itemWidth, itemHeight)); // Just to be sure

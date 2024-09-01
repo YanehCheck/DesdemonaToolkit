@@ -10,4 +10,5 @@ public interface IEpicGamesClient {
     public Task<ApiResult> Accounts_LookupAccountId(string accountId, string accessToken);
     public Task<ApiResult> Fortnite_GetFounderCodes(FounderCodePlatform platform, string accountId, string accessToken);
     public Task<ApiResult> Fortnite_QueryProfile(string accountId, string accessToken, FortniteProfile profile);
+    public Task<ApiResult> Accounts_SetSacCode(string accountId, string accessToken, string sacCode);
 }

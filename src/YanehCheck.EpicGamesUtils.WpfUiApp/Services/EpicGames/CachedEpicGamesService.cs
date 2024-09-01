@@ -24,6 +24,11 @@ public class CachedEpicGamesService(EpicGamesService epicGamesService, ICache ca
             () => epicGamesService.GetFortniteProfile(accountId, accessToken));
     }
 
+    public Task<EpicGamesSetSacCodeResult> SetSacCode(string accountId, string accessToken, string sacCode) {
+        return cache.GetOrAdd(nameof(SetSacCode),
+            () => epicGamesService.SetSacCode(accountId, accessToken, sacCode));
+    }
+
     public void InvalidateAll() => cache.Clear();
 
     public void Invalidate(string method) => cache.Remove(method);

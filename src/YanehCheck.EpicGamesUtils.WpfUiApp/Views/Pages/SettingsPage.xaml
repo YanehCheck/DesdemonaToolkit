@@ -384,7 +384,7 @@
                 </StackPanel>
             </ui:CardExpander>
             <ui:CardControl 
-                Margin="0,5,0,0"
+                Margin="0,0,0,12"
                 Icon="{ui:SymbolIcon 60628}"> <!--60628 == TextBoxSettings24-->
                 <ui:CardControl.Header>
                     <Grid>
@@ -406,6 +406,43 @@
                 <ui:Button
                     Content="Open appsettings.json"
                     Command="{Binding ViewModel.OpenAppSettingsFileCommand}"/>
+            </ui:CardControl>
+            <ui:CardControl 
+                Margin="0,0,0,12"
+                Icon="{ui:SymbolIcon Heart24}">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ui:TextBlock
+                            Grid.Row="0"
+                            FontTypography="Body">
+                            Help me support future updates through Support-A-Creator program!
+                        </ui:TextBlock>
+                        <ui:TextBlock
+                            Grid.Row="1"
+                            Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}">
+                            The development takes a long time. Thank you for using Desdemona Toolkit!
+                        </ui:TextBlock>
+                    </Grid>
+                </ui:CardControl.Header>
+                <StackPanel Orientation="Horizontal">
+                    <ui:Card
+                        Height="auto"
+                        Padding="10,7"
+                        Width="auto"
+                        Margin="0,0,20,0">
+                        <ui:TextBlock
+                            Text="{Binding ViewModel.SacCode, Mode=OneTime}"
+                            VerticalAlignment="Center"
+                            FontTypography="BodyStrong"/>
+                    </ui:Card>
+                    <ui:Button
+                        Content="Use it!"
+                        Command="{Binding ViewModel.UseSacCodeCommand, Mode=OneTime}"/>
+                </StackPanel>
             </ui:CardControl>
         </StackPanel>
         <TextBlock 

@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
+using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
+using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Types.Enums;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
@@ -10,11 +13,15 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
 public partial class SettingsViewModel(IBrowserService browserService,
+    ICachedEpicGamesService epicGamesService,
+    ISnackbarService snackbarService,
+    ISessionService sessionService,
     IWritableOptions<ItemImageCachingOptions> itemImageCacheOptions,
     IWritableOptions<ItemFetchOptions> itemFetchOptions,
     IWritableOptions<ItemExportImageFormatOptions> itemExportFormatOptions,
     IWritableOptions<ItemExportImageAppearanceOptions> itemExportAppearanceOptions,
     IWritableOptions<ItemExportFortniteGgOptions> itemExportFortniteGgOptions) : ObservableObject, IViewModel, INavigationAware, INotifyPropertyChanged {
+    public string SacCode => "DESDEMONATOOLKIT";
     private bool _isInitialized = false;
 
     [ObservableProperty]
@@ -184,6 +191,37 @@ public partial class SettingsViewModel(IBrowserService browserService,
     private string GetAssemblyVersion() {
         return Assembly.GetExecutingAssembly().GetName().Version?.ToString()
                ?? string.Empty;
+    }
+
+    [RelayCommand]
+    private async Task UseSacCode() {
+        if (!sessionService.IsAuthenticated) {
+            snackbarService.Show(
+                "Failure",
+                "No account authenticated. Please authenticate on the Home page.",
+                ControlAppearance.Danger,
+                null,
+                TimeSpan.FromSeconds(5));
+            return;
+        }
+
+        var result = await epicGamesService.SetSacCode(sessionService.AccountId!, sessionService.AccessToken!, SacCode);
+
+        if (!result.Success) {
+            snackbarService.Show(
+                "Failure",
+                $"{result.ErrorMessage}",
+                ControlAppearance.Danger,
+                null,
+                TimeSpan.FromSeconds(5));
+        }
+
+        snackbarService.Show(
+            "Success",
+            "Thank you for supporting me!",
+            ControlAppearance.Success,
+            null,
+            TimeSpan.FromSeconds(5));
     }
 
     [RelayCommand]

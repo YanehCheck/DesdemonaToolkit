@@ -175,7 +175,8 @@
                             AutoToolTipPlacement="BottomRight"
                             IsSnapToTickEnabled="False"
                             Value="{Binding ViewModel.ImageJpegQuality, Mode=TwoWay, Delay=500}"
-                        /> <!-- The delay is needed as the binding fires for every single value if dragging and breaks File.Write despite it having exclusive static lock?-->
+                        />
+                        <!-- The delay is needed as the binding fires for every single value if dragging and breaks File.Write despite it having exclusive static lock?-->
                     </ui:CardControl>
                     <ui:TextBlock 
                         Text="Included information"
@@ -356,7 +357,7 @@
                         Text="Fortnite.GG"
                         Margin="6, 5, 0, 0"
                         FontTypography="BodyStrong"/>
-                                <ui:CardControl 
+                    <ui:CardControl 
                         Margin="0,5,0,0" >
                         <ui:CardControl.Header>
                             <Grid>
@@ -385,7 +386,8 @@
             </ui:CardExpander>
             <ui:CardControl 
                 Margin="0,0,0,12"
-                Icon="{ui:SymbolIcon 60628}"> <!--60628 == TextBoxSettings24-->
+                Icon="{ui:SymbolIcon 60628}">
+                <!--60628 == TextBoxSettings24-->
                 <ui:CardControl.Header>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -399,7 +401,8 @@
                         <ui:TextBlock
                             Grid.Row="1"
                             Foreground="{ui:ThemeResource TextFillColorSecondaryBrush}">
-                            By editing following JSON file you may access experimental settings. <Bold>Advanced users only!</Bold>
+                            By editing following JSON file you may access experimental settings.
+                            <Bold>Advanced users only!</Bold>
                         </ui:TextBlock>
                     </Grid>
                 </ui:CardControl.Header>

@@ -119,7 +119,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             Clipboard.SetText(fetchString);
             snackbarService.Show(
                 "Success",
-                $"The script was copied to clipboard. Please paste it into your browser's console where you are logged into Fortnite.gg",
+                $"The script was copied to clipboard. Please navigate to Fortnite.GG in your browser and paste it into the browsers console.",
                 ControlAppearance.Success,
                 null,
                 TimeSpan.FromSeconds(10));

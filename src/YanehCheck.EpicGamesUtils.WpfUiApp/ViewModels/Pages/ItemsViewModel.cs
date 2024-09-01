@@ -365,7 +365,8 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     }
 
     private async Task LoadImages(IEnumerable<ItemPresentationModel> items) {
-        await Parallel.ForEachAsync(items, async (item, _) => {
+        var test = items.ToList();
+        await Parallel.ForEachAsync(test, async (item, _) => {
             item.BitmapFrame = await imageProvider.GetImageAsync(item.FortniteGgId);
         });
     }

@@ -38,11 +38,6 @@ public class FortniteInventoryImageProcessor(IWritableOptions<ItemExportImageApp
         var itemsPerRow = options.Value.ItemsPerRow;
         var fontFamily = GetFortniteFontFamily();
 
-
-        if (items.Count < itemsPerRow) {
-            itemsPerRow = items.Count;
-        }
-
         var fontColor = Color.ParseHex(options.Value.FontColor);
         var width = itemsPerRow * (options.Value.ItemWidth + options.Value.ItemSpacing) - options.Value.ItemSpacing;
         var height =

@@ -12,7 +12,7 @@ namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 /// <inheritdoc cref="ICustomFilterParser"/>ilters;
 /// <inheritdoc cref="ICustomFilterParser"/>
 public class CustomFilterParser : ICustomFilterParser {
-    private bool strict = true;
+    private bool strict = false;
     public IFilter Parse(string filterString) {
         var lexer = new FilterLexer(filterString);
         var filter = new Filter();
@@ -138,7 +138,12 @@ public class CustomFilterParser : ICustomFilterParser {
     }
 
     private void ParseAndOr(FilterLexer lexer, Filter filter) {
-        var token = lexer.GetNextToken(TokenType.And | TokenType.Or | TokenType.EndOfFile);
+        var expecting = TokenType.And | TokenType.Or | TokenType.EndOfFile;
+        if (!strict) {
+            expecting |= TokenType.Property | TokenType.PropertyHeader;
+        }
+
+        var token = lexer.GetNextToken(expecting);
         if(token is null) {
             throw new FilterParserException(lexer.Line, lexer.Char, "Syntax error. Unknown or unexpected token.");
         }
@@ -149,6 +154,11 @@ public class CustomFilterParser : ICustomFilterParser {
         else if(token.Type == TokenType.And) {
             filter.AddClause(true);
             ParseProperty(lexer, filter);
+        }
+        else if (!strict && token.Type is TokenType.Property or TokenType.PropertyHeader) {
+            filter.AddClause(false);
+            lexer.PushBack(token);
+            ParsePropertyOrPropertyHeader(lexer, filter);
         }
         else if(token.Type == TokenType.EndOfFile) {
             return;

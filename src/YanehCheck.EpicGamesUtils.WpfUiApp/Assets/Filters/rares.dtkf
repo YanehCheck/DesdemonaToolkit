@@ -2,117 +2,118 @@
 ###Name=Strict exclusive
 ###Description=Rare, exclusive and unique items. Tries to not show accessories, recent and pretty commonly owned stuff, but may miss some things.
 ###Author=Desdemona Toolkit
-###Optimizations==0
+###Strict=False
 
 # Purple skull trooper
 ###Remark=Purple
 FortniteId=="CID_030_Athena_Commando_M_Halloween" && OwnedStylesRaw{"ClothingColor:Mat1"
 
 # Pink ghoul trooper
-||###Remark=Pink
+###Remark=Pink
 FortniteId=="CID_029_Athena_Commando_F_Halloween" && OwnedStylesRaw{"Material:Mat3"
 
 # Max omega/carbide
-||###Remark=Max
+###Remark=Max
 FortniteId*==["CID_116_Athena_Commando_M_CarbideBlack", "CID_115_Athena_Commando_M_CarbideBlue"] && OwnedStylesRaw{"Emissive:Emissive3" && OwnedStylesRaw{"Progressive:Stage5"
 
 # Max drift/Calamity
-||###Remark=Max
+###Remark=Max
 FortniteId*==["CID_161_Athena_Commando_M_Drift", "CID_237_Athena_Commando_F_Cowgirl"] && OwnedStylesRaw{"Progressive:Stage5"
 
 # OG gold SS
-||###Remark=Gold
+###Remark=Gold
 Season=="c2s2" && Source==BattlePass && OwnedStylesRaw{"Progressive:Stage4" && FortniteId!="VTID_573_TNTina_StyleD"
-||###Remark=Gold
+
+###Remark=Gold
 FortniteId=="CID_691_Athena_Commando_F_TNTina" && OwnedStylesRaw{"Progressive:Stage7"
 
 # World Cup Fishstick
-||###Remark=World Cup
+###Remark=World Cup
 FortniteId=="CID_315_Athena_Commando_M_TeriyakiFish" && OwnedStylesRaw{"Parts:Stage3"
 
 # Party trooper j Balvin
-||###Remark=Both exclusive
+###Remark=Both exclusive
 FortniteId=="CID_920_Athena_Commando_M_PartyTrooper" && OwnedStylesRaw@{["Material:Mat2", "Material:Mat3"]
 
-||# Long wait in Shop
+# Long wait in Shop
 LastSeen<2020-6-20 && Source==Shop
 
-||# Early crew
+# Early crew
 Source==Crew && Release<=2021-9-1
 
-||# STW test and creator banners
+# STW test and creator banners
 SourceDescription*{["STW ALPHA TEST", "SURVIVORS AND SELECT A YOUTUBER"]
 
-||# Other banners
+# Other banners
 FortniteId*==["NewsletterBanner", "InfluencerBanner50"]
 
 # Specific emoticons
-||###Remark={SourceDescription}
+###Remark={SourceDescription}
 FortniteId*==["Emoji_S19_ShowdownReaper", "Emoji_S17_StreamElementsSlurpMonster", "Emoji_S22_FunBreak"]
 
 # Cup, drops, etc
-||###Remark={SourceDescription}
+###Remark={SourceDescription}
 SourceDescription*{["REDEEM CODE", "TWITCH", "COLLEGIATE CUP", "STREAMER ELEMENTS LEADERBOARD", "GALAXY CUP"] && Release<2023-5-5
 
 # Cups, but only emojis, sprays,..
-||###Remark={SourceDescription}
+###Remark={SourceDescription}
 SourceDescription{"CUP" && Type*==[Emoji, Spray, Banner] && Release<2023-5-5
 
-||# STW Founder
+# STW Founder
 SourceDescription=="STW Founder's Pack" && Type@!=[Backpack, Pickaxe]
 
-|| #100 levels
+#100 levels
 Name{"SEASON LEVEL 100"
 
-|| # Winterfest outfits
+# Winterfest outfits
 SourceDescription*{["Winterfest", "Daily gifts"] && Type==Outfit
 
-||# Refer a friend
+# Refer a friend
 SourceDescription{"REFER A FRIEND" && Type*==[Outfit, Pickaxe, Glider]
 
-||# Older FNCS Set stuff
+# Older FNCS Set stuff
 Set=="FNCS" && Release<=2023-05-30 && Type@!=[LoadingScreen, Emoji, Spray]
 
-||# Vbuck cards
+# Vbuck cards
 SourceDescription{"REDEEM VBUCK"
 
-||# Llama-rama
+# Llama-rama
 SourceDescription{"llama-rama"
 
-||# Samsung galaxy
+# Samsung galaxy
 SourceDescription{"Samsung Galaxy" && Type==Outfit
 
-||# Xbox bundles
+# Xbox bundles
 SourceDescription@{["xbox", "bundle"] && Type==Outfit
 
-||# Nvidia things
+# Nvidia things
 Name{"Reflex" && Type==Outfit
 
-||# Switch bundle
+# Switch bundle
 SourceDescription{"Nintendo Switch"
 
-||# Honor
+# Honor
 SourceDescription{"Honor 20"
 
-||# Twitch prime
+# Twitch prime
 SourceDescription{"prime pack" && Type==Outfit
 
-||# PS4
+# PS4
 SourceDescription{"PlayStation" && Type==Outfit
 
-||# Early starter packs
+# Early starter packs
 Name*==["ROGUE AGENT", "WINGMAN"]
 
-||# S1 (also an extra check for mislabeled unreleased items)
+# S1 (also an extra check for mislabeled unreleased items)
 Season=="c1s1" && Release<2018-1-1 && Source==BattlePass && Type!=Backpack
 
-||# S2
+# S2
 Season=="c1s2" && Rarity*==[Legendary, Epic] && Source==BattlePass
 
-||# S3
+# S3
 Name*==["THE REAPER", "ELITE AGENT", "DARK VOYAGER"] && Type==Outfit
 
-||# Specific items
+# Specific items
 Name*==
 [
 # Outfits

@@ -11,7 +11,7 @@ internal class FilterLexer {
     public int Line { get; private set; } = 1;
     public int Char { get; private set; } = 0;
     public int Pos { get; private set; } = 0;
-    public bool Strict { get; set; } = true;
+    public bool Strict { get; set; } = false;
 
     private Stack<Token> pushedBackTokens = new();
 
@@ -267,6 +267,7 @@ internal class FilterLexer {
 
     private Token? LexEnumLiteral<T>(TokenType enumTokenType) where T : Enum {
         var names = Enum.GetNames(typeof(T));
+
         var stringValue = names.SingleOrDefault(n => sourceString[Pos..].StartsWith(n));
         if(stringValue != null) {
             UpdatePos(stringValue.Length);

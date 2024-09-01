@@ -1,7 +1,8 @@
 ###Version=1
-###Name=Any exclusives
-###Description=Any time-limited items.
+###Name=Rare style remark
+###Description=Adds remarks to generally rare styles.
 ###Author=Desdemona Toolkit
+###AllPass=true
 
 # Purple skull trooper
 ###Remark=Purple
@@ -32,19 +33,3 @@ FortniteId=="CID_315_Athena_Commando_M_TeriyakiFish" && OwnedStylesRaw{"Parts:St
 # Party trooper j Balvin
 ||###Remark=Both exclusive
 FortniteId=="CID_920_Athena_Commando_M_PartyTrooper" && OwnedStylesRaw@{["Material:Mat2", "Material:Mat3"]
-||
-Source==Challenges && LastSeen==null
-||
-Source==Exclusives
-||
-Source==Crew && Release<=2021-9-1
-||
-Set=="FNCS" && Release<=2023-05-30 && Source==Shop
-||
-Season=="c1s1" && Source==BattlePass && Release<2018-1-1
-||
-Season*==["c1s2", "c2s3", "c1s4", "c1s5"] && Source==BattlePass && Type==Outfit && Rarity*==[Epic, Legendary]
-||
-Name*==["ROGUE AGENT", "WINGMAN", "SUMMIT STRIKER", "THE ACE"]
-||
-Source==Packs && SourceDescription{"Level up quest pack"

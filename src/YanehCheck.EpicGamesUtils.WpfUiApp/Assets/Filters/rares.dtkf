@@ -16,6 +16,10 @@ FortniteId=="CID_029_Athena_Commando_F_Halloween" && OwnedStylesRaw{"Material:Ma
 ||###Remark=Max
 FortniteId*==["CID_116_Athena_Commando_M_CarbideBlack", "CID_115_Athena_Commando_M_CarbideBlue"] && OwnedStylesRaw{"Emissive:Emissive3" && OwnedStylesRaw{"Progressive:Stage5"
 
+# Max drift/Calamity
+||###Remark=Max
+FortniteId*==["CID_161_Athena_Commando_M_Drift", "CID_237_Athena_Commando_F_Cowgirl"] && OwnedStylesRaw{"Progressive:Stage5"
+
 # OG gold SS
 ||###Remark=Gold
 Season=="c2s2" && Source==BattlePass && OwnedStylesRaw{"Progressive:Stage4" && FortniteId!="VTID_573_TNTina_StyleD"

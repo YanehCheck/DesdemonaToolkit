@@ -6,28 +6,16 @@
 ![.NET](https://img.shields.io/badge/.NET-8.0-8A2824)
 ## About
 
-Desdemona Toolkit is free and open-source desktop application for externally viewing and managing Fortnite accounts with high focus on customizability and safety.
-
-<b>Safe</b> - Designed to guarantee that credentials or any data will never be sent to me or any other third party.  
-<b>Open-source</b> - All code is public and licenced under GPL-3.0!  
-<b>Customization</b> - Make it yours with flexible settings and options.  
-
-### ⚠️Desdemona Toolkit is currently in early active development. You should expect bugs, breaking changes and lack of features early-on.⚠️
-
-## Why?
-
-One day, I wanted to show off my cosmetics collection to a friend, but I only found solutions that required sending my credentials to third parties. So, I decided to write my own script... then added a few extra features... then scrapped it all and created a stand-alone desktop application as my pet project, so others don't have to worry about where their credentials and data might end up.
+Desdemona Toolkit is free and open-source desktop application for exploring and manage your Fortnite account and items without giving out your credentials. 
 
 ## Features
 
-⭐ Browse your inventory including unlocked styles with advanced filtering
-⭐ Export your inventory to Fortnite.GG or as a customizable image  
-⭐ Create custom filter based on your needs with simple, but powerful DTKF filtering language
-⭐ Fetch the newest item data at any time 
+⭐ **Browse & Share**: Browse every skin, emote, and cosmetic you've unlocked, with all unlockable styles included. Share your items as an image or export it to Fortnite.GG.  
+⭐ **Customizable**: Create filters to organize and annotate your items exactly how you want.  
+⭐ **Secure**: Your login information is never shared with any third parties. Desdemona Toolkit communicates directly with the Epic Games API.  
+⭐ **Open-Source**: All the code is licensed under GPL-3.0, ensuring transparency and extensibility.  
 
-## Usage
-
-See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage and on how to create your own filter.
+### ⚠️Desdemona Toolkit is currently in early active development. You should expect minor bugs, breaking changes and lack of features early-on.⚠️
 
 ## Installation and set-up
 
@@ -40,6 +28,10 @@ See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage a
     - If the release is older and some items are not showing up, you can also then use the `Items - Fortnite.GG` option to get the latest data from www.fortnite.gg
 - Authenticate using your authorization code
 - Use the app! Browse your inventory, export it and so on!
+
+## Usage
+
+See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage and on how to create your own filter.
   
 ## Gallery
 <img width="750" src="https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/img-export.png"> </img>

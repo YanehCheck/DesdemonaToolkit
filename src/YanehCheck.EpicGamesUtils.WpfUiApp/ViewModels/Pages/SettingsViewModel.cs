@@ -3,7 +3,7 @@ using System.Reflection;
 using Wpf.Ui;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
+using YanehCheck.EpicGamesUtils.EgsApi.Service;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
@@ -13,7 +13,7 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
 public partial class SettingsViewModel(IBrowserService browserService,
-    ICachedEpicGamesService epicGamesService,
+    IEpicGamesService epicGamesService,
     ISnackbarService snackbarService,
     ISessionService sessionService,
     IWritableOptions<ItemImageCachingOptions> itemImageCacheOptions,
@@ -205,15 +205,17 @@ public partial class SettingsViewModel(IBrowserService browserService,
             return;
         }
 
-        var result = await epicGamesService.SetSacCode(sessionService.AccountId!, sessionService.AccessToken!, SacCode);
-
-        if (!result.Success) {
+        try {
+            await epicGamesService.UseSacCode(sessionService.AccountId!, sessionService.AccessToken!, SacCode);
+        }
+        catch (Exception ex) {
             snackbarService.Show(
                 "Failure",
-                $"{result.ErrorMessage}",
+                $"{ex.Message}",
                 ControlAppearance.Danger,
                 null,
                 TimeSpan.FromSeconds(5));
+            return;
         }
 
         snackbarService.Show(

@@ -4,9 +4,10 @@ using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Common.Enums.Items;
 using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
+using YanehCheck.EpicGamesUtils.EgsApi.Service;
+using YanehCheck.EpicGamesUtils.EgsApi.Service.Dtos;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Exceptions;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
@@ -16,7 +17,7 @@ using ItemPresentationModel = YanehCheck.EpicGamesUtils.WpfUiApp.Types.Classes.P
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels.Pages;
 
 public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationAware {
-    private readonly ICachedEpicGamesService epicGamesService;
+    private readonly IEpicGamesService epicGamesService;
     private readonly IItemFacade itemFacade;
     private readonly ISessionService sessionService;
     private readonly ISnackbarService snackbarService;
@@ -67,7 +68,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
 
     /// <inheritdoc/>
-    public ItemsViewModel(ICachedEpicGamesService epicGamesService,
+    public ItemsViewModel(IEpicGamesService epicGamesService,
         IItemFacade itemFacade,
         ISessionService sessionService,
         ISnackbarService snackbarService,
@@ -132,7 +133,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         ItemsLoaded = false;
         items = [];
         CustomFilterUpdate();
-        epicGamesService.Invalidate(nameof(ICachedEpicGamesService.GetFortniteProfile));
+        //epicGamesService.Invalidate(nameof(ICachedEpicGamesService.GetFortniteCosmetics));
         InitializeViewModelForUserAndShowResult(() => {
             ItemsLoaded = true;
         });
@@ -373,10 +374,14 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
     private async Task<(IEnumerable<ItemPresentationModel>? Items, string? ErrorMessage)> FetchItems() {
         // Get owned item IDs and styles
-        var profileItemsResult = await epicGamesService.GetFortniteProfile(sessionService.AccountId!, sessionService.AccessToken!);
-        if (!profileItemsResult.Success) {
+        FortniteItemsResult profileItemsResult = null!;
+        try {
+            profileItemsResult = await epicGamesService.GetFortniteItems(sessionService.AccountId!, sessionService.AccessToken!);
+        }
+
+        catch (Exception ex) {
             _initializedForAccountId = "";
-            return ( null, $"An error occured while fetching your inventory.\nError: {profileItemsResult.ErrorMessage!}");
+            return ( null, $"An error occured while fetching your inventory.\nError: {ex.Message}");
         }
         var profileItems = profileItemsResult.Items!.ToList();
 
@@ -389,7 +394,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             var items = await itemFacade.GetByFortniteIdAsync(emptyProfileItems);
             // Add owned raw styles and map to ItemPresentationModel
             var itemsWithStyles = items.Select((item, index) => new ItemPresentationModel(item) {
-                OwnedStylesRaw = profileItems.ElementAt(index).OwnedStylesRaw
+                OwnedStylesRaw = profileItems.ElementAt(index).OwnedStylesRaw.Select(v => new ItemStyleRaw(v.Channel, v.Properties))
             }).ToList();
             // Pull required style information from DB for UNLOCKABLE styles
             foreach (var item in itemsWithStyles.Where(e => e.OwnedStylesRaw.Any())) {

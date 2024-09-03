@@ -4,7 +4,7 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Db.Bl.Facades.Interfaces;
 using YanehCheck.EpicGamesUtils.Db.Bl.Models;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
+using YanehCheck.EpicGamesUtils.EgsApi.Service;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
@@ -16,7 +16,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     IBrowserService browserService,
     IPersistenceProvider persistenceProvider, 
     ISessionService sessionService, 
-    ICachedEpicGamesService epicGamesService,
+    IEpicGamesService epicGamesService,
     IFortniteItemProvider itemProvider,
     IItemFacade itemFacade,
     IItemStyleFacade itemStyleFacade,
@@ -62,9 +62,9 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     }
 
     private void InitializeViewModel() {
-        if(sessionService.IsAuthenticated) {
-            Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId!, sessionService.AccessToken!));
-        }
+        //if(sessionService.IsAuthenticated) {
+        //    Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId!, sessionService.AccessToken!));
+        //}
 
         AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
         LastItemFetch = persistenceProvider.LastItemFetch;
@@ -83,35 +83,35 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             return;
         }
 
-        epicGamesService.Invalidate(nameof(ICachedEpicGamesService.AuthenticateAccount));
-        var resultAuth = await epicGamesService.AuthenticateAccount(AuthorizationCode);
-        if (resultAuth) {
-            persistenceProvider.AccountId = resultAuth.AccountId!;
-            persistenceProvider.AccessToken = resultAuth.AccessToken!;
-            persistenceProvider.AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
-            persistenceProvider.DisplayName = resultAuth.DisplayName!;
+        //epicGamesService.Invalidate(nameof(ICachedEpicGamesService.AuthenticateAccountUsingAuthCode));
+        try {
+            var resultAuth = await epicGamesService.AuthenticateAccountUsingAuthCode(AuthorizationCode);
+            persistenceProvider.AccountId = resultAuth.AccountId;
+            persistenceProvider.AccessToken = resultAuth.AccessToken;
+            persistenceProvider.AccessTokenExpiry = resultAuth.AccessTokenExpiry;
+            persistenceProvider.DisplayName = resultAuth.DisplayName;
 
-            sessionService.AccountId = resultAuth.AccountId!;
-            sessionService.AccessToken = resultAuth.AccessToken!;
-            sessionService.AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
+            sessionService.AccountId = resultAuth.AccountId;
+            sessionService.AccessToken = resultAuth.AccessToken;
+            sessionService.AccessTokenExpiry = resultAuth.AccessTokenExpiry;
             sessionService.DisplayName = resultAuth.DisplayName;
 
-            DisplayName = resultAuth.DisplayName!;
-            AccessTokenExpiry = resultAuth.AccessTokenExpiry!.Value;
+            DisplayName = resultAuth.DisplayName;
+            AccessTokenExpiry = resultAuth.AccessTokenExpiry;
 
-            epicGamesService.InvalidateAll();
+            //epicGamesService.InvalidateAll();
 
             snackbarService.Show("Success", $"Successfully authenticated as {resultAuth.DisplayName}.", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
         }
-        else {
-            snackbarService.Show("Failure", resultAuth.ErrorMessage!, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
+        catch(Exception ex) {
+            snackbarService.Show("Failure", ex.Message, ControlAppearance.Danger, null, TimeSpan.FromSeconds(5));
             return;
         }
 
         persistenceProvider.Save();
 
         // Precache information for other pages
-        await Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId, sessionService.AccessToken));
+        //await Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId, sessionService.AccessToken));
     }
 
     [RelayCommand]

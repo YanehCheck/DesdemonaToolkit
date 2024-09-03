@@ -9,15 +9,14 @@ using Wpf.Ui;
 using Wpf.Ui.Controls;
 using YanehCheck.EpicGamesUtils.Db.Bl;
 using YanehCheck.EpicGamesUtils.Db.Dal;
-using YanehCheck.EpicGamesUtils.Utils.EgApiWrapper;
+using YanehCheck.EpicGamesUtils.EgsApi.Api;
+using YanehCheck.EpicGamesUtils.EgsApi.Service;
 using YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer;
 using YanehCheck.EpicGamesUtils.Utils.FortniteAssetSerializer.Interfaces;
 using YanehCheck.EpicGamesUtils.Utils.FortniteGgScraper;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Cli;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.CustomFilters.Interfaces;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Services.EpicGames.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems.Mappers;
@@ -26,7 +25,6 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.Persistence.Interfaces;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Services.UI.Interfaces;
-using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Cache;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options;
 using YanehCheck.EpicGamesUtils.WpfUiApp.ViewModels;
 using YanehCheck.EpicGamesUtils.WpfUiApp.Views.Windows;
@@ -66,13 +64,7 @@ public partial class App {
 
             // EGS API
             services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
-            services.AddSingleton<EpicGamesService>();
-            services.AddSingleton<ICachedEpicGamesService>(sp =>
-                new CachedEpicGamesService(
-                    sp.GetRequiredService<EpicGamesService>(),
-                    new InMemoryCache()
-                )
-            );
+            services.AddSingleton<IEpicGamesService, EpicGamesService>();
 
             // Other fortnite
             services.AddTransient<IFortniteImageProvider, FortniteImageProvider>();

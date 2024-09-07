@@ -11,10 +11,10 @@ public class QueryProfileAthenaResponseMapper : IResponseMapper<QueryProfileAthe
         var response = new QueryProfileAthenaResponse {
             Created = json.SelectToken("$.profileChanges[0].profile.created")!.ToObject<DateTime>(),
             Updated = json.SelectToken("$.profileChanges[0].profile.updated")!.ToObject<DateTime>(),
-            AccountLevel = json.SelectToken("$.profileChanges[0].profile.stats.attributes.accountLevel")!.ToObject<int>(),
-            LifetimeWins = json.SelectToken("$.profileChanges[0].profile.stats.attributes.lifetime_wins")!.ToObject<int>(),
-            BattlePassStars = json.SelectToken("$.profileChanges[0].profile.stats.attributes.battlestars")!.ToObject<int>(),
-            BattlePassStarsTotal = json.SelectToken("$.profileChanges[0].profile.stats.attributes.battlestars_season_total")!.ToObject<int>()
+            AccountLevel = json.SelectToken("$.profileChanges[0].profile.stats.attributes.accountLevel")?.ToObject<int>() ?? 0,
+            LifetimeWins = json.SelectToken("$.profileChanges[0].profile.stats.attributes.lifetime_wins")?.ToObject<int>() ?? 0,
+            BattlePassStars = json.SelectToken("$.profileChanges[0].profile.stats.attributes.battlestars")?.ToObject<int>() ?? 0,
+            BattlePassStarsTotal = json.SelectToken("$.profileChanges[0].profile.stats.attributes.battlestars_season_total")?.ToObject<int>() ?? 0
             /*CurrentSeasonStats = new SeasonStats {
                 SeasonNumber = json.SelectToken("x.profileChanges[0].profile.stats.attributes.season_num")!.ToObject<int>(),
                 Wins = json.SelectToken("x.profileChanges[0].profile.stats.attributes.season.numWins")?.ToObject<int>(),

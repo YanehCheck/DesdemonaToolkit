@@ -62,9 +62,9 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
     }
 
     private void InitializeViewModel() {
-        //if(sessionService.IsAuthenticated) {
-        //    Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId!, sessionService.AccessToken!));
-        //}
+        if(sessionService.IsAuthenticated) {
+            Task.Run(() => epicGamesService.PrecacheResults(sessionService.AccountId!, sessionService.AccessToken!));
+        }
 
         AccessTokenExpiry = persistenceProvider.AccessTokenExpiry;
         LastItemFetch = persistenceProvider.LastItemFetch;
@@ -83,7 +83,6 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             return;
         }
 
-        //epicGamesService.Invalidate(nameof(ICachedEpicGamesService.AuthenticateAccountUsingAuthCode));
         try {
             var resultAuth = await epicGamesService.AuthenticateAccountUsingAuthCode(AuthorizationCode);
             persistenceProvider.AccountId = resultAuth.AccountId;
@@ -99,8 +98,6 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
             DisplayName = resultAuth.DisplayName;
             AccessTokenExpiry = resultAuth.AccessTokenExpiry;
 
-            //epicGamesService.InvalidateAll();
-
             snackbarService.Show("Success", $"Successfully authenticated as {resultAuth.DisplayName}.", ControlAppearance.Success, null, TimeSpan.FromSeconds(5));
         }
         catch(Exception ex) {
@@ -109,9 +106,6 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         }
 
         persistenceProvider.Save();
-
-        // Precache information for other pages
-        //await Task.Run(() => epicGamesService.PreCacheAll(sessionService.AccountId, sessionService.AccessToken));
     }
 
     [RelayCommand]

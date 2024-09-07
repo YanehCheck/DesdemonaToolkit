@@ -357,12 +357,11 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             return (0, fetchResult.ErrorMessage);
         }
         var fetchedItems = fetchResult.Items!.ToList();
-        items = fetchedItems.Where(i => !string.IsNullOrEmpty(i.FortniteGgId)).ToList();
+        items = fetchedItems.Where(i => !string.IsNullOrEmpty(i.FortniteGgId) && i.Id != Guid.Empty).ToList();
         ItemsLoaded = true;
-        var missingItems = fetchedItems.Count - items.Count();
         CustomFilterUpdate();
         await Task.Run(() => LoadImages(filteredItems));
-        return (missingItems, null);
+        return (fetchResult.ItemsWithMissingData, null);
     }
 
     private async Task LoadImages(IEnumerable<ItemPresentationModel> items) {
@@ -372,7 +371,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         });
     }
 
-    private async Task<(IEnumerable<ItemPresentationModel>? Items, string? ErrorMessage)> FetchItems() {
+    private async Task<(IEnumerable<ItemPresentationModel>? Items, string ErrorMessage, int ItemsWithMissingData)> FetchItems() {
         // Get owned item IDs and styles
         FortniteItemsResult profileItemsResult = null!;
         try {
@@ -381,7 +380,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
         catch (Exception ex) {
             _initializedForAccountId = "";
-            return ( null, $"An error occured while fetching your inventory.\nError: {ex.Message}");
+            return (null, $"An error occured while fetching your inventory.\nError: {ex.Message}", 0);
         }
         var profileItems = profileItemsResult.Items!.ToList();
 
@@ -401,10 +400,10 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
                 var validProperties = item.OwnedStylesRaw.SelectMany(i => i.Property);
                 item.OwnedStyles = await itemStyleFacade.GetByFortniteItemIdAsync(item.FortniteId, validProperties);
             }
-            return (itemsWithStyles,null);
+            return (itemsWithStyles, null, profileItems.Count - items.Count());
         }
         catch (Exception ex) {
-            return (null, $"An error occured while fetching item data from database.\nError: {ex.Message}");
+            return (null, $"An error occured while fetching item data from database.\nError: {ex.Message}", 0);
         }
     }
 }

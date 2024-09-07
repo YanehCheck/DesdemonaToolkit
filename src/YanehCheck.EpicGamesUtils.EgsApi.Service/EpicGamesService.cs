@@ -1,6 +1,7 @@
 ﻿using YanehCheck.EpicGamesUtils.EgsApi.Api;
 using YanehCheck.EpicGamesUtils.EgsApi.Api.Enums;
 using YanehCheck.EpicGamesUtils.EgsApi.Api.Responses.DataObjects;
+using YanehCheck.EpicGamesUtils.EgsApi.Api.Responses.Interfaces;
 using YanehCheck.EpicGamesUtils.EgsApi.Service.Dtos;
 using YanehCheck.EpicGamesUtils.EgsApi.Service.Helpers;
 using YanehCheck.EpicGamesUtils.EgsApi.Service.Mappers;
@@ -8,8 +9,14 @@ using Attribute = YanehCheck.EpicGamesUtils.EgsApi.Api.Responses.DataObjects.Att
 
 namespace YanehCheck.EpicGamesUtils.EgsApi.Service;
 
-public class EpicGamesService(IEpicGamesClient client) : IEpicGamesService {
+public class EpicGamesService(ICachedEpicGamesClient client) : IEpicGamesService {
     private readonly ItemMapper itemMapper = new();
+
+    public async Task PrecacheResults(string accountId, string accessToken) {
+        await client.PrecacheAsync(() => Task.FromResult(client.Fortnite_QueryAthenaProfile(accountId, accessToken).Result as IResponse), nameof(client.Fortnite_QueryAthenaProfile));
+        await client.PrecacheAsync(() => Task.FromResult(client.Fortnite_QueryCommonCoreProfile(accountId, accessToken).Result as IResponse), nameof(client.Fortnite_QueryCommonCoreProfile));
+    }
+
     public async Task<AccountAuthTokenResult> AuthenticateAccountUsingAuthCode(string authcode) {
         var response = await client.Accounts_AuthenticateAsAccount(AuthClientType.FortnitePcGameClient, authcode);
         return new AccountAuthTokenResult(

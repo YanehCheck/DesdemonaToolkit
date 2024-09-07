@@ -2,24 +2,11 @@
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using YanehCheck.EpicGamesUtils.EgsApi.Api.Enums;
-using YanehCheck.EpicGamesUtils.EgsApi.Api.Exceptions;
 using YanehCheck.EpicGamesUtils.EgsApi.Api.Helpers;
 using YanehCheck.EpicGamesUtils.EgsApi.Api.Mappers;
 using YanehCheck.EpicGamesUtils.EgsApi.Api.Responses;
 
 namespace YanehCheck.EpicGamesUtils.EgsApi.Api;
-
-/// <summary>
-/// <exception cref="EpicGamesApiException"></exception>
-/// </summary>
-public interface IEpicGamesClient {
-    Task<ClientAuthResponse> Accounts_AuthenticateAsClient(AuthClientType clientType);
-    Task<AccountAuthCodeAuthResponse> Accounts_AuthenticateAsAccount(AuthClientType clientType, string authCode);
-    Task<AccountLookupResponse> Accounts_LookupAccountId(string accountId, string accessToken);
-    Task<QueryProfileCommonCoreResponse> Fortnite_QueryCommonCoreProfile(string accountId, string accessToken);
-    Task<QueryProfileAthenaResponse> Fortnite_QueryAthenaProfile(string accountId, string accessToken);
-    Task<QueryProfileCommonCoreResponse> Accounts_SetSacCode(string accountId, string accessToken, string sacCode);
-}
 
 /// <inheritdoc cref="IEpicGamesClient"/>
 public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
@@ -30,7 +17,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
     private readonly QueryProfileCommonCoreResponseMapper queryCoreMapper = new();
     private readonly QueryProfileAthenaResponseMapper queryAthenaMapper = new();
 
-    public async Task<ClientAuthResponse> Accounts_AuthenticateAsClient(AuthClientType clientType) {
+    public virtual async Task<ClientAuthResponse> Accounts_AuthenticateAsClient(AuthClientType clientType) {
         var authClient = AuthClient.GetClient(clientType);
         var credentialsBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{authClient.Id}:{authClient.Secret}"));
 
@@ -53,7 +40,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         }
     }
     
-    public async Task<AccountAuthCodeAuthResponse> Accounts_AuthenticateAsAccount(AuthClientType clientType, string authCode) {
+    public virtual async Task<AccountAuthCodeAuthResponse> Accounts_AuthenticateAsAccount(AuthClientType clientType, string authCode) {
         var authClient = AuthClient.GetClient(clientType);
         var credentialsBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{authClient.Id}:{authClient.Secret}"));
 
@@ -78,7 +65,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         }
     }
 
-    public async Task<AccountLookupResponse> Accounts_LookupAccountId(string accountId, string accessToken) {
+    public virtual async Task<AccountLookupResponse> Accounts_LookupAccountId(string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://account-public-service-prod.ol.epicgames.com/account/api/public/account/{accountId}");
@@ -98,7 +85,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         }
     }
 
-    public async Task<QueryProfileCommonCoreResponse> Fortnite_QueryCommonCoreProfile(string accountId, string accessToken) {
+    public virtual async Task<QueryProfileCommonCoreResponse> Fortnite_QueryCommonCoreProfile(string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/profile/{accountId}/client/QueryProfile", Method.Post);
@@ -120,7 +107,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         }
     }
 
-    public async Task<QueryProfileAthenaResponse> Fortnite_QueryAthenaProfile(string accountId, string accessToken) {
+    public virtual async Task<QueryProfileAthenaResponse> Fortnite_QueryAthenaProfile(string accountId, string accessToken) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/profile/{accountId}/client/QueryProfile", Method.Post);
@@ -142,7 +129,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
         }
     }
 
-    public async Task<QueryProfileCommonCoreResponse> Accounts_SetSacCode(string accountId, string accessToken, string sacCode) {
+    public virtual async Task<QueryProfileCommonCoreResponse> Accounts_SetSacCode(string accountId, string accessToken, string sacCode) {
         var request =
             new RestRequest(
                 $"https://fngw-mcp-gc-livefn.ol.epicgames.com/fortnite/api/game/v2/profile/{accountId}/client/SetAffiliateName", Method.Post);

@@ -63,7 +63,7 @@ public partial class App {
             services.AddTransient<IRestClient, RestClient>();
 
             // EGS API
-            services.AddSingleton<IEpicGamesClient, EpicGamesClient>();
+            services.AddSingleton<ICachedEpicGamesClient, CachedEpicGamesClient>();
             services.AddSingleton<IEpicGamesService, EpicGamesService>();
 
             // Other fortnite

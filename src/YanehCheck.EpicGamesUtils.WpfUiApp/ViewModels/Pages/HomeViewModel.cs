@@ -158,7 +158,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
         }
 
         try {
-            var filteredItems = items.Where(i => i.FortniteId != null!).DistinctBy(i => i.FortniteId);
+            var filteredItems = items.Where(i => i.FortniteId != null!).DistinctBy(i => i.FortniteId).ToList();
             await itemFacade.SaveByFortniteIdAsync(filteredItems);
 
             LastItemFetch = DateTime.Now;
@@ -174,7 +174,7 @@ public partial class HomeViewModel(ISnackbarService snackbarService,
 
             sessionService.IsItemDataFetched = true;
 
-            snackbarService.Show("Success", $"Successfully fetched {filteredItems!.Count()} items!", ControlAppearance.Success,
+            snackbarService.Show("Success", $"Successfully fetched {filteredItems.Count} items!", ControlAppearance.Success,
                 null, TimeSpan.FromSeconds(5));
         }
         catch(Exception ex) {

@@ -6,24 +6,24 @@ public interface ICustomFilterProvider {
     string FilterDirectory { get; }
 
     /// <inheritdoc cref="GetAllAsync"/>
-    IEnumerable<IFilter> GetAll(Action<string, Exception>? onErrorCallback = null);
+    IList<IFilter> GetAll(Action<string, Exception>? onErrorCallback = null);
 
     /// <summary>
     /// Reads, compiles and returns all filters.
     /// </summary>
     /// <param name="onErrorCallback">Gets called on exception with the file name and Exception.</param>
     /// <exception cref="FilterParserException"></exception>
-    Task<IEnumerable<IFilter>> GetAllAsync(Action<string, Exception>? onErrorCallback = null);
+    Task<IList<IFilter>> GetAllAsync(Action<string, Exception>? onErrorCallback = null);
 
     /// <inheritdoc cref=".GetAllParallelAsync"/>
-    IEnumerable<IFilter> GetAllParallel(Action<string, Exception>? onErrorCallback = null);
+    IList<IFilter> GetAllParallel(Action<string, Exception>? onErrorCallback = null);
 
     /// <summary>
     /// Reads, compiles and returns all filters in parallel.
     /// </summary>
     /// <param name="onErrorCallback">Gets called on exception with the file name and Exception.</param>
     /// <exception cref="FilterParserException"></exception>
-    Task<IEnumerable<IFilter>> GetAllParallelAsync(Action<string, Exception>? onErrorCallback = null);
+    Task<IList<IFilter>> GetAllParallelAsync(Action<string, Exception>? onErrorCallback = null);
 
     /// <inheritdoc cref="GetAllLazyAsync"/>
     IEnumerable<IFilter> GetAllLazy(Action<string, Exception>? onErrorCallback = null);

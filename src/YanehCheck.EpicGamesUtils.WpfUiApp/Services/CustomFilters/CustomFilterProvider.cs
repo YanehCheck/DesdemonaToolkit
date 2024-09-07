@@ -9,13 +9,13 @@ public class CustomFilterProvider(ICustomFilterParser parser) : ICustomFilterPro
     public string FilterDirectory { get; } = Path.Combine(Path.GetDirectoryName(Process.GetCurrentProcess().MainModule!.FileName)!, "data/filters");
 
     /// <inheritdoc cref="GetAllAsync"/>
-    public IEnumerable<IFilter> GetAll(Action<string, Exception>? onErrorCallback = null) =>
+    public IList<IFilter> GetAll(Action<string, Exception>? onErrorCallback = null) =>
         GetAllAsync(onErrorCallback).ConfigureAwait(false).GetAwaiter().GetResult();
 
     /// <summary>
     /// Reads, compiles and returns all filters.
     /// </summary>
-    public async Task<IEnumerable<IFilter>> GetAllAsync(Action<string, Exception>? onErrorCallback = null) {
+    public async Task<IList<IFilter>> GetAllAsync(Action<string, Exception>? onErrorCallback = null) {
         Directory.CreateDirectory(FilterDirectory);
         var filterFiles = Directory.GetFiles(FilterDirectory, "*.dtkf");
         var filters = new List<IFilter>();
@@ -35,13 +35,13 @@ public class CustomFilterProvider(ICustomFilterParser parser) : ICustomFilterPro
     }
 
     /// <inheritdoc cref="GetAllParallelAsync"/>
-    public IEnumerable<IFilter> GetAllParallel(Action<string, Exception>? onErrorCallback = null) =>
+    public IList<IFilter> GetAllParallel(Action<string, Exception>? onErrorCallback = null) =>
         GetAllParallelAsync(onErrorCallback).ConfigureAwait(false).GetAwaiter().GetResult();
 
     /// <summary>
     /// Reads, compiles and returns all filters in parallel.
     /// </summary>
-    public async Task<IEnumerable<IFilter>> GetAllParallelAsync(Action<string, Exception>? onErrorCallback = null) {
+    public async Task<IList<IFilter>> GetAllParallelAsync(Action<string, Exception>? onErrorCallback = null) {
         Directory.CreateDirectory(FilterDirectory);
         var filterFiles = Directory.GetFiles(FilterDirectory, "*.dtkf");
         var filters = new ConcurrentBag<IFilter>();
@@ -56,7 +56,7 @@ public class CustomFilterProvider(ICustomFilterParser parser) : ICustomFilterPro
             }
         });
 
-        return filters;
+        return filters.ToList();
     }
 
     /// <inheritdoc cref="GetAllLazyAsync"/>

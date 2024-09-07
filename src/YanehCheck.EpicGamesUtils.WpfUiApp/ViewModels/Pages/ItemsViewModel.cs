@@ -38,11 +38,11 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
     // and even stability.
 
     [ObservableProperty]
-    private IEnumerable<ItemPresentationModel> _presentedItems = [];
-    private IEnumerable<ItemPresentationModel> filteredItems = [];
-    private IEnumerable<ItemPresentationModel> sortedItems = [];
-    private IEnumerable<ItemPresentationModel> customFilteredItems = [];
-    private IEnumerable<ItemPresentationModel> items = [];
+    private IList<ItemPresentationModel> _presentedItems = [];
+    private IList<ItemPresentationModel> filteredItems = [];
+    private IList<ItemPresentationModel> sortedItems = [];
+    private IList<ItemPresentationModel> customFilteredItems = [];
+    private IList<ItemPresentationModel> items = [];
 
     [ObservableProperty] 
     private string _search = "";
@@ -218,7 +218,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
         }
         else {
             try {
-                customFilteredItems = CustomFilter.Apply(items).OfType<ItemPresentationModel>();
+                customFilteredItems = CustomFilter.Apply(items).OfType<ItemPresentationModel>().ToList();
             }
             catch (FilterException e) {
                 snackbarService.Show(
@@ -235,21 +235,25 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
 
     private void SortUpdate() {
         sortedItems = SortFilter switch {
-            ItemSortFilter.AtoZ => customFilteredItems.OrderBy(i => i.Name),
-            ItemSortFilter.ZtoA => customFilteredItems.OrderByDescending(i => i.Name),
+            ItemSortFilter.AtoZ => customFilteredItems.OrderBy(i => i.Name).ToList(),
+            ItemSortFilter.ZtoA => customFilteredItems.OrderByDescending(i => i.Name).ToList(),
             ItemSortFilter.Newest => customFilteredItems.OrderByDescending(i => i.Release ?? DateTime.MaxValue)
                 .ThenBy(i => i.Set)
-                .ThenBy(i => i.Type),
+                .ThenBy(i => i.Type)
+                .ToList(),
             ItemSortFilter.Oldest => customFilteredItems.OrderBy(i => i.Release ?? DateTime.MaxValue)
                 .ThenBy(i => i.Set)
-                .ThenBy(i => i.Type),
-            ItemSortFilter.ShopMostRecent => customFilteredItems.OrderByDescending(i => i.LastSeen ?? DateTime.MinValue),
-            ItemSortFilter.ShopLongestWait => customFilteredItems.OrderBy(i => i.LastSeen ?? DateTime.MaxValue),
+                .ThenBy(i => i.Type)
+                .ToList(),
+            ItemSortFilter.ShopMostRecent => customFilteredItems.OrderByDescending(i => i.LastSeen ?? DateTime.MinValue).ToList(),
+            ItemSortFilter.ShopLongestWait => customFilteredItems.OrderBy(i => i.LastSeen ?? DateTime.MaxValue).ToList(),
             ItemSortFilter.Rarity => customFilteredItems.OrderByDescending(i => i.Rarity)
                 .ThenBy(i => i.Set) // This should somewhat group related items together
-                .ThenBy(i => i.Type), 
+                .ThenBy(i => i.Type)
+                .ToList(), 
             ItemSortFilter.Type => customFilteredItems.OrderBy(i => i.Type)
                 .ThenByDescending(i => i.Rarity)
+                .ToList()
         };
         FilterUpdate();
     }
@@ -262,7 +266,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             (!TagFilter.Any() || TagFilter.Intersect(i.Tags).Any()) &&
             TypeFilter.Satisfied(i.Type);
 
-        filteredItems = sortedItems.Where(FiltersCond);
+        filteredItems = sortedItems.Where(FiltersCond).ToList();
         SearchUpdate();
     }
 
@@ -272,7 +276,7 @@ public partial class ItemsViewModel : ObservableObject, IViewModel, INavigationA
             i.Name!.Contains(Search, StringComparison.InvariantCultureIgnoreCase) ||
             (!string.IsNullOrEmpty(i.Set) && i.Set!.Contains(Search, StringComparison.InvariantCultureIgnoreCase));
 
-        PresentedItems = filteredItems.Where(SearchCond);
+        PresentedItems = filteredItems.Where(SearchCond).ToList();
     }
 
     #endregion

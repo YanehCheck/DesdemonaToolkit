@@ -13,19 +13,19 @@ using YanehCheck.EpicGamesUtils.WpfUiApp.Utilities.Options.Interfaces;
 namespace YanehCheck.EpicGamesUtils.WpfUiApp.Services.FortniteItems;
 
 public class FortniteItemProvider(IFortniteGgScrapper fortniteGgScrapper, IRestClient restClient, FortniteGgItemMapper mapper, IWritableOptions<ItemFetchOptions> options) : IFortniteItemProvider {
-    public async Task<IEnumerable<ItemModel>?> GetItemsJsonFileAsync(string path, Action<double>? progressReport) {
+    public async Task<IList<ItemModel>?> GetItemsJsonFileAsync(string path, Action<double>? progressReport) {
         try {
             var json = await File.ReadAllTextAsync(path);
 
             var items = JsonConvert.DeserializeObject<List<FortniteGgItemDto>>(json);
-            return items!.Select(DecodeAndMap);
+            return items!.Select(DecodeAndMap).ToList();
         }
         catch(Exception e) {
             return null;
         }
     }
 
-    public async Task<IEnumerable<ItemModel>?> GetItemsStableUriAsync(Action<double>? progressReport) {
+    public async Task<IList<ItemModel>?> GetItemsStableUriAsync(Action<double>? progressReport) {
         try {
             var request = new RestRequest(options.Value.StableSourceUri);
             var response = await restClient.GetAsync(request);
@@ -36,18 +36,18 @@ public class FortniteItemProvider(IFortniteGgScrapper fortniteGgScrapper, IRestC
             progressReport?.Invoke(100);
 
             var items = JsonConvert.DeserializeObject<List<FortniteGgItemDto>>(response.Content!);
-            return items!.Select(DecodeAndMap);
+            return items!.Select(DecodeAndMap).ToList();
         }
         catch(Exception e) {
             return null;
         }
     }
 
-    public async Task<IEnumerable<ItemModel>?> GetItemsFortniteGgAsync(Action<double>? progressReport) {
+    public async Task<IList<ItemModel>?> GetItemsFortniteGgAsync(Action<double>? progressReport) {
         var items = await fortniteGgScrapper.ScrapIdRangeParallelAsync(0, options.Value.FortniteGgIdRange, progressReport);
         return items is null or { IsEmpty: true } ?
             null :
-            items.Select(DecodeAndMap);
+            items.Select(DecodeAndMap).ToList();
     }
 
     private ItemModel DecodeAndMap(FortniteGgItemDto item) {

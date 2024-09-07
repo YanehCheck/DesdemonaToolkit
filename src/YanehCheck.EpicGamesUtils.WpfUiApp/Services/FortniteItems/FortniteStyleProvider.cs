@@ -27,7 +27,7 @@ public class FortniteStyleProvider(IFortniteAssetSerializer assetSerializer, Ite
         return styles;
     }
 
-    public async Task<List<ItemStyleModel>?> GetStylesJsonFileAsync(string file, Action<double>? progressReport = null) {
+    public async Task<IReadOnlyCollection<ItemStyleModel>?> GetStylesJsonFileAsync(string file, Action<double>? progressReport = null) {
         progressReport?.Invoke(0);
         var content = await File.ReadAllTextAsync(file);
         progressReport?.Invoke(0.5);

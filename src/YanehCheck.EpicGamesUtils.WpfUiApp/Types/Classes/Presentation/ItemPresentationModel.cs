@@ -17,7 +17,6 @@ public partial class ItemPresentationModel : ItemOwnedModel {
     public void ToggleItemDetailFlyout() => DetailFlyoutOpened = !DetailFlyoutOpened;
 
     public bool FromChallenge => PriceVbucks == null && PriceUsd == null && SourceDescription != null;
-
     public IEnumerable<IEnumerable<StyleNamePresentation>> StylesToPresent => GetStylesToPresent();
 
     private IEnumerable<IEnumerable<StyleNamePresentation>> GetStylesToPresent() {

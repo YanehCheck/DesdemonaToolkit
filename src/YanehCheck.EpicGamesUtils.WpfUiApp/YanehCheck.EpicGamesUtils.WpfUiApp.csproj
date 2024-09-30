@@ -82,6 +82,7 @@
     <None Remove="Assets\Images\ItemTypeIcons\icon-vocal.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-wheels.png" />
     <None Remove="Assets\Images\ItemTypeIcons\icon-wrap.png" />
+    <None Remove="Assets\Images\Rarities\rarity-adidas.png" />
     <None Remove="Assets\Images\Rarities\rarity-alanwalker.png" />
     <None Remove="Assets\Images\Rarities\rarity-bmw.png" />
     <None Remove="Assets\Images\Rarities\rarity-common.png" />
@@ -163,6 +164,7 @@
     <Resource Include="Assets\Images\ItemTypeIcons\icon-guitar.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-keytar.png" />
     <Resource Include="Assets\Images\ItemTypeIcons\icon-vocal.png" />
+    <Resource Include="Assets\Images\Rarities\rarity-adidas.png" />
     <Resource Include="Assets\Images\Rarities\rarity-alanwalker.png" />
     <Resource Include="Assets\Images\Rarities\rarity-common.png" />
     <Resource Include="Assets\Images\Rarities\rarity-dark.png" />

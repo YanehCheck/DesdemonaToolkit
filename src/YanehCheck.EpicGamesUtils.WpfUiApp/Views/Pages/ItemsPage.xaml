@@ -766,14 +766,14 @@
                                         RenderOptions.BitmapScalingMode="LowQuality"
                                         Stretch="UniformToFill" />
                                 </Border.Background>
-                                <ui:Button
-                                    Content="Common"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{Binding ViewModel.RarityCommand}"
-                                    CommandParameter="{x:Static items:ItemRarity.Common}"
-                                    Background="{Binding ViewModel.RarityFilter,
-                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
-                                                ConverterParameter={x:Static items:ItemRarity.Common}}"/>
+                                    <ui:Button
+                                        Content="Common"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding ViewModel.RarityCommand}"
+                                        CommandParameter="{x:Static items:ItemRarity.Common}"
+                                        Background="{Binding ViewModel.RarityFilter,
+                                         Converter={StaticResource EnumerableContainsToColorTintConverter},
+                                         ConverterParameter={x:Static items:ItemRarity.Common}}"/>
                             </Border>
                             <Border
                                 CornerRadius="4"
@@ -1160,6 +1160,27 @@
                                     Background="{Binding ViewModel.RarityFilter,
                                                 Converter={StaticResource EnumerableContainsToColorTintConverter},
                                                 ConverterParameter={x:Static items:ItemRarity.Bmw}}"/>
+                            </Border>
+                        </UniformGrid>
+                        <UniformGrid Rows="1">
+                            <Border
+                                CornerRadius="4"
+                                BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                                BorderThickness="1">
+                                <Border.Background>
+                                    <ImageBrush
+                                        ImageSource="pack://application:,,,/Assets/Images/Rarities/rarity-adidas.png"
+                                        RenderOptions.BitmapScalingMode="LowQuality"
+                                        Stretch="UniformToFill" />
+                                </Border.Background>
+                                <ui:Button
+                                    Content="Adidas Series"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding ViewModel.RarityCommand}"
+                                    CommandParameter="{x:Static items:ItemRarity.AdidasSeries}"
+                                    Background="{Binding ViewModel.RarityFilter,
+                                                Converter={StaticResource EnumerableContainsToColorTintConverter},
+                                                ConverterParameter={x:Static items:ItemRarity.AdidasSeries}}"/>
                             </Border>
                         </UniformGrid>
                     </StackPanel>

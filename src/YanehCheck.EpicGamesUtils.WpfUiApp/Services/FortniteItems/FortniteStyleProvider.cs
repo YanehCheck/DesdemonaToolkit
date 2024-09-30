@@ -15,6 +15,11 @@ public class FortniteStyleProvider(IFortniteAssetSerializer assetSerializer, Ite
         
         int progress = 0;
         await Parallel.ForEachAsync(files, async (f, _) => {
+            if (f.Contains("VehicleCosmetics")) {
+                if (!f.Contains("Variants") && !f.Contains("VTID")) {
+                    return;
+                }
+            }
             var style = await assetSerializer.DeserializeCosmeticVariantAssetFileAsync(f);
             if(style != null) {
                 styles.Add(mapper.MapToModel(style));

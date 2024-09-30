@@ -34,7 +34,7 @@ public class CliHandler(IFortniteItemProvider itemProvider, IFortniteStyleProvid
         var inputPath = args[0];
         var outputPath = args[1];
 
-        var styles = styleProvider.GetStylesPackagePropertiesFileRecursiveAsync(inputPath, p => {
+        var styles = await styleProvider.GetStylesPackagePropertiesFileRecursiveAsync(inputPath, p => {
             var progress = (int) (p * 100);
             if(progress % 10 == 0) {
                 Console.WriteLine($"{progress}%");
@@ -48,7 +48,7 @@ public class CliHandler(IFortniteItemProvider itemProvider, IFortniteStyleProvid
             await Console.Error.WriteLineAsync("Output path leads to invalid directory");
         }
 
-        await File.WriteAllTextAsync(inputPath, json);
+        await File.WriteAllTextAsync(outputPath, json);
     }
 
     private async Task HandleFggDataToJson(string[] args) {

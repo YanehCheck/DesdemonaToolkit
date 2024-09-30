@@ -14,4 +14,5 @@ public class JsonParseableResponseMapper<TResponse> : IResponseMapper<TResponse>
 public class AccountAuthCodeAuthResponseMapper : JsonParseableResponseMapper<AccountAuthCodeAuthResponse>;
 public class ClientAuthResponseMapper : JsonParseableResponseMapper<ClientAuthResponse>;
 public class AccountLookupResponseMapper : JsonParseableResponseMapper<AccountLookupResponse>;
+public class RedeemCodeAccountMapper : JsonParseableResponseMapper<RedeemCodeAccountResponse>;
 public class ErrorResponseMapper : JsonParseableResponseMapper<EpicGamesApiException>;

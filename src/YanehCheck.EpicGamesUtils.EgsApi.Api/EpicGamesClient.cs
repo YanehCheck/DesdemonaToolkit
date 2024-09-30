@@ -14,6 +14,7 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
     private readonly ClientAuthResponseMapper clientAuthMapper = new();
     private readonly AccountAuthCodeAuthResponseMapper accAuthCodeMapper = new();
     private readonly AccountLookupResponseMapper accountLookupMapper = new();
+    private readonly RedeemCodeAccountMapper redeemCodeAccountMapper = new();
     private readonly QueryProfileCommonCoreResponseMapper queryCoreMapper = new();
     private readonly QueryProfileAthenaResponseMapper queryAthenaMapper = new();
 
@@ -101,6 +102,27 @@ public class EpicGamesClient(IRestClient client) : IEpicGamesClient {
 
         if(response.IsSuccessStatusCode) {
             return queryCoreMapper.MapFromJson(json)!;
+        }
+        else {
+            throw errorMapper.MapFromJson(json)!;
+        }
+    }
+
+    public virtual async Task<RedeemCodeAccountResponse> Fortnite_RedeemCodeAccount(string accountId, string accessToken, string code) {
+        var request =
+            new RestRequest(
+                $"https://fulfillment-public-service-prod.ol.epicgames.com/fulfillment/api/public/accounts/{accountId}/codes/{code}", Method.Post);
+        request.AddHeader("Authorization", $"Bearer {accessToken}");
+        request.AddBody("{}");
+
+        var response = await client.ExecuteAsync(request);
+        if(response.Content is null) {
+            throw new HttpRequestException($"Could not contact the Epic Games API (response code {response.StatusCode}).");
+        }
+        var json = JToken.Parse(response.Content!);
+
+        if(response.IsSuccessStatusCode) {
+            return redeemCodeAccountMapper.MapFromJson(json)!;
         }
         else {
             throw errorMapper.MapFromJson(json)!;

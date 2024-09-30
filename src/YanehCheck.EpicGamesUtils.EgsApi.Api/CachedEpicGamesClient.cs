@@ -54,6 +54,16 @@ public class CachedEpicGamesClient(IRestClient client) : EpicGamesClient(client)
         return response;
     }
 
+    public override async Task<RedeemCodeAccountResponse> Fortnite_RedeemCodeAccount(string accountId, string accessToken, string code) {
+        string cacheKey = nameof(Fortnite_RedeemCodeAccount);
+        if(cache.TryGet(cacheKey, out var cachedResponse)) {
+            return (RedeemCodeAccountResponse) cachedResponse;
+        }
+
+        var response = await base.Fortnite_RedeemCodeAccount(accountId, accessToken, code);
+        return response;
+    }
+
     public override async Task<QueryProfileAthenaResponse> Fortnite_QueryAthenaProfile(string accountId, string accessToken) {
         string cacheKey = nameof(Fortnite_QueryAthenaProfile);
         if(cache.TryGet(cacheKey, out var cachedResponse)) {

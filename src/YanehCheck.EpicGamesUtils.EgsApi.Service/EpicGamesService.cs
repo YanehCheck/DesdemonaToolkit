@@ -30,6 +30,10 @@ public class EpicGamesService(ICachedEpicGamesClient client) : IEpicGamesService
         var response = await client.Accounts_SetSacCode(accountId, accessToken, sacCode);
     }
 
+    public async Task RedeemCodeAccount(string accountId, string accessToken, string code) { 
+        var response = await client.Fortnite_RedeemCodeAccount(accountId, accessToken, code);
+    }
+
     public async Task<FortniteItemsResult> GetFortniteItems(string accountId, string accessToken) {
         var commonCoreResponse = await client.Fortnite_QueryCommonCoreProfile(accountId, accessToken);
         var athenaResponse = await client.Fortnite_QueryAthenaProfile(accountId, accessToken);

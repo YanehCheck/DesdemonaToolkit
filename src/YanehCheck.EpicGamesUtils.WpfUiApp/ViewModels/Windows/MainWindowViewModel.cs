@@ -32,6 +32,12 @@ public partial class MainWindowViewModel : ObservableObject, IViewModel {
             Content = "Items",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Tag24 },
             TargetPageType = typeof(ItemsPage)
+        },
+        new NavigationViewItem()
+        {
+            Content = "Account Tools",
+            Icon = new SymbolIcon { Symbol = SymbolRegular.Wrench24 },
+            TargetPageType = typeof(AccountUtilsPage)
         }
     };
 

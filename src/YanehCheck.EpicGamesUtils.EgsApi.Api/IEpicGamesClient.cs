@@ -13,5 +13,6 @@ public interface IEpicGamesClient {
     Task<AccountLookupResponse> Accounts_LookupAccountId(string accountId, string accessToken);
     Task<QueryProfileCommonCoreResponse> Fortnite_QueryCommonCoreProfile(string accountId, string accessToken);
     Task<QueryProfileAthenaResponse> Fortnite_QueryAthenaProfile(string accountId, string accessToken);
+    Task<RedeemCodeAccountResponse> Fortnite_RedeemCodeAccount(string accountId, string accessToken, string code);
     Task<QueryProfileCommonCoreResponse> Accounts_SetSacCode(string accountId, string accessToken, string sacCode);
 }

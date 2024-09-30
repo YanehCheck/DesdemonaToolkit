@@ -10,6 +10,6 @@ public class OwnedFortniteItem(string fortniteId, List<OwnedVariant> ownedVarian
 }
 
 public class OwnedVariant(string channel, List<string> properties) {
-    public string Channel { get; }
-    public List<string> Properties { get; }
+    public string Channel { get; } = channel;
+    public List<string> Properties { get; } = properties;
 }

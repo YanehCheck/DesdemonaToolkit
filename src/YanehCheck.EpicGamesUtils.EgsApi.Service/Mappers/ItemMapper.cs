@@ -5,7 +5,8 @@ namespace YanehCheck.EpicGamesUtils.EgsApi.Service.Mappers;
 
 internal class ItemMapper {
     public OwnedFortniteItem MapFromItem(Item item) {
-        var variants = item.Attributes.Variants?.Select(v => new OwnedVariant(v.Channel, v.OwnedProperties)).ToList();
+        var variants = item.Attributes.Variants?.Where(v => v.OwnedProperties.Count != 0)
+            .Select(v => new OwnedVariant(v.Channel, v.OwnedProperties)).ToList();
         var ownedItem = new OwnedFortniteItem(item.FortniteId, variants ?? []);
         return ownedItem;
     }

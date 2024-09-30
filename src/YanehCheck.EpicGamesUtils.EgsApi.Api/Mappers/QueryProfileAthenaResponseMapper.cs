@@ -44,10 +44,11 @@ public class QueryProfileAthenaResponseMapper : IResponseMapper<QueryProfileAthe
         item.Quantity = token.SelectToken("$.quantity")?.ToObject<int>()!;
         item.Attributes = new Attribute();
 
-        var variantTokens = token.SelectToken("$.attributes.variants.*");
-        if(variantTokens != null) {
-            item.Attributes.Variants = variantTokens.Select(v => v.ToObject<Variant>()!).ToList();
-        }
+        var variantTokens = token.SelectToken("$.attributes.variants");
+        item.Attributes.Variants = variantTokens is null ?
+            [] :
+            variantTokens.ToObject<List<Variant>>();
+
         item.Attributes.GrantAccessToItem = token.SelectToken("$.attributes.access_item")?.ToObject<string>();
 
         return item;

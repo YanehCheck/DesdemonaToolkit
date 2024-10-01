@@ -30,7 +30,13 @@
                 </ui:CardControl.Header>
                 <StackPanel
                     Orientation="Horizontal">
+                    <CheckBox  
+                        Content="Monitor clipboard"
+                        Command="{Binding ViewModel.ToggleRedeemCodeMonitorClipboardCommand, Mode=OneTime}"
+                        IsChecked="{Binding ViewModel.MonitorClipboardRedeemCode, Mode=TwoWay}"
+                        ToolTip="Monitors your clipboard. If it finds string resembling Fortnite reward code, redeems it instantly."/>
                     <ui:TextBox
+                        Margin="10,0,0,0"
                         Width="220"
                         PlaceholderText="CODEC-ODECO-DECOD-ECODE"
                         Text="{Binding ViewModel.Code, Mode=OneWayToSource}"/>

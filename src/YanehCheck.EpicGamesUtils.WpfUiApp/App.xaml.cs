@@ -84,6 +84,7 @@ public partial class App {
             services.AddSingleton<IBrowserService, BrowserService>();
             services.AddSingleton<IPersistenceProvider, PersistenceProvider>();
             services.AddSingleton<ISessionService, SessionService>();
+            services.AddSingleton<IClipboardService, ClipboardService>();
 
             // UI services
             services.AddSingleton<IPageService, PageService>();

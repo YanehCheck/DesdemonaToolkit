@@ -12,7 +12,7 @@ Desdemona Toolkit is free and open-source desktop application for exploring and 
 
 ⭐ **Browse & Share**: Browse every skin, emote, and cosmetic you've unlocked, with all unlockable styles included. Share your items as an image or export it to Fortnite.GG.  
 ⭐ **Customizable**: Create filters to organize and annotate your items exactly how you want.  
-⭐ **Periodically updated**: New tools and patches being added constantly. Enjoy fast reward code redeemer!
+⭐ **Periodically updated**: New tools and patches being added constantly. Enjoy fast reward code redeemer!  
 ⭐ **Secure**: Your login information is never shared with any third parties. Desdemona Toolkit communicates directly with the Epic Games API.  
 ⭐ **Open-Source**: All the code is licensed under GPL-3.0, ensuring transparency and extensibility.  
 

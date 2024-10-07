@@ -33,17 +33,16 @@ Desdemona Toolkit is free and open-source desktop application for exploring and 
 ## Usage
 
 See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage and on how to create your own filter.
+
+## What is in the making for next release (v0.3.0)
+
+#### EGS API REPL Page
+- Very powerful feature for advanced users
+- Support for most notable API endpoints
+- Built-in doc pages
+- Extra functionality, like variables, helper functions, etc...
   
 ## Gallery
 <img width="750" src="https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/img-export.png"> </img>
 ![Home Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot1.png)
 ![Inventory Page](https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/screenshot2.png)
-  
-## Roadmap
-- General account information page
-- Inventory statistics like total price, number of items, ...
-- STW: Claim daily quest
-- STW: Check founder codes
-- More auth options
-- UI and UX polish, Full light mode support
-- ????

@@ -34,13 +34,32 @@ Desdemona Toolkit is free and open-source desktop application for exploring and 
 
 See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage and on how to create your own filter.
 
-## What is in the making for next release (v0.3.0)
+## The future and what is in the making for v1.0.0 release
+
+The long-term goal for this project is to become "toolkit" for real. I would consider the current locker feature pretty top-notch, but user-friendly customizable features take a long time to make and currently I just don't have time to implement all of them. My solution is to integrate most of the api as a REPL module. This will unlock almost unlimited and newest use-cases at the cost of user-friendliness.
 
 #### EGS API REPL Page
 - Very powerful feature for advanced users
 - Support for most notable API endpoints
+- No boilerplate information required compared to calling the API yourself
 - Built-in doc pages
-- Extra functionality, like variables, helper functions, etc...
+
+The DTKF language was implemented for customizable, easy and shareable locker filtering and I think it fulfilled my vision. I would love to implement similar scripting language, DTKAPI, as a facade for the API REPL page.
+
+#### EGS API DTKAPI Language
+- Extra useful functions (stringify json, etc...)
+- Persistent aliases for commands
+- Shareable script files
+
+I will end it off with early draft of the language.
+```
+/alias "profile" "/QueryProfile profileId=athena"
+profileVar << /profile
+winsVar << /json-get-section wins <profileVar>
+/RandomApiEndpoint profileId=athena {"loadout": 5, wins: <winsVar>}
+```
+
+###
   
 ## Gallery
 <img width="750" src="https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/img-export.png"> </img>

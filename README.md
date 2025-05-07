@@ -8,6 +8,8 @@
 
 Desdemona Toolkit is a free and open-source desktop application for exploring and managing your Fortnite account and items without the need to share your credentials. 
 
+### ⚠️I am sad to say that Desdemona Toolkit is currently really outdated (e.g., missing new series, new item types), although some features are still usable. This is due to my personal lack of time for hobby development. The application will be updated and development resumed around 2025-07-xx. I have really interesting and exciting features in the works!⚠️
+
 ## Features
 
 ⭐ **Browse & Share**: Browse every skin, emote, and cosmetic you've unlocked, with all unlockable styles included. Share your items as an image or export it to Fortnite.GG.  
@@ -33,33 +35,6 @@ Desdemona Toolkit is a free and open-source desktop application for exploring an
 ## Usage
 
 See [Wiki](https://github.com/YanehCheck/DesdemonaToolkit/wiki) for FAQ, usage, and how to create your own filter.
-
-## The future and what is in the making for the v1.0.0 release
-
-The long-term goal for this project is to become a "toolkit" for real. I would consider the current locker feature pretty top-notch, but user-friendly customizable features take a long time to make and currently I just don't have time to implement all of them. My solution is to integrate most of the API into a REPL module. This will unlock almost unlimited and newest use cases at the cost of user-friendliness.
-
-#### EGS API REPL Page
-- Very powerful feature for advanced users
-- Support for most notable API endpoints
-- No boilerplate information is required compared to calling the API yourself
-- Built-in doc pages
-
-The DTKF language was implemented for customizable, easy, and shareable locker filtering, and I think it fulfilled my vision. I would love to implement a similar scripting language, DTKAPI, as a facade for the API REPL page.
-
-#### EGS API DTKAPI Language
-- Extra useful functions (stringify JSON, etc...)
-- Persistent aliases for commands
-- Shareable script files
-
-I will conclude with an initial draft of the language.
-```
-/alias "profile" "/QueryProfile profileId=athena"
-profileVar << /profile
-winsVar << /json-get-section wins <profileVar>
-/RandomApiEndpoint profileId=athena {"loadout": 5, wins: <winsVar>}
-```
-
-###
   
 ## Gallery
 <img width="750" src="https://github.com/YanehCheck/DesdemonaToolkit/blob/master/images/img-export.png"> </img>
